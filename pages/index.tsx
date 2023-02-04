@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import AllCatagories from "components/allCatagories";
 import Head from "next/head";
 function HomePage() {
   return (
@@ -8,7 +9,10 @@ function HomePage() {
         <meta name="description" content="Nextjs Ecommerce website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="bg-slate-600 px-8">
+      <main className="px-8">
+        <section>
+          <AllCatagories />
+        </section>
       </main>
     </Fragment>
   );
