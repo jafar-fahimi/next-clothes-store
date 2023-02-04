@@ -1,5 +1,11 @@
 import React from "react";
+import Navbar from "./Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <section className="min-h-screen bg-slate-800">{children}</section>;
+  return (
+    <section className="min-h-screen px-8">
+      <Navbar />
+      {children}
+    </section>
+  );
 }
