@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import AllCatagories from "components/allCatagories";
+import AllCatagories from "components/catagory/allCatagories";
 import Head from "next/head";
 function HomePage() {
   return (
