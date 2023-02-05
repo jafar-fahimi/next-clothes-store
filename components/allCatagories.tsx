@@ -23,15 +23,15 @@ import {
 
 export default function AllCatagories() {
   return (
-    <section className="flex flex-col gap-y-80">
-      <div className="grid grid-cols-3 mt-40">
-        <Catagory srcProp={bag1} cat="Hat"/>
-        <Catagory srcProp={bag2} cat="Hat"/>
-        <Catagory srcProp={bag3} cat="Hat"/>
+    <section className="flex flex-col">
+      <div className="flex flex-col flex-wrap sm:flex-row justify-evenly gap-y-2">
+        <Catagory srcProp={bag1} cat="Hat" />
+        <Catagory srcProp={bag2} cat="Hat" />
+        <Catagory srcProp={bag3} cat="Hat" />
       </div>
-      <div className="grid grid-cols-2">
-        <Catagory srcProp={bag2} cat="Hat"/>
-        <Catagory srcProp={bag3} cat="Hat"/>
+      <div className="flex flex-col flex-wrap sm:flex-row justify-evenly ">
+        <Catagory srcProp={bag4} cat="Hat" />
+        <Catagory srcProp={bag5} cat="Hat" />
       </div>
     </section>
   );
