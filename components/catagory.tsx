@@ -7,7 +7,7 @@ export default function Catagory({ srcProp, cat }: Props) {
       <div className="relative">
         <div className="w-80 h-80 -z-10 group">
           <Image
-            alt="imgwww"
+            alt="Catagory Item Image"
             className="group-hover:scale-105 transition-all duration-500"
             src={srcProp}
             width={300}
