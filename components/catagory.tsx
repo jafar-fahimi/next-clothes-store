@@ -3,15 +3,12 @@ type Props = { srcProp: string | StaticImageData; cat: string };
 
 export default function Catagory({ srcProp, cat }: Props) {
   return (
-    <section>
       <div className="relative">
-        <div className="w-80 h-80 -z-10 group">
+        <div className="w-80 -z-10 group">
           <Image
             alt="Catagory Item Image"
-            className="group-hover:scale-105 transition-all duration-500"
-            src={srcProp}
-            width={300}
-            height={300}
+            className="group-hover:scale-105 transition-all duration-500 flex-1"
+            src={srcProp} 
             quality={100}
           />
           <div className="absolute hover:cursor-pointer -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-40 bg-white/70 py-4 px-2 text-center">
@@ -20,6 +17,5 @@ export default function Catagory({ srcProp, cat }: Props) {
           </div>
         </div>
       </div>
-    </section>
   );
 }
