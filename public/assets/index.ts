@@ -20,9 +20,13 @@ import twitter from "./twitter.svg";
 import people01 from "./people01.png";
 import people02 from "./people02.png";
 import people03 from "./people03.png";
+import bagIcon1 from "./bag-icon(1).png";
+import bagIcon2 from "./bag-icon(2).png";
 
 export {
   airbnb,
+  bagIcon1,
+  bagIcon2,
   binance,
   coinbase,
   dropbox,
