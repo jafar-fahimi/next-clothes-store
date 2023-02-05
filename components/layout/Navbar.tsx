@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar ">
       <Image src={nextLogo} alt="hoobank" width={100} height={50} />
-      <ul className="list-none sm:flex hidden justify-end items-center flex-1 border-box text-lg lg:text-xl">
+      <ul className="list-none sm:flex hidden justify-end items-center flex-1 text-sm border-box md:text-lg lg:text-xl">
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
           <a href="#">Shop</a>
         </li>
