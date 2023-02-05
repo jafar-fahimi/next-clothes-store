@@ -7,14 +7,14 @@ export default function AllCatagories() {
     <section className="">
       {/* <div className="grid grid-cols-3 grid-flow-row-dense justify-center gap-x-4 gap-y-4 mb-2"> */}
       <div className="flex flex-col flex-wrap sm:flex-row justify-center gap-x-4 gap-y-4 mb-2">
-        <Catagory srcProp={brownHat} cat="Hat" />
-        <Catagory srcProp={jacket} cat="Hat" />
-        <Catagory srcProp={sneakers} cat="Hat" />
+        <Catagory srcProp={brownHat} cat="Hats" />
+        <Catagory srcProp={jacket} cat="Jackets" />
+        <Catagory srcProp={sneakers} cat="Sneakers" />
       </div>
       {/* <div className="inline-grid grid-cols-2 grid-flow-row-dense justify-center items-center justify-center gap-x-4 gap-y-4"> */}
       <div className="flex flex-col flex-wrap sm:flex-row justify-center gap-x-4 gap-y-4">
-        <Catagory srcProp={women} cat="Hat" />
-        <Catagory srcProp={men} cat="Hat" />
+        <Catagory srcProp={women} cat="Women" />
+        <Catagory srcProp={men} cat="Men" />
       </div>
     </section>
   );
