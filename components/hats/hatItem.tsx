@@ -21,8 +21,8 @@ export default function HatItem({ shop_data_item }: Props) {
           src={shop_data_item.imageUrl}
         />
         <div className="absolute top-0 bg-white/20 w-full h-full hidden group-hover:block z-10"></div>
-        <div className="absolute invisible hover:block group-hover:visible hover:cursor-pointer cursor-pointer -translate-x-1/2 -translate-y-1/2 bottom-10 left-1/2 bg-white/70 py-2 px-8 text-center">
-          <Link href="#" className="font-thin inline-block uppercase w-28">
+        <div className="absolute hidden group-hover:block -translate-x-1/2 -translate-y-1/2 bottom-10 left-1/2 text-black bg-white/90 hover:bg-black hover:text-white py-2 px-8 text-center">
+          <Link href="#" className="font-normal inline-block uppercase w-28">
             Add To Cart
           </Link>
         </div>

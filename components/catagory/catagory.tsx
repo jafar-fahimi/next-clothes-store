@@ -5,10 +5,10 @@ type Props = { srcProp: string | StaticImageData; cat: string };
 export default function Catagory({ srcProp, cat }: Props) {
   return (
     <Link className="relative" href={`/${cat.toLowerCase()}`}>
-      <div className="w-80 -z-10 group">
+      <div className="w-96 -z-10 group">
         <Image
           alt="Catagory Item Image"
-          className="group-hover:scale-105 transition-all duration-500 flex-1"
+          className="group-hover:scale-105 transition-all w-full h-full duration-500 flex-1"
           src={srcProp}
           quality={100}
         />
