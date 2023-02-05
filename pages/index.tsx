@@ -1,21 +1,26 @@
-import { Fragment, useState } from "react";
-import AllCatagories from "components/catagory/allCatagories";
+import React from "react";
 import Head from "next/head";
+import AllCatagories from "components/catagory/allCatagories";
+
+import { Provider } from "react-redux"; // provider use useContext
+import store from "components/redux-toolkit/app/store";
+import { IcecreamView } from "components/redux-toolkit/app/icecream/IcecreamView";
+
 function HomePage() {
   return (
-    <Fragment>
+    <React.Fragment>
       <Head>
         <title>Jafar Ecommerce</title>
         <meta name="description" content="Nextjs Ecommerce website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="px-8">
-        <section>
+        <Provider store={store}>
           <AllCatagories />
-        </section>
+          <IcecreamView />
+        </Provider>
       </main>
-    </Fragment>
+    </React.Fragment>
   );
 }
-
 export default HomePage;
