@@ -14,8 +14,18 @@ import transparent2 from "./transparent-item(2).png";
 import transparent3 from "./transparent-item(3).png";
 import transparent4 from "./transparent-item(4).png";
 import transparent5 from "./transparent-item(5).png";
+import brownHat from "./Home-Images/brown-brim.png";
+import jacket from "./Home-Images/jackets.png";
+import men from "./Home-Images/men.png";
+import women from "./Home-Images/women.png";
+import sneakers from "./Home-Images/sneakers.png";
 
 export {
+  brownHat,
+  jacket,
+  men,
+  women,
+  sneakers,
   bag1,
   bag2,
   bag3,
