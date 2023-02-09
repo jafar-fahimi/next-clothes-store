@@ -1,21 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let localItem;
+let localItemState: string | null = "{}";
 if (typeof window !== "undefined") {
   localItem = localStorage.getItem("ITEM");
+  localItemState = localStorage.getItem("state");
 }
 
-const stateCartItems = JSON.parse(localStorage.getItem("state") || "{}")?.cartItems
-  ? JSON.parse(localStorage.getItem("state") || "{}").cartItems
+const stateCartItems = JSON.parse(localItemState || "{}")?.cartItems
+  ? JSON.parse(localItemState || "{}").cartItems
   : [];
-const stateTotalPrice = JSON.parse(localStorage.getItem("state") || "{}")?.totalPrice
-  ? JSON.parse(localStorage.getItem("state") || "{}").totalPrice
+const stateTotalPrice = JSON.parse(localItemState || "{}")?.totalPrice
+  ? JSON.parse(localItemState || "{}").totalPrice
   : 0;
-const stateTotalItems = JSON.parse(localStorage.getItem("state") || "{}")?.totalItems
-  ? JSON.parse(localStorage.getItem("state") || "{}").totalItems
+const stateTotalItems = JSON.parse(localItemState || "{}")?.totalItems
+  ? JSON.parse(localItemState || "{}").totalItems
   : 0;
-const stateWishlist = JSON.parse(localStorage.getItem("state") || "{}")?.wishlist
-  ? JSON.parse(localStorage.getItem("state") || "{}").wishlist
+const stateWishlist = JSON.parse(localItemState || "{}")?.wishlist
+  ? JSON.parse(localItemState || "{}").wishlist
   : [];
 
 const initialState = [
