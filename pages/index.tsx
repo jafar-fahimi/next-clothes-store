@@ -4,7 +4,7 @@ import AllCatagories from "components/catagory/allCatagories";
 
 import { Provider } from "react-redux"; // provider use useContext
 import store from "components/redux-toolkit/app/store";
-import { IcecreamView } from "components/redux-toolkit/app/icecream/IcecreamView";
+import { ItemView } from "components/redux-toolkit/app/item/itemView";
 
 function HomePage() {
   return (
@@ -17,7 +17,7 @@ function HomePage() {
       <main className="px-8">
         <Provider store={store}>
           <AllCatagories />
-          <IcecreamView />
+          <ItemView />
         </Provider>
       </main>
     </React.Fragment>

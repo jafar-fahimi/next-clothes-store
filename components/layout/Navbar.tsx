@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import nextLogo from "public/next.svg";
 import { menu, close, bagIcon1, bagIcon2 } from "public/assets/";
 
@@ -11,7 +12,7 @@ export default function Navbar() {
       <Image src={nextLogo} alt="hoobank" width={100} height={50} />
       <ul className="list-none sm:flex hidden justify-end items-center flex-1 text-sm border-box md:text-lg lg:text-xl">
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-          <a href="#">Shop</a>
+          <Link href="/">Shop</Link>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
           <a href="#">Contact</a>
@@ -20,14 +21,14 @@ export default function Navbar() {
           <a href="#">Sign In</a>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-          <a href="#">
+          <Link href="/checkout">
             <div className="relative">
               <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
               <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
                 0
               </span>
             </div>
-          </a>
+          </Link>
         </li>
       </ul>
 
@@ -46,7 +47,7 @@ export default function Navbar() {
         >
           <ul className="list-none flex justify-end items-start flex-1 flex-col">
             <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-              <a href="#">Shop</a>
+              <Link href="/">Shop</Link>
             </li>
             <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
               <a href="#">Contact</a>
@@ -55,14 +56,14 @@ export default function Navbar() {
               <a href="#">Sign In</a>
             </li>
             <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-              <a href="#">
+              <Link href="/checkout">
                 <div className="relative">
                   <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
                   <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
                     0
                   </span>
                 </div>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

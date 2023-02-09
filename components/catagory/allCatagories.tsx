@@ -1,6 +1,6 @@
 import React from "react";
 import Catagory from "./catagory";
-import { brownHat, men, women, jacket, sneakers } from "/public/images/";
+import { brownHat, men, women, jacket, sneakers } from "public/images";
 
 export default function AllCatagories() {
   return (
