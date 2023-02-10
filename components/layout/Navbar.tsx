@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import nextLogo from "public/next.svg";
@@ -8,6 +8,10 @@ import { brownHat, men, women, jacket, sneakers } from "public/images";
 export default function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [cartOverview, setCartOverview] = useState(false);
+
+  useEffect(() => {
+    setCartOverview(false);
+  }, []);
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar ">
@@ -72,9 +76,9 @@ export default function Navbar() {
         <div
           className={`${
             !toggle ? "hidden" : "flex"
-          } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+          } p-6 bg-black-gradient absolute top-10 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
-          <ul className="list-none flex justify-end items-start flex-1 flex-col">
+          <ul className="list-none flex items-start justify-center py-4 px-4 bg-white flex-1 flex-col gap-4 border-2 border-black">
             <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
               <Link href="/">Shop</Link>
             </li>
