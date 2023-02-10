@@ -4,6 +4,7 @@ import Link from "next/link";
 import nextLogo from "public/next.svg";
 import { menu, close, bagIcon2 } from "public/assets/";
 import { brownHat, men, women, jacket, sneakers } from "public/images";
+import OneItem from "./oneItem";
 
 export default function Navbar() {
   const [toggle, setToggle] = useState(false);
@@ -39,20 +40,8 @@ export default function Navbar() {
           {cartOverview && (
             <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
               <div className="space-y-4 mb-8">
-                <div className="flex gap-x-4">
-                  <Image src={brownHat} width={70} alt="cart item image" />
-                  <div className="flex flex-col text-[18px]">
-                    <h4>Blue Bearnie</h4>
-                    <span>1 x 18$</span>
-                  </div>
-                </div>
-                <div className="flex gap-x-4">
-                  <Image src={brownHat} width={70} alt="cart item image" />
-                  <div className="flex flex-col text-[18px]">
-                    <h4>Blue Bearnie</h4>
-                    <span>1 x 18$</span>
-                  </div>
-                </div>
+                <OneItem id={1} name="Jafar" imageUrl={brownHat} qty={1} price={18} />
+                <OneItem id={2} name="Jafar" imageUrl={men} qty={1} price={18} />
               </div>
               <Link
                 href="/checkout"
