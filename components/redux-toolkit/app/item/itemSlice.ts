@@ -63,7 +63,7 @@ const itemSlice = createSlice({
     //   console.log("payload is: ", payload);
     //   localStorage.setItem("ITEM", JSON.stringify(state));
     // },
-    addItem(state, action) {
+    addToCart(state, action) {
       //   console.log(action.payload.price);
       //   console.log(state);
 
