@@ -20,9 +20,10 @@ const stateWishlist = JSON.parse(localItemState || "{}")?.wishlist
   ? JSON.parse(localItemState || "{}").wishlist
   : [];
 
-const initialState = [
+const allItems = [
   { id: 1, name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 0 },
-  { id: 2, name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 0 },
+  { id: 2, name: "Brown Brim2", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 30, qty: 10 },
+  { id: 3, name: "Brown Brim2", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 30, qty: 10 },
 ];
 
 type StateProps = {
@@ -42,7 +43,7 @@ type PayLoadProps = {
 const itemSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: stateCartItems,
+    cartItems: allItems,
     totalPrice: stateTotalPrice,
     totalItems: stateTotalItems,
     wishlist: stateWishlist,
@@ -64,31 +65,14 @@ const itemSlice = createSlice({
     //   localStorage.setItem("ITEM", JSON.stringify(state));
     // },
     addToCart(state, action) {
-      //   console.log(action.payload.price);
-      //   console.log(state);
-
-      if (state.cartItems.findIndex((item) => item._id === action.payload._id) !== -1) {
-        // console.log("hello");
-        const index = state.cartItems.findIndex((item) => item._id === action.payload._id);
-        if (state.cartItems[index].countInStock === 0) {
-          return;
-        }
-
-        // console.log(index);
-        state.cartItems[index].countInStock = state.cartItems[index].countInStock - 1;
+      if (state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1) {
+        const index = state.cartItems.findIndex((item) => item.id === action.payload.id);
         state.cartItems[index].qty++;
-        // console.log(state.cartItems);
       } else {
         action.payload["qty"] = 1;
-        // console.log(action.payload);
-
         state.cartItems.push(action.payload);
-        // console.log(action.payload.price);
       }
-      //   console.log(state.totalPrice);
       state.totalPrice = Number((state.totalPrice + action.payload.price).toFixed(2));
-      // Number(state.totalPrice).toFixed(2);
-
       state.totalItems = state.totalItems + 1;
       localStorage.setItem("state", JSON.stringify(state));
     },
