@@ -20,7 +20,7 @@ export default function HatItem({ shop_data_item }: Props) {
           height={300}
           src={shop_data_item.imageUrl}
         />
-        <div className="absolute invisible group-hover:visible -translate-x-1/2 -translate-y-1/2  bottom-10 left-1/2 text-black bg-white/90 cursor-pointer hover:bg-black hover:text-white text-center">
+        <div className="absolute invisible group-hover:visible -translate-x-1/2 -translate-y-1/2  bottom-10 left-1/2 transition-all duration-200 text-black bg-white/90 cursor-pointer hover:bg-black hover:text-white text-center">
           <Link href="#" className="block py-2 px-8 font-normal uppercase">
             Add&nbsp;To&nbsp;Cart
           </Link>

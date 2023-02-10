@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import nextLogo from "public/next.svg";
@@ -75,20 +75,20 @@ export default function Navbar() {
 
         <div
           className={`${
-            !toggle ? "hidden" : "flex"
+            !toggle ? "hidden" : "flex z-10"
           } p-6 bg-black-gradient absolute top-10 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
           <ul className="list-none flex items-start justify-center py-4 px-4 bg-white flex-1 flex-col gap-4 border-2 border-black">
-            <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
               <Link href="/">Shop</Link>
             </li>
-            <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
               <a href="#">Contact</a>
             </li>
-            <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
               <a href="#">Sign In</a>
             </li>
-            <li className="relative mx-4 font-normal focus:font-semibold">
+            <li className="relative box-border px-4 font-normal focus:font-semibold">
               <div
                 onClick={() => setCartOverview(!cartOverview)}
                 className="hover:cursor-pointer  hover:font-semibold  relative"
@@ -118,7 +118,7 @@ export default function Navbar() {
                   </div>
                   <Link
                     href="/checkout"
-                    className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4"
+                    className="block uppercase px-8 w-full border-2border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 "
                   >
                     go to checkout
                   </Link>

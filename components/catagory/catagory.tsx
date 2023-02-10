@@ -12,7 +12,7 @@ export default function Catagory({ srcProp, cat }: Props) {
           src={srcProp}
           quality={100}
         />
-        <div className="absolute hover:cursor-pointer -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-40 bg-white/70 py-4 px-2 text-center">
+        <div className="absolute hover:cursor-pointer -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-40 bg-white/70 hover:bg-white/90 transition-all duration-300 py-4 px-2 text-center">
           <h3 className="md:text-xl">{cat}</h3>
           <span className="font-thin">Shop Now</span>
         </div>
