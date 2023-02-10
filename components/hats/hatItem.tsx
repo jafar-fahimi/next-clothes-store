@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { addToCart } from "components/redux-toolkit/app/item/itemSlice";
 
 type Props = {
   shop_data_item: {
@@ -9,7 +11,9 @@ type Props = {
     imageUrl: string;
   };
 };
+
 export default function HatItem({ shop_data_item }: Props) {
+  const iDispatch = useDispatch();
   return (
     <div className="relative" key={shop_data_item.id}>
       <div className="w-64 h-80 -z-10 group">
@@ -21,7 +25,11 @@ export default function HatItem({ shop_data_item }: Props) {
           src={shop_data_item.imageUrl}
         />
         <div className="absolute invisible group-hover:visible -translate-x-1/2 -translate-y-1/2  bottom-10 left-1/2 transition-all duration-200 text-black bg-white/90 cursor-pointer hover:bg-black hover:text-white text-center">
-          <Link href="#" className="block py-2 px-8 font-normal uppercase">
+          <Link
+            href="#"
+            className="block py-2 px-8 font-normal uppercase"
+            onClick={() => iDispatch(addToCart({ ...shop_data_item }))}
+          >
             Add&nbsp;To&nbsp;Cart
           </Link>
         </div>

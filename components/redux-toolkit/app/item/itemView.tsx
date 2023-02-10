@@ -7,7 +7,6 @@ type Props = {
   imageUrl: string;
   price: number;
   qty?: number;
-  countInStock?: number;
 };
 
 export function ItemView() {
