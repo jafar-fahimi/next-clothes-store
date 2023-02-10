@@ -40,13 +40,15 @@ type PayLoadProps = {
   price: number;
 };
 
+let totalPriceValue = 0;
+allItems.forEach((item) => (totalPriceValue += item.price * item.qty));
+
 const itemSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: allItems,
-    totalPrice: stateTotalPrice,
-    totalItems: stateTotalItems,
-    wishlist: stateWishlist,
+    totalPrice: totalPriceValue,
+    totalItems: allItems.length,
   },
   reducers: {
     // addToCart: (state: StateProps[], payload: PayLoadProps) => void {
@@ -77,8 +79,8 @@ const itemSlice = createSlice({
       localStorage.setItem("state", JSON.stringify(state));
     },
 
-    minusFromCart: (state, payload) => {
-      const prevItem = state.find((item) => item.name == payload.name);
+    minusFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
+      const prevItem = state.cartItems.find((item: { name: string }) => item.name == payload.name);
       if (prevItem) {
         if (!prevItem.qty) {
           prevItem.qty = 0;
@@ -88,16 +90,16 @@ const itemSlice = createSlice({
       } else {
         return;
       }
-      console.log("payload is: ", payload);
+      console.log("after minus payload is: ", payload);
     },
-    deleteFromCart: (state, payload) => {
-      const prevItem = state.find((item) => item.name == payload.name);
+    deleteFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
+      const prevItem = state.cartItems.find((item) => item.name == payload.name);
       if (prevItem) {
-        state.filter((item) => item.name != payload.name);
+        state.cartItems.filter((item) => item.name !== payload.name);
       } else {
         return;
       }
-      console.log("payload is: ", payload);
+      console.log("after delete payload is: ", payload);
     },
   },
 });
