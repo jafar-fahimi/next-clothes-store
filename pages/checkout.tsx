@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
@@ -16,7 +17,7 @@ export default function Checkout() {
 
   return (
     <section className="max-w-4xl mx-auto">
-      <div className="flex justify-between my-4">
+      <div className="flex justify-between my-4 text-lg">
         <span>Product</span>
         <span>Description</span>
         <span>Price</span>
@@ -25,12 +26,12 @@ export default function Checkout() {
       </div>
       <hr />
       {itemStateArray.map((item) => (
-        <div className="flex justify-between my-4" key={item.id}>
-          <span>{item.name}</span>
+        <div className="flex justify-between my-4 items-center text-xl" key={item.id}>
+          <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
           <span>{item.name}</span>
           <span>{item.price}</span>
           <span>{item.qty}</span>
-          <span>Remove</span>
+          <button className="text-2xl">X</button>
         </div>
       ))}
     </section>
