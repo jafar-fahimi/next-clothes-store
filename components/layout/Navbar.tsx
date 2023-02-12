@@ -5,8 +5,21 @@ import nextLogo from "public/next.svg";
 import { menu, close, bagIcon2 } from "public/assets/";
 import { brownHat, men, women, jacket, sneakers } from "public/images";
 import OneItem from "./oneItem";
+import { useSelector } from "react-redux";
+
+type Props = {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  qty?: number;
+};
 
 export default function Navbar() {
+  const itemStateArray: Props[] = useSelector(
+    (state: { item: { cartItems: Props[] } }) => state.item.cartItems
+  );
+
   const [toggle, setToggle] = useState(false);
   const [cartOverview, setCartOverview] = useState(false);
 
@@ -40,8 +53,16 @@ export default function Navbar() {
           {cartOverview && (
             <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
               <div className="space-y-4 mb-8">
-                <OneItem id={1} name="Jafar" imageUrl={brownHat} qty={1} price={18} />
-                <OneItem id={2} name="Jafar" imageUrl={men} qty={1} price={18} />
+                {itemStateArray.map((item) => (
+                  <OneItem
+                    id={item.id}
+                    key={item.id}
+                    name={item.name}
+                    imageUrl={item.imageUrl}
+                    qty={item.qty}
+                    price={item.price}
+                  />
+                ))}
               </div>
               <Link
                 href="/checkout"
@@ -90,24 +111,20 @@ export default function Navbar() {
               {cartOverview && (
                 <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
                   <div className="space-y-4 mb-8">
-                    <div className="flex gap-x-4">
-                      <Image src={brownHat} width={70} alt="cart item image" />
-                      <div className="flex flex-col text-[18px]">
-                        <h4>Blue Bearnie</h4>
-                        <span>1 x 18$</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-x-4">
-                      <Image src={brownHat} width={70} alt="cart item image" />
-                      <div className="flex flex-col text-[18px]">
-                        <h4>Blue Bearnie</h4>
-                        <span>1 x 18$</span>
-                      </div>
-                    </div>
+                    {itemStateArray.map((item) => (
+                      <OneItem
+                        id={item.id}
+                        key={item.id}
+                        name={item.name}
+                        imageUrl={item.imageUrl}
+                        qty={item.qty}
+                        price={item.price}
+                      />
+                    ))}
                   </div>
                   <Link
                     href="/checkout"
-                    className="block uppercase px-8 w-full border-2border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 "
+                    className="block uppercase px-8 w-full border-2border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 text-center"
                   >
                     go to checkout
                   </Link>
