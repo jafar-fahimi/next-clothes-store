@@ -2,9 +2,8 @@ import React from "react";
 import Head from "next/head";
 import AllCatagories from "components/catagory/allCatagories";
 
-import { Provider } from "react-redux"; // provider use useContext
-import store from "components/redux-toolkit/app/store";
 import { ItemView } from "components/redux-toolkit/app/item/itemView";
+import HatsHomePage from "components/hats/hatsHomePage";
 
 function HomePage() {
   return (
@@ -15,10 +14,8 @@ function HomePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="px-8">
-        <Provider store={store}>
-          <AllCatagories />
-          <ItemView />
-        </Provider>
+        <AllCatagories />
+        <ItemView />
       </main>
     </React.Fragment>
   );
