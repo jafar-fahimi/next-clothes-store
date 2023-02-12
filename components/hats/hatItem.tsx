@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { addToCart } from "components/redux-toolkit/app/item/itemSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
+// import { AddToCartHandler, ItemView } from "components/redux-toolkit/app/item/itemView";
 
 type Props = {
   shop_data_item: {
@@ -13,7 +14,11 @@ type Props = {
 };
 
 export default function HatItem({ shop_data_item }: Props) {
-  const iDispatch = useDispatch();
+  const dispatch = useDispatch();
+  const itemStateArray: Props[] = useSelector(
+    (state: { item: { cartItems: Props[] } }) => state.item.cartItems
+  );
+
   return (
     <div className="relative" key={shop_data_item.id}>
       <div className="w-64 h-80 -z-10 group">
@@ -28,7 +33,10 @@ export default function HatItem({ shop_data_item }: Props) {
           <Link
             href="#"
             className="block py-2 px-8 font-normal uppercase"
-            onClick={() => iDispatch(addToCart({ ...shop_data_item }))}
+            onClick={() => {
+              console.log(itemStateArray);
+              return dispatch(addToCart(shop_data_item));
+            }}
           >
             Add&nbsp;To&nbsp;Cart
           </Link>
