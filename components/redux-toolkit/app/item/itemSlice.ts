@@ -64,6 +64,7 @@ const itemSlice = createSlice({
     },
 
     minusFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
+      console.log("after minus payload is: ", payload);
       const prevItem = state.cartItems.find((item: { name: string }) => item.name == payload.name);
       if (prevItem) {
         if (!prevItem.qty) {
@@ -74,7 +75,6 @@ const itemSlice = createSlice({
       } else {
         return;
       }
-      console.log("after minus payload is: ", payload);
     },
     deleteFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
       const prevItem = state.cartItems.find((item) => item.name == payload.name);

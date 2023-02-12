@@ -8,23 +8,21 @@ import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
 
 type Props = {
-  cartItems: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    price: number;
-    qty?: number;
-  }[];
-  totalPrice: number;
-  totalItems: number;
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  qty?: number;
 };
 
+type selectorType = { cartItems: Props[]; totalPrice: number; totalItems: number };
+type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 export default function Navbar() {
   const {
     cartItems: itemStateArray,
     totalPrice,
     totalItems,
-  }: any = useSelector((state: { item: { cartItems: Props[] } }) => state.item);
+  }: selectorType = useSelector((state: { item: stateItemType }) => state.item);
 
   const [toggle, setToggle] = useState(false);
   const [cartOverview, setCartOverview] = useState(false);
