@@ -20,10 +20,8 @@ import { createSlice } from "@reduxjs/toolkit";
 //   ? JSON.parse(localItemState || "{}").wishlist
 //   : [];
 
-const allItems = [
-  { id: 1, name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 0 },
-  { id: 2, name: "Brown Brim2", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 30, qty: 10 },
-  { id: 3, name: "Brown Brim2", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 30, qty: 10 },
+const allItems: StateProps[] = [
+  { id: 1, name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 1 },
 ];
 
 type StateProps = {
@@ -31,7 +29,7 @@ type StateProps = {
   name: string;
   imageUrl: string;
   price: number;
-  qty?: number;
+  qty: number;
 };
 type PayLoadProps = {
   id: number;
@@ -51,21 +49,6 @@ const itemSlice = createSlice({
     totalItems: allItems.length,
   },
   reducers: {
-    // addToCart: (state: StateProps[], payload: PayLoadProps) => void {
-    //   const prevItem = state.find((item) => item.name == payload.name);
-    //   if (prevItem) {
-    //     if (!prevItem.qty) {
-    //       prevItem.qty = 1;
-    //     } else {
-    //       prevItem.qty++;
-    //     }
-    //   } else {
-    //     const newState = [...state, payload];
-    //     // const state = newState;
-    //   }
-    //   console.log("payload is: ", payload);
-    //   localStorage.setItem("ITEM", JSON.stringify(state));
-    // },
     addToCart(state, action) {
       if (state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1) {
         const index = state.cartItems.findIndex((item) => item.id === action.payload.id);
@@ -77,6 +60,7 @@ const itemSlice = createSlice({
       state.totalPrice = Number((state.totalPrice + action.payload.price).toFixed(2));
       state.totalItems = state.totalItems + 1;
       localStorage.setItem("state", JSON.stringify(state));
+      // console.log(state);
     },
 
     minusFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
