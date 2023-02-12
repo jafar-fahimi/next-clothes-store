@@ -13,7 +13,7 @@ export function ItemView() {
   const itemStateArray: Props[] = useSelector(
     (state: { item: { cartItems: Props[] } }) => state.item.cartItems
   );
-  console.log(itemStateArray);
+  // console.log(itemStateArray);
   const iDispatch = useDispatch();
   return (
     <div>
@@ -41,4 +41,12 @@ export function ItemView() {
       </button>
     </div>
   );
+}
+
+export function AddToCartHandler(props: Props) {
+  const dispatch = useDispatch();
+  const itemStateArray: Props[] = useSelector(
+    (state: { item: { cartItems: Props[] } }) => state.item.cartItems
+  );
+  return [itemStateArray, dispatch(addToCart(props))];
 }
