@@ -16,7 +16,7 @@ export default function Checkout() {
   );
 
   return (
-    <section className="max-w-4xl mx-auto">
+    <section className="max-w-4xl mt-8 mx-auto">
       <table>
         <tr className="text-lg flex space-x-32 border-b-2 border-black/30 pb-3 mb-4">
           <td className="mr-20">Product</td>
@@ -42,6 +42,10 @@ export default function Checkout() {
           </tr>
         ))}
       </table>
+      <div className="flex flex-col items-end">
+        <span className="uppercase text-3xl">Total: 100$</span>
+        <button className="bg-blue-500 px-2 py-1 rounded-lg text-white mt-8 font-semibold">Pay with 💵</button>
+      </div>
     </section>
   );
 }
