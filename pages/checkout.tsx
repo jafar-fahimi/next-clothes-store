@@ -17,23 +17,31 @@ export default function Checkout() {
 
   return (
     <section className="max-w-4xl mx-auto">
-      <div className="flex justify-between my-4 text-lg">
-        <span>Product</span>
-        <span>Description</span>
-        <span>Price</span>
-        <span>Quantity</span>
-        <span>Remove</span>
-      </div>
-      <hr />
-      {itemStateArray.map((item) => (
-        <div className="flex justify-between my-4 items-center text-xl" key={item.id}>
-          <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
-          <span>{item.name}</span>
-          <span>{item.price}</span>
-          <span>{item.qty}</span>
-          <button className="text-2xl">X</button>
-        </div>
-      ))}
+      <table>
+        <tr className="text-lg flex space-x-32 border-b-2 border-black/30 pb-3 mb-4">
+          <td className="mr-20">Product</td>
+          <td>Description</td>
+          <td>Price</td>
+          <td>Quantity</td>
+          <td>Remove</td>
+        </tr>
+        {itemStateArray.map((item) => (
+          <tr
+            className="text-xl flex space-x-32 border-b-2 border-black/30 items-center pb-3 mb-3"
+            key={item.id}
+          >
+            <td>
+              <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
+            </td>
+            <td className="text-2xl">{item.name}</td>
+            <td>{item.price}</td>
+            <td>{item.qty}</td>
+            <td>
+              <button className="text-2xl">X</button>
+            </td>
+          </tr>
+        ))}
+      </table>
     </section>
   );
 }
