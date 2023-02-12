@@ -8,17 +8,23 @@ import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
 
 type Props = {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  qty?: number;
+  cartItems: {
+    id: number;
+    name: string;
+    imageUrl: string;
+    price: number;
+    qty?: number;
+  }[];
+  totalPrice: number;
+  totalItems: number;
 };
 
 export default function Navbar() {
-  const itemStateArray: Props[] = useSelector(
-    (state: { item: { cartItems: Props[] } }) => state.item.cartItems
-  );
+  const {
+    cartItems: itemStateArray,
+    totalPrice,
+    totalItems,
+  }: any = useSelector((state: { item: { cartItems: Props[] } }) => state.item);
 
   const [toggle, setToggle] = useState(false);
   const [cartOverview, setCartOverview] = useState(false);
@@ -47,7 +53,7 @@ export default function Navbar() {
           >
             <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
-              0
+              {totalItems}
             </span>
           </div>
           {cartOverview && (
@@ -105,7 +111,7 @@ export default function Navbar() {
               >
                 <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
-                  0
+                  {totalItems}
                 </span>
               </div>
               {cartOverview && (
