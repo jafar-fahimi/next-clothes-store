@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 // let localItem;
 // let localItemState: string | null = "{}";
 // if (typeof window !== "undefined") {
@@ -20,32 +19,33 @@ import { createSlice } from "@reduxjs/toolkit";
 //   ? JSON.parse(localItemState || "{}").wishlist
 //   : [];
 
-const allItems: StateProps[] = [
+const allItems: Props[] = [
   { id: 1, name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 3 },
 ];
-
-type StateProps = {
+type Props = {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
   qty: number;
 };
+
 type PayLoadProps = {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
 };
-
-let totalPriceValue = 0;
-allItems.forEach((item) => (totalPriceValue += item.price * item.qty));
-
+type StateAction = {
+  cartItems: Props[];
+  totalPrice: number;
+  totalItems: number;
+};
 const itemSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: allItems,
-    totalPrice: totalPriceValue,
+    totalPrice: allItems.reduce((acc, cur) => acc + cur.price * cur.qty, 0),
     totalItems: allItems.length,
   },
   reducers: {
@@ -59,41 +59,36 @@ const itemSlice = createSlice({
       }
       state.totalPrice = Number((state.totalPrice + action.payload.price).toFixed(2));
       state.totalItems = state.totalItems + 1;
-      localStorage.setItem("state", JSON.stringify(state));
+      // localStorage.setItem("state", JSON.stringify(state));
       // console.log(state);
     },
 
-    deleteFromCart: (state: { cartItems: StateProps[] }, { payload }: any) => {
-      console.log("payload is: ", payload);
-      const prevItem = state.cartItems.find((item) => item.name == payload.name);
-      console.log("prevItem is: ", prevItem);
+    deleteFromCart: (state: StateAction, action: any) => {
+      const prevItem = state.cartItems.find((item) => item.name == action.payload.name);
       if (prevItem) {
-        state.cartItems.filter((item) => {
-          console.log("item to delete is ", item.name);
-          return item.name !== payload.name;
-        });
+        // decreasing totalPrice:
+        const toDeleteItem = state.cartItems.find((item) => item.name === action.payload.name);
+        state.totalPrice -= (toDeleteItem?.price as number) * (toDeleteItem?.qty as number);
+        // as; to declare that it's never undefined
+
+        const nextStateItems = state.cartItems.filter((item) => item.name !== action.payload.name);
+        state.cartItems = nextStateItems;
       } else {
         return;
       }
-      console.log("after delete payload is: ", payload);
     },
-    minusFromCart: (state: { cartItems: StateProps[] }, { payload }: any) => {
-      console.log("before minus state.cartItems is : ", state.cartItems);
-      console.log("before minus state is : ", state);
-      // console.log("before minus payload is: ", payload.name);
-      const prevItem = state.cartItems.find((item: { name: string }) => item.name == payload.name);
-      console.log("before minus prevItem is : ", prevItem);
+    minusFromCart: (state: StateAction, action: any) => {
+      const prevItem = state.cartItems.find((item: { name: string }) => item.name == action.payload.name);
       if (prevItem) {
         if (prevItem.qty == 0) {
-          // deleteFromCart(payload);
-          console.log("state.cartItems is : ", state.cartItems);
-          state.cartItems.filter((item) => item.name != payload.name);
-          // console.log("after minus payload is - in delete: ", payload);
+          const nextStateItems = state.cartItems.filter((item) => item.name !== action.payload.name);
+          state.cartItems = nextStateItems;
         }
         if (!prevItem.qty) {
           prevItem.qty = 0;
         } else {
           prevItem.qty--;
+          state.totalPrice -= prevItem.price;
         }
       } else {
         return;
