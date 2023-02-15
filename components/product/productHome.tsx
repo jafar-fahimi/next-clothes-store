@@ -12,7 +12,7 @@ export default function ProductHome({ pitem }: Props) {
   return (
     <section>
       <h1 className="text-3xl text-center font-semibold mb-8">{SHOP_DATA[pitem2].title}</h1>
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="flex flex-wrap gap-5 gap-y-9 justify-center">
         {SHOP_DATA[pitem2].items.map((shop_data_item) => (
           <ProductItem key={shop_data_item.id} shop_data_item={shop_data_item} />
         ))}
