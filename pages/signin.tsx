@@ -10,6 +10,7 @@ export default function Signin() {
           <input
             type="email"
             placeholder="Email"
+            required
             className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-10" />
@@ -17,6 +18,7 @@ export default function Signin() {
           <input
             type="password"
             placeholder="Password"
+            required
             className="placeholder-slate-600  py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-6" />
@@ -39,20 +41,28 @@ export default function Signin() {
             type="text"
             placeholder="Display Name"
             className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
+            required
           />
           <hr className="w-full mb-4 md:mb-10" />
-          <input type="email" placeholder="Email" className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none" />
+          <input
+            type="email"
+            placeholder="Email"
+            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
+            required
+          />
           <hr className="w-full mb-4 md:mb-10" />
           <input
             type="password"
             placeholder="Password"
             className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
+            required
           />
           <hr className="w-full mb-4 md:mb-10" />
           <input
             type="password"
             placeholder="Confirm Password"
             className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
+            required
           />
           <hr className="w-full mb-4 md:mb-10" />
           <button className="uppercase px-16 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
