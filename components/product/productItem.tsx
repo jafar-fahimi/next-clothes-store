@@ -12,11 +12,12 @@ type Props = {
   };
 };
 
-export default function ProductItem({ shop_data_item }: Props) {
+export default function ProductItem(props: Props) {
   const dispatch = useDispatch();
   const itemStateArray: Props[] = useSelector(
     (state: { item: { cartItems: Props[] } }) => state.item.cartItems
   );
+  const shop_data_item = { ...props.shop_data_item, qty: 1 };
 
   return (
     <div className="relative" key={shop_data_item.id}>
