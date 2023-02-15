@@ -1,4 +1,4 @@
-import { deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
+import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,7 +42,9 @@ export default function Checkout() {
                 &lt;
               </button>
               &nbsp;{item.qty}&nbsp;
-              <button className="font-extrabold text-2xl">&gt;</button>
+              <button onClick={() => dispatch(addToCart(item))} className="font-extrabold text-2xl">
+                &gt;
+              </button>
             </td>
             <td>
               <button className="text-2xl" onClick={() => dispatch(deleteFromCart(item))}>
