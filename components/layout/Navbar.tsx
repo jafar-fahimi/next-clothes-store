@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import nextLogo from "public/next.svg";
 import { menu, close, bagIcon2 } from "public/assets/";
-import { brownHat, men, women, jacket, sneakers } from "public/images";
 import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
 
@@ -56,7 +55,7 @@ export default function Navbar() {
           </div>
           {cartOverview && (
             <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
-              <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-8 overflow-y-auto">
                 {itemStateArray.map((item) => (
                   <OneItem
                     id={item.id}
@@ -114,7 +113,7 @@ export default function Navbar() {
               </div>
               {cartOverview && (
                 <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
-                  <div className="space-y-4 mb-8">
+                  <div className="space-y-4 mb-8 overflow-y-auto">
                     {itemStateArray.map((item) => (
                       <OneItem
                         id={item.id}
