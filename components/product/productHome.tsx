@@ -7,6 +7,7 @@ type Props = {
 export default function ProductHome({ pitem }: Props) {
   // console.log("pitem is:", pitem, pitem === "hats");
   const pitem2 = pitem || "hats"; // just to avoid pitem-is-undefined error; exist in initial-load
+  // took near 10 hours!
 
   return (
     <section>

@@ -63,10 +63,14 @@ const itemSlice = createSlice({
       // console.log(state);
     },
 
-    minusFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
-      console.log("after minus payload is: ", payload);
+    minusFromCart: (state: { cartItems: StateProps[] }, { payload }: any) => {
+      // console.log("before minus payload is: ", payload.name);
       const prevItem = state.cartItems.find((item: { name: string }) => item.name == payload.name);
       if (prevItem) {
+        if (prevItem.qty == 0) {
+          deleteFromCart(payload);
+          // console.log("after minus payload is - in delete: ", payload);
+        }
         if (!prevItem.qty) {
           prevItem.qty = 0;
         } else {
@@ -76,7 +80,7 @@ const itemSlice = createSlice({
         return;
       }
     },
-    deleteFromCart: (state: { cartItems: StateProps[] }, payload: any) => {
+    deleteFromCart: (state: { cartItems: StateProps[] }, { payload }: any) => {
       const prevItem = state.cartItems.find((item) => item.name == payload.name);
       if (prevItem) {
         state.cartItems.filter((item) => item.name !== payload.name);
