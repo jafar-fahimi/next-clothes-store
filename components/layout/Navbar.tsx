@@ -41,7 +41,7 @@ export default function Navbar() {
           <a href="#">Contact</a>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-          <a href="#">Sign In</a>
+          <a href="signin">Sign In</a>
         </li>
         <li className="relative mx-4 font-normal focus:font-semibold">
           <div
