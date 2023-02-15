@@ -7,7 +7,7 @@ type Props = {
   name: string;
   imageUrl: string;
   price: number;
-  qty?: number;
+  qty: number;
 };
 type selectorType = { cartItems: Props[]; totalPrice: number };
 type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
@@ -36,13 +36,13 @@ export default function Checkout() {
               <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
             </td>
             <td className="text-2xl w-32">{item.name}</td>
-            <td>{item.price}</td>
+            <td>{item.price}$</td>
             <td className="flex items-end">
-              <button onClick={() => dispatch(minusFromCart(item))} className="font-extrabold text-2xl">
+              <button onClick={() => dispatch(minusFromCart(item))} className="font-extrabold text-2xl focus:ring-4">
                 &lt;
               </button>
               &nbsp;{item.qty}&nbsp;
-              <button onClick={() => dispatch(addToCart(item))} className="font-extrabold text-2xl">
+              <button onClick={() => dispatch(addToCart(item))} className="font-extrabold text-2xl focus:ring-4">
                 &gt;
               </button>
             </td>
