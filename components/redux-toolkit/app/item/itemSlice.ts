@@ -30,12 +30,6 @@ type Props = {
   qty: number;
 };
 
-type PayLoadProps = {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-};
 type StateAction = {
   cartItems: Props[];
   totalPrice: number;
@@ -49,7 +43,7 @@ const itemSlice = createSlice({
     totalItems: allItems.length,
   },
   reducers: {
-    addToCart(state, action) {
+    addToCart(state: StateAction, action: { payload: Props }) {
       if (state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1) {
         const index = state.cartItems.findIndex((item) => item.id === action.payload.id);
         state.cartItems[index].qty++;
@@ -63,7 +57,7 @@ const itemSlice = createSlice({
       // console.log(state);
     },
 
-    deleteFromCart: (state: StateAction, action: any) => {
+    deleteFromCart: (state: StateAction, action: { payload: Props }) => {
       const prevItem = state.cartItems.find((item) => item.name == action.payload.name);
       if (prevItem) {
         // decreasing totalPrice:
@@ -77,7 +71,7 @@ const itemSlice = createSlice({
         return;
       }
     },
-    minusFromCart: (state: StateAction, action: any) => {
+    minusFromCart: (state: StateAction, action: { payload: Props }) => {
       const prevItem = state.cartItems.find((item: { name: string }) => item.name == action.payload.name);
       if (prevItem) {
         if (prevItem.qty == 0) {
