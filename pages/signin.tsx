@@ -7,13 +7,17 @@ export default function Signin() {
         <h2 className="text-xl font-semibold">I already have an account</h2>
         <p className="text-sm mb-8 mt-1">Sign in with your email and password</p>
         <form action="#" method="post">
-          <input type="email" placeholder="Email" className="placeholder-slate-600 py-[2px] block w-full" />
+          <input
+            type="email"
+            placeholder="Email"
+            className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
+          />
           <hr className="w-full mb-10" />
           {/* <hr className="w-full mb-6" /> */}
           <input
             type="password"
             placeholder="Password"
-            className="placeholder-slate-600  py-[2px] block w-full"
+            className="placeholder-slate-600  py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-6" />
           <div className="flex justify-between gap-x-4 mt-4">
@@ -34,21 +38,21 @@ export default function Signin() {
           <input
             type="text"
             placeholder="Display Name"
-            className="placeholder-slate-600 block py-[2px] w-full"
+            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-4 md:mb-10" />
-          <input type="email" placeholder="Email" className="placeholder-slate-600 block py-[2px] w-full" />
+          <input type="email" placeholder="Email" className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none" />
           <hr className="w-full mb-4 md:mb-10" />
           <input
             type="password"
             placeholder="Password"
-            className="placeholder-slate-600 block py-[2px] w-full"
+            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-4 md:mb-10" />
           <input
             type="password"
             placeholder="Confirm Password"
-            className="placeholder-slate-600 block py-[2px] w-full"
+            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-4 md:mb-10" />
           <button className="uppercase px-16 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
