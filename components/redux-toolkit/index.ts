@@ -11,6 +11,7 @@ store.dispatch(
     name: "Brown Brim",
     imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png",
     price: 25,
+    qty: 3,
   })
 );
 // store.dispatch(restocked(3));
