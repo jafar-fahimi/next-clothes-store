@@ -14,7 +14,6 @@ export default function Signin() {
             className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-10" />
-          {/* <hr className="w-full mb-6" /> */}
           <input
             type="password"
             placeholder="Password"
