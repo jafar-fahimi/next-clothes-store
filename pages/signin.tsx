@@ -1,34 +1,37 @@
 import React from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { initFirebase } from "firebaseApp";
-
-initFirebase();
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
-
-const signIn = signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Signin() {
-  return (
+  initFirebase();
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  const [user, loading] = useAuthState(auth);
+  
+
+  const signIn = signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+    return (
     <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
       <div className="w-full px-8">
         <h2 className="text-xl font-semibold">I already have an account</h2>
