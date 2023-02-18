@@ -3,16 +3,22 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { initFirebase } from "firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 // function Signin(): NextPage { // wrong; Type 'Element' is not assignable to type 'NextPage<{}, {}>'.
-const Signin: NextPage = () => {
+const Signin: NextPage = function () {
+  // or: = () => {}
   initFirebase();
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const [user, loading] = useAuthState(auth);
 
-  if (!loading) return <h2>Loading...</h2>;
-  if (user) return <h2>Welcome {user.displayName}</h2>;
+  const router = useRouter();
+  if (loading) return <h2>Loading...</h2>;
+  if (user) {
+    router.push("/");
+    // return <h2>Welcome {user.displayName}</h2>;
+  }
 
   // const signIn = signInWithPopup(auth, provider)
   //   .then((result) => {
@@ -48,14 +54,12 @@ const Signin: NextPage = () => {
           <input
             type="email"
             placeholder="Email"
-            required
             className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-10" />
           <input
             type="password"
             placeholder="Password"
-            required
             className="placeholder-slate-600  py-[2px] block w-full lg:text-xl outline-none"
           />
           <hr className="w-full mb-6" />
