@@ -2,36 +2,44 @@ import React from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { initFirebase } from "firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { NextPage } from "next";
 
-export default function Signin() {
+// function Signin(): NextPage { // wrong; Type 'Element' is not assignable to type 'NextPage<{}, {}>'.
+const Signin: NextPage = () => {
   initFirebase();
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const [user, loading] = useAuthState(auth);
-  
 
-  const signIn = signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
+  if (!loading) return <h2>Loading...</h2>;
+  if (user) return <h2>Welcome {user.displayName}</h2>;
 
-    return (
+  // const signIn = signInWithPopup(auth, provider)
+  //   .then((result) => {
+  //     // This gives you a Google Access Token. You can use it to access the Google API.
+  //     const credential = GoogleAuthProvider.credentialFromResult(result);
+  //     const token = credential?.accessToken;
+  //     // The signed-in user info.
+  //     const user = result.user;
+  //     // IdP data available using getAdditionalUserInfo(result)
+  //     // ...
+  //   })
+  //   .catch((error) => {
+  //     // Handle Errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     // The email of the user's account used.
+  //     const email = error.customData.email;
+  //     // The AuthCredential type that was used.
+  //     const credential = GoogleAuthProvider.credentialFromError(error);
+  //     // ...
+  //   });
+  const signIn = async () => {
+    const result = await signInWithPopup(auth, provider);
+    console.log(result);
+  };
+
+  return (
     <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
       <div className="w-full px-8">
         <h2 className="text-xl font-semibold">I already have an account</h2>
@@ -104,4 +112,5 @@ export default function Signin() {
       </div>
     </section>
   );
-}
+};
+export default Signin;
