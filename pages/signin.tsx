@@ -104,30 +104,33 @@ const Signin: NextPage = function () {
           <input
             type="email"
             placeholder="Email"
-            className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
+            onKeyDown={() => setError(null)}
+            className={` placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none ${
+              errors.email && "border-orange-500"
+            }`}
             {...register("email", { required: true })}
           />
-          {errors.email && (
-            <p className="p-1 text-[13px] font-light  text-orange-500">Please enter a valid email.</p>
-          )}
-          <hr className="w-full mb-10" />
+          <p className="py-2 mb-4 text-[13px] font-light text-orange-500">
+            {errors.email && <span className="absolute">Please enter a valid email.</span>}
+          </p>
           <input
             type="password"
             placeholder="Password"
             onKeyDown={() => setError(null)}
-            className="placeholder-slate-600  py-[2px] block w-full lg:text-xl outline-none"
+            className={`placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
+              errors.password && "border-orange-500"
+            }`}
             {...register("password", {
               required: true,
               minLength: 4,
               maxLength: 60,
             })}
           />
-          {errors.password && (
-            <p className="p-1 text-[13px] font-light  text-orange-500">
-              Your password must contain between 4 and 60 characters.
-            </p>
-          )}
-          <hr className="w-full mb-6" />
+          <p className="py-2 mb-8 text-[13px] font-light text-orange-500">
+            {errors.password && (
+              <span className="absolute"> Your password must contain between 4 and 60 characters.</span>
+            )}
+          </p>
           <div className="flex justify-between gap-x-4 mt-4">
             <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
               Sign in
