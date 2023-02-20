@@ -14,7 +14,7 @@ const Signin: NextPage = function () {
   if (loading) return <h2>Loading...</h2>;
   if (user) router.push("/");
 
-  const signIn = async () => {
+  const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -60,7 +60,7 @@ const Signin: NextPage = function () {
               Sign in
             </button>
             <span
-              onClick={signIn}
+              onClick={signInWithGoogle}
               className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent hover:border-blue-600 transition-all duration-300"
             >
               {/* can't be button! took me 2 days! */}
