@@ -11,18 +11,32 @@ import { auth, googleProvider } from "firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 // function Signin(): NextPage { // wrong; Type 'Element' is not assignable to type 'NextPage<{}, {}>'.
 const Signin: NextPage = function () {
   // or: = () => {}
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
-  const [LocalLoading, setLocalLoading] = useState(false);
-  const [userLocal, setUserLocal] = useState<User | null>(null);
+  const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<null | AuthError>(null);
 
-  if (loading) return <h2>Loading...</h2>;
-  if (user) router.push("/");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  if (loading || localLoading) return <h2>Loading...</h2>;
+  if (user) {
+    alert("You are signed in!");
+    router.push("/");
+  }
 
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider)
@@ -51,7 +65,6 @@ const Signin: NextPage = function () {
     setLocalLoading(true);
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUserLocal(userCredential.user);
         router.push("/");
       })
       .catch((err) => {
@@ -66,7 +79,6 @@ const Signin: NextPage = function () {
     // await func; so that its done completely, before other codes. not for then.
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUserLocal(userCredential.user);
         router.push("/");
       })
       .catch((err) => {
@@ -76,23 +88,45 @@ const Signin: NextPage = function () {
       .finally(() => setLocalLoading(false));
   };
 
+  const onSubmitSignIn: SubmitHandler<Inputs> = async ({ email, password }) => {
+    await signIn(email, password);
+  };
+  const onSubmitSignUp: SubmitHandler<Inputs> = async ({ email, password }) => {
+    await signUp(email, password);
+  };
+
   return (
     <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
       <div className="w-full px-8">
         <h2 className="text-xl font-semibold">I already have an account</h2>
         <p className="text-sm mb-8 mt-1">Sign in with your email and password</p>
-        <form action="#" method="post">
+        <form onSubmit={handleSubmit(onSubmitSignIn)} action="#" method="post">
           <input
             type="email"
             placeholder="Email"
             className="placeholder-slate-600 py-[2px] block w-full lg:text-xl outline-none"
+            {...register("email", { required: true })}
           />
+          {errors.email && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">Please enter a valid email.</p>
+          )}
           <hr className="w-full mb-10" />
           <input
             type="password"
             placeholder="Password"
+            onKeyDown={() => setError(null)}
             className="placeholder-slate-600  py-[2px] block w-full lg:text-xl outline-none"
+            {...register("password", {
+              required: true,
+              minLength: 4,
+              maxLength: 60,
+            })}
           />
+          {errors.password && (
+            <p className="p-1 text-[13px] font-light  text-orange-500">
+              Your password must contain between 4 and 60 characters.
+            </p>
+          )}
           <hr className="w-full mb-6" />
           <div className="flex justify-between gap-x-4 mt-4">
             <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
@@ -112,7 +146,7 @@ const Signin: NextPage = function () {
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
 
-        <form action="#" method="post">
+        <form onSubmit={handleSubmit(onSubmitSignUp)} action="#" method="post">
           <input
             type="text"
             placeholder="Display Name"
