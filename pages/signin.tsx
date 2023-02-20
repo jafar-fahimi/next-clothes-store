@@ -12,6 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import SignUp from "components/user/signup";
 
 type Inputs = {
   email: string;
@@ -61,19 +62,6 @@ const Signin: NextPage = function () {
       });
   };
 
-  const signUp = async (email: string, password: string) => {
-    setLocalLoading(true);
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        router.push("/");
-      })
-      .catch((err) => {
-        alert(err.message);
-        setError(err.message);
-      })
-      .finally(() => setLocalLoading(false));
-  };
-
   const signIn = async (email: string, password: string) => {
     setLocalLoading(true);
     // await func; so that its done completely, before other codes. not for then.
@@ -90,9 +78,6 @@ const Signin: NextPage = function () {
 
   const onSubmitSignIn: SubmitHandler<Inputs> = async ({ email, password }) => {
     await signIn(email, password);
-  };
-  const onSubmitSignUp: SubmitHandler<Inputs> = async ({ email, password }) => {
-    await signUp(email, password);
   };
 
   return (
@@ -148,40 +133,7 @@ const Signin: NextPage = function () {
       <div className=" w-full px-8">
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
-
-        <form onSubmit={handleSubmit(onSubmitSignUp)} action="#" method="post">
-          <input
-            type="text"
-            placeholder="Display Name"
-            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
-            required
-          />
-          <hr className="w-full mb-4 md:mb-10" />
-          <input
-            type="email"
-            placeholder="Email"
-            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
-            required
-          />
-          <hr className="w-full mb-4 md:mb-10" />
-          <input
-            type="password"
-            placeholder="Password"
-            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
-            required
-          />
-          <hr className="w-full mb-4 md:mb-10" />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="placeholder-slate-600 block py-[2px] w-full lg:text-xl outline-none"
-            required
-          />
-          <hr className="w-full mb-4 md:mb-10" />
-          <button className="uppercase px-16 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
-            Sign up
-          </button>
-        </form>
+        <SignUp />
       </div>
     </section>
   );
