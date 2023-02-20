@@ -11,7 +11,6 @@ type Inputs = {
 
 export default function SignUp() {
   const [localLoading, setLocalLoading] = useState(false);
-  const [error, setError] = useState<null | AuthError>(null);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
   //   const confirmPasswordRef = useRef<MutableRefObject<LegacyRef<HTMLInputElement> | undefined>>();
   //   const confirmPasswordRef = useRef<LegacyRef<HTMLInputElement> | undefined>();
@@ -33,7 +32,6 @@ export default function SignUp() {
       })
       .catch((err) => {
         alert(err.message);
-        setError(err.message);
       })
       .finally(() => setLocalLoading(false));
   };
@@ -43,7 +41,7 @@ export default function SignUp() {
     else setMatchPasswordErr(true);
   };
   if (localLoading) return <h3 className="text-3xl">Loading...</h3>;
-  //   if (error) return <h3 className="text-3xl">Error!</h3>;
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmitSignUp)} action="#" method="post">
@@ -57,7 +55,6 @@ export default function SignUp() {
         <input
           type="email"
           placeholder="Email"
-          onKeyDown={() => setError(null)}
           className={` placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none ${
             errors.email && "border-orange-500"
           }`}
@@ -70,7 +67,6 @@ export default function SignUp() {
         <input
           type="password"
           placeholder="Password"
-          onKeyDown={() => setError(null)}
           className={`placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
             errors.password && "border-orange-500"
           }`}
