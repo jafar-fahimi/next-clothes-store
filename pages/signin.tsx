@@ -1,5 +1,12 @@
-import React from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import React, { useState } from "react";
+import {
+  AuthError,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  User,
+} from "firebase/auth";
 import { auth, googleProvider } from "firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
@@ -10,6 +17,9 @@ const Signin: NextPage = function () {
   // or: = () => {}
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
+  const [LocalLoading, setLocalLoading] = useState(false);
+  const [userLocal, setUserLocal] = useState<User | null>(null);
+  const [error, setError] = useState<null | AuthError>(null);
 
   if (loading) return <h2>Loading...</h2>;
   if (user) router.push("/");
@@ -35,6 +45,35 @@ const Signin: NextPage = function () {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
+  };
+
+  const signUp = async (email: string, password: string) => {
+    setLocalLoading(true);
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setUserLocal(userCredential.user);
+        router.push("/");
+      })
+      .catch((err) => {
+        alert(err.message);
+        setError(err.message);
+      })
+      .finally(() => setLocalLoading(false));
+  };
+
+  const signIn = async (email: string, password: string) => {
+    setLocalLoading(true);
+    // await func; so that its done completely, before other codes. not for then.
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setUserLocal(userCredential.user);
+        router.push("/");
+      })
+      .catch((err) => {
+        alert(err.message);
+        setError(err.message);
+      })
+      .finally(() => setLocalLoading(false));
   };
 
   return (
