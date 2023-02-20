@@ -113,7 +113,18 @@ export default function Navbar() {
               <a href="#">Contact</a>
             </li>
             <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
-              <a href="#">Sign In</a>
+              {!user ? (
+                <a href="signin">Sign In</a>
+              ) : (
+                <button
+                  onClick={() => {
+                    auth.signOut();
+                    console.log("signed out from navbar;", user.displayName);
+                  }}
+                >
+                  Sign out
+                </button>
+              )}
             </li>
             <li className="relative box-border px-4 font-normal focus:font-semibold">
               <div
