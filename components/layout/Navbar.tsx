@@ -5,6 +5,8 @@ import nextLogo from "public/next.svg";
 import { menu, close, bagIcon2 } from "public/assets/";
 import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
+import { auth } from "firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 type Props = {
   id: number;
@@ -25,6 +27,7 @@ export default function Navbar() {
 
   const [toggle, setToggle] = useState(false);
   const [cartOverview, setCartOverview] = useState(false);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     setCartOverview(false);
@@ -41,7 +44,18 @@ export default function Navbar() {
           <a href="#">Contact</a>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-          <a href="signin">Sign In</a>
+          {!user ? (
+            <a href="signin">Sign In</a>
+          ) : (
+            <button
+              onClick={() => {
+                auth.signOut();
+                console.log("signed out from navbar;", user.displayName);
+              }}
+            >
+              Sign out
+            </button>
+          )}
         </li>
         <li className="relative mx-4 font-normal focus:font-semibold">
           <div
