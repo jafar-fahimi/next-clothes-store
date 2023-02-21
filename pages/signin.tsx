@@ -90,7 +90,7 @@ const Signin: NextPage = function () {
             type="email"
             placeholder="Email"
             onKeyDown={() => setError(null)}
-            className={` placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none ${
+            className={` placeholder-slate-600 py-[2px] border-0 border-b-2 block w-full  lg:text-xl outline-none ${
               errors.email && "border-orange-500"
             }`}
             {...register("email", { required: true })}
@@ -102,7 +102,7 @@ const Signin: NextPage = function () {
             type="password"
             placeholder="Password"
             onKeyDown={() => setError(null)}
-            className={`placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
+            className={`placeholder-slate-600 border-0 border-b-2 py-[2x] block w-full  lg:text-xl outline-none ${
               errors.password && "border-orange-500"
             }`}
             {...register("password", {

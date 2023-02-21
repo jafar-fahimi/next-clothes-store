@@ -48,14 +48,14 @@ export default function SignUp() {
         <input
           type="text"
           placeholder="Display Name"
-          className={` placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none `}
+          className={`border-0 placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none `}
           required
         />
         <p className="py-2 mb-4 text-[13px] font-light text-orange-500"></p>
         <input
           type="email"
           placeholder="Email"
-          className={` placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none ${
+          className={`border-0 placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none ${
             errors.email && "border-orange-500"
           }`}
           {...register("email", { required: true })}
@@ -67,7 +67,7 @@ export default function SignUp() {
         <input
           type="password"
           placeholder="Password"
-          className={`placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
+          className={`border-0 placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
             errors.password && "border-orange-500"
           }`}
           {...register("password", {
@@ -87,7 +87,7 @@ export default function SignUp() {
           required
           ref={confirmPasswordRef}
           onKeyDown={() => setMatchPasswordErr(false)}
-          className={`placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
+          className={`border-0 placeholder-slate-600 border-b-2 py-[2px] block w-full lg:text-xl outline-none ${
             errors.password && "border-orange-500"
           }`}
         />
