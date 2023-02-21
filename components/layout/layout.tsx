@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section className="min-h-screen px-8 pb-8">
+    <section className="min-h-screen px-3 sm:px-8 pb-8">
       <Navbar />
       {children}
     </section>
