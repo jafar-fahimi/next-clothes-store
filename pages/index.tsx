@@ -10,9 +10,9 @@ function HomePage() {
         <meta name="description" content="Nextjs Ecommerce website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="absolute -translate-x-6 sm:relative px-4">
+      <section>
         <AllCatagories />
-      </main>
+      </section>
     </React.Fragment>
   );
 }
