@@ -41,7 +41,7 @@ export default function Navbar() {
           <Link href="/">Shop</Link>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
-          <a href="#">Contact</a>
+          <Link href="contact">Contact</Link>
         </li>
         <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
           {!user ? (
@@ -109,7 +109,7 @@ export default function Navbar() {
               <Link href="/">Shop</Link>
             </li>
             <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
-              <a href="#">Contact</a>
+              <Link href="contact">Contact</Link>
             </li>
             <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
               {!user ? (
@@ -151,7 +151,7 @@ export default function Navbar() {
                   </div>
                   <Link
                     href="/checkout"
-                    className="block uppercase px-8 w-full border-2border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 text-center"
+                    className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 text-center"
                   >
                     go to checkout
                   </Link>
