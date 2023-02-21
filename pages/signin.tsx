@@ -82,7 +82,7 @@ const Signin: NextPage = function () {
 
   return (
     <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
-      <div className="w-full px-8">
+      <div className="w-full sm:px-8">
         <h2 className="text-xl font-semibold">I already have an account</h2>
         <p className="text-sm mb-8 mt-1">Sign in with your email and password</p>
         <form onSubmit={handleSubmit(onSubmitSignIn)} action="#" method="post">
@@ -117,12 +117,12 @@ const Signin: NextPage = function () {
             )}
           </p>
           <div className="flex justify-between gap-x-4 mt-4">
-            <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all duration-300">
+            <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all  text-sm sm:text-base duration-300">
               Sign in
             </button>
             <span
               onClick={signInWithGoogle}
-              className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent hover:border-blue-600 transition-all duration-300"
+              className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
             >
               {/* can't be button! took me 2 days! */}
               Sign in with google
@@ -130,7 +130,7 @@ const Signin: NextPage = function () {
           </div>
         </form>
       </div>
-      <div className=" w-full px-8">
+      <div className=" w-full sm:px-8">
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
         <SignUp />
