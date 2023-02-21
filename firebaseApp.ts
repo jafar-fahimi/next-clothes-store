@@ -6,12 +6,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyABjP78C8Jde6DUnSSbPKihBs3Yy9iia8E",
-  authDomain: "ecommerce-clothes-c558f.firebaseapp.com",
-  projectId: "ecommerce-clothes-c558f",
-  storageBucket: "ecommerce-clothes-c558f.appspot.com",
-  messagingSenderId: "302086656277",
-  appId: "1:302086656277:web:e56ab938151111d60f591c",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
