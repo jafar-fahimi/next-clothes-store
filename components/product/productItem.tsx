@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
 
@@ -11,13 +11,20 @@ type Props = {
     imageUrl: string;
   };
 };
-
-export default function ProductItem(props: Props) {
+type RealProps = {
+  id: number;
+  name: string;
+  price: number | string;
+  imageUrl: string | StaticImageData;
+};
+export default function ProductItem(props: RealProps) {
+  // console.log("props in productItem: ", props);
   const dispatch = useDispatch();
   const itemStateArray: Props[] = useSelector(
     (state: { item: { cartItems: Props[] } }) => state.item.cartItems
   );
-  const shop_data_item = { ...props.shop_data_item, qty: 1 };
+  const shop_data_item = { ...props, qty: 1 };
+  // console.log("shop-data-item in productItme is ; ", shop_data_item);
 
   return (
     <div className="relative" key={shop_data_item.id}>
