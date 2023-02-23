@@ -1,13 +1,18 @@
+import { StaticImageData } from "next/image";
 import SHOP_DATA from "utils/shop.data";
+import { PriceProps } from "utils/types";
 import ProductItem from "./productItem";
+
 
 type Props = {
   pitem: "jackets" | "hats" | "sneakers" | "men" | "women";
+  data: PriceProps[];
 };
-export default function ProductHome({ pitem }: Props) {
+export default function ProductHome({ pitem, data }: Props) {
   // console.log("pitem is:", pitem, pitem === "hats");
   const pitem2 = pitem || "hats"; // just to avoid pitem-is-undefined error; exist in initial-load
   // took near 10 hours!
+  console.log("data in productHome is: ", data);
 
   return (
     <section>
