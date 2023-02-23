@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: false,
   },
   images: {
-    domains: ["i.ibb.co"],
+    domains: ["i.ibb.co", "files.stripe.com"],
   },
 };
 
