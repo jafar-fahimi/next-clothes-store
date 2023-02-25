@@ -2,7 +2,7 @@ import ProductHome from "components/product/productHome";
 import { GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import Stripe from "stripe";
-import { PriceProps, ProductProps } from "utils/types";
+import { PriceProps, ProductProps, titleTypes } from "utils/types";
 
 let myPaths: any = [];
 type Props = {
@@ -20,6 +20,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
     expand: ["data.product"],
   });
   const { prices: myPrices } = { prices };
+  console.log("prices are : ", prices);
 
   return {
     props: {
@@ -41,8 +42,8 @@ const HatsPage: NextPage<Props> = ({ prices }: Props) => {
   const router = useRouter();
   // console.log("myPrices in [item] is : ", myPrices); // arr of obj each has product!
 
-  type dataProp = { item: "hats" | "jackets" | "sneakers" | "men" | "women" };
-  const item: any = router.query.item as unknown as dataProp;
+  type dataProps = { item: titleTypes };
+  const item: any = router.query.item as unknown as dataProps;
 
   for (let p = 0; p < 30; p++) {
     myPaths.push({ params: { item: (p + 1).toString } });

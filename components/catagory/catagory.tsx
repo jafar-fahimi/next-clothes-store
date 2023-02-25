@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-type Props = { srcProp: string | StaticImageData; cat: string };
+import { titleTypes } from "utils/types";
+type Props = { srcProp: string | StaticImageData; cat: titleTypes };
 
 export default function Catagory({ srcProp, cat }: Props) {
   return (

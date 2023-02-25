@@ -43,3 +43,5 @@ export type ProductProps = {
   updated: number;
   url: null | string;
 };
+
+export type titleTypes = "hats" | "jackets" | "sneakers" | "bags" | "watches";

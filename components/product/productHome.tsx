@@ -1,9 +1,9 @@
 // import SHOP_DATA from "utils/shop.data";
-import { PriceProps } from "utils/types";
+import { PriceProps, titleTypes } from "utils/types";
 import ProductItem from "./productItem";
 
 type Props = {
-  pitem: "jackets" | "hats" | "sneakers" | "bags" | "watches";
+  pitem: titleTypes;
   data: PriceProps[];
 };
 export default function ProductHome({ pitem, data = [] }: Props) {
