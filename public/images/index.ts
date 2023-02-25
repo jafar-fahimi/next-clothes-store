@@ -16,15 +16,15 @@ import transparent4 from "./transparent-item(4).png";
 import transparent5 from "./transparent-item(5).png";
 import brownHat from "./Home-Images/brown-brim.png";
 import jacket from "./Home-Images/jackets.png";
-import men from "./Home-Images/men.png";
-import women from "./Home-Images/women.png";
 import sneakers from "./Home-Images/sneakers.png";
+import rolexwatches from "./Home-Images/rolex-watches.jpg";
+import bagCollection from "./Home-Images/bags.jpeg";
 
 export {
   brownHat,
   jacket,
-  men,
-  women,
+  rolexwatches,
+  bagCollection,
   sneakers,
   bag1,
   bag2,
