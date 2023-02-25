@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StaticImageData } from "next/image";
 import { ItemPropsType } from "utils/types";
 
 const allItems: ItemPropsType[] = [
@@ -16,7 +15,7 @@ const itemSlice = createSlice({
   initialState: {
     cartItems: allItems,
     totalPrice: allItems.reduce((acc, cur) => acc + cur.price * cur.qty, 0),
-    totalItems: allItems.length,
+    totalItems: allItems.reduce((acc, cur) => acc + cur.qty, 0),
   },
   reducers: {
     addToCart(state: StateAction, action: { payload: ItemPropsType }) {
@@ -25,11 +24,9 @@ const itemSlice = createSlice({
         state.cartItems[index].qty++;
       } else {
         action.payload["qty"] = 1;
-        // console.log(action.payload["qty"], 'action.payload["qty"]');
-        console.log(action.payload, " action.payload.id");
         state.cartItems.push(action.payload);
       }
-      state.totalPrice = Number(state.totalPrice + +action.payload.price);
+      state.totalPrice = Number(state.totalPrice + action.payload.price);
       state.totalItems = state.totalItems + 1;
       // localStorage.setItem("state", JSON.stringify(state));
       // console.log(state);
@@ -40,7 +37,7 @@ const itemSlice = createSlice({
       if (prevItem) {
         // decreasing totalPrice:
         const toDeleteItem = state.cartItems.find((item) => item.name === action.payload.name);
-        state.totalPrice -= Number(toDeleteItem?.price as number) * (toDeleteItem?.qty as number);
+        state.totalPrice -= (toDeleteItem?.price as number) * (toDeleteItem?.qty as number);
         // as; to declare that it's never undefined
 
         const nextStateItems = state.cartItems.filter((item) => item.name !== action.payload.name);
@@ -61,6 +58,7 @@ const itemSlice = createSlice({
         } else {
           prevItem.qty--;
           state.totalPrice -= +prevItem.price;
+          state.totalItems -= 1;
         }
       } else {
         return;
