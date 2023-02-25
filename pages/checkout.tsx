@@ -1,16 +1,10 @@
-import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
+import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/itemSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { ItemPropsType } from "utils/types";
 
-type Props = {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  qty: number;
-};
-type selectorType = { cartItems: Props[]; totalPrice: number };
-type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
+type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
+type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
 export default function Checkout() {
   const dispatch = useDispatch();
   const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
@@ -38,11 +32,17 @@ export default function Checkout() {
             <td className="text-2xl w-32">{item.name}</td>
             <td>{item.price}$</td>
             <td className="flex items-end">
-              <button onClick={() => dispatch(minusFromCart(item))} className="font-extrabold text-2xl focus:ring-4">
+              <button
+                onClick={() => dispatch(minusFromCart(item))}
+                className="font-extrabold text-2xl focus:ring-4"
+              >
                 &lt;
               </button>
               &nbsp;{item.qty}&nbsp;
-              <button onClick={() => dispatch(addToCart(item))} className="font-extrabold text-2xl focus:ring-4">
+              <button
+                onClick={() => dispatch(addToCart(item))}
+                className="font-extrabold text-2xl focus:ring-4"
+              >
                 &gt;
               </button>
             </td>
