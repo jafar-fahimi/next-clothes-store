@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/item/itemSlice";
+import { addToCart } from "components/redux-toolkit/app/itemSlice";
 
 type Props = {
   shop_data_item: {
@@ -12,9 +12,9 @@ type Props = {
   };
 };
 type RealProps = {
-  id: number;
+  id: string;
   name: string;
-  price: number | string;
+  price: number;
   imageUrl: string | StaticImageData;
 };
 export default function ProductItem(props: RealProps) {
