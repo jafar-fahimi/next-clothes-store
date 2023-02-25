@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
-import itemReducer from "./item/itemSlice";
+import itemReducer from "./itemSlice";
 
 const logger = createLogger();
 
