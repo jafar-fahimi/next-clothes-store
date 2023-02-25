@@ -1,5 +1,5 @@
 import store from "./app/store";
-import { addToCart, minusFromCart, deleteFromCart } from "./app/item/itemSlice";
+import { addToCart, minusFromCart, deleteFromCart } from "./app/itemSlice";
 
 console.log("initial store ", store.getState());
 const unsubscribe = store.subscribe(() => {
@@ -7,7 +7,7 @@ const unsubscribe = store.subscribe(() => {
 });
 store.dispatch(
   addToCart({
-    id: 1,
+    id: "1",
     name: "Brown Brim",
     imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png",
     price: 25,

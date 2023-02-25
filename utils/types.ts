@@ -45,3 +45,11 @@ export type ProductProps = {
 };
 
 export type titleTypes = "hats" | "jackets" | "sneakers" | "bags" | "watches";
+
+export type ItemPropsType = {
+  id: string;
+  name: string;
+  imageUrl: string | StaticImageData;
+  price: number;
+  qty: number;
+};
