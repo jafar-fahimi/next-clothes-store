@@ -1,11 +1,12 @@
 import { loadStripe } from "@stripe/stripe-js";
+import Stripe from "stripe";
 
-let stripePromise: Promise | null = null;
+let stripePromise: any = null;
 // stripe instance
 
-const getStripe = () => {
+const getStripe = async () => {
   if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+    stripePromise = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
   }
   return stripePromise;
 };
