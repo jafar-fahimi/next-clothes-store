@@ -1,3 +1,36 @@
+import { backdropClasses } from "@mui/material";
+import {
+  acessoryTraditional,
+  aPairOfTrainers,
+  backgroundHatsLadiesClothing,
+  backgroundHatVintageFemale,
+  birthdayWatch,
+  blackToteBag,
+  canvasHatBlank,
+  capciusFemalePurse,
+  collectionWatch,
+  cottonToteBags,
+  eleganceYellowBag,
+  fashionShoe,
+  fasionBeautySunwear,
+  fasionShoeAndSneakers,
+  femaleHandBag,
+  femaleSneakersRun,
+  femaleWatch,
+  frontViewOfHoodie,
+  greatCapFasion,
+  leatherHandBag,
+  newPairWhiteSne,
+  orangeJacket,
+  pairWork,
+  pocketWatch,
+  stillLifeRenderFront,
+  stillLifeRenderJacketFront2,
+  stillLifeRenderRedJacket,
+  unbrandedModern,
+  watchShow,
+} from "public/images";
+
 export const products = [
   {
     id: "price_1MecxUJna0QE1h10NuNpc3AS",
@@ -5,7 +38,7 @@ export const products = [
     description: "watch freepik",
     price: 165.1,
     currency: "USD",
-    image: "products/watch/watch-show.png",
+    image: watchShow,
   },
   {
     id: "price_1Mecx7Jna0QE1h10CyMmboEx",
@@ -13,7 +46,7 @@ export const products = [
     description: "watch freepik",
     price: 135,
     currency: "USD",
-    image: "products/watch/pocket-watch.png",
+    image: pocketWatch,
   },
   {
     id: "price_1MecwiJna0QE1h101HwDgqcy",
@@ -21,7 +54,7 @@ export const products = [
     description: "watch freepik",
     price: 230,
     currency: "USD",
-    image: "products/watch/female-watch.png",
+    image: femaleWatch,
   },
   {
     id: "price_1MecvhJna0QE1h10GieIAuM1",
@@ -29,7 +62,7 @@ export const products = [
     description: "watch freepik",
     price: 160,
     currency: "USD",
-    image: "products/watch/collection-of-watches.png",
+    image: collectionWatch,
   },
   {
     id: "price_1MectSJna0QE1h10taawCQmv",
@@ -37,7 +70,7 @@ export const products = [
     description: "watch freepik",
     price: 110,
     currency: "USD",
-    image: "products/watches/brithday-watch.png",
+    image: birthdayWatch,
   },
   {
     id: "price_1MecszJna0QE1h10w6RGqZWA",
@@ -45,7 +78,7 @@ export const products = [
     description: "sneakers freepik",
     price: 225,
     currency: "USD",
-    image: "products/sneakers/unbranded-modern-sporty-shoe.png",
+    image: unbrandedModern,
   },
   {
     id: "price_1MecsZJna0QE1h10YX9U8zRS",
@@ -53,7 +86,7 @@ export const products = [
     description: "sneakers freepik",
     price: 195,
     currency: "USD",
-    image: "products/sneakers/pair of workout sneakers on white background.png",
+    image: pairWork,
   },
   {
     id: "price_1Mecs8Jna0QE1h10URchpLaF",
@@ -61,7 +94,7 @@ export const products = [
     description: "sneakers freepik",
     price: 190,
     currency: "USD",
-    image: "products/sneakers/fasion-shoes-and-sneakers-(2).png",
+    image: fashionShoe,
   },
   {
     id: "price_1MecrQJna0QE1h10UcaJ1sWf",
@@ -69,7 +102,7 @@ export const products = [
     description: "sneakers freepik",
     price: 135,
     currency: "USD",
-    image: "products/sneakers/New-pair-of white-sneakers-2.png",
+    image: newPairWhiteSne,
   },
   {
     id: "price_1MecqkJna0QE1h10UvA5O1Hj",
@@ -77,7 +110,7 @@ export const products = [
     description: "sneakers freepik",
     price: 210,
     currency: "USD",
-    image: "products/sneakers/Female-Sneakers-for-run.png",
+    image: femaleSneakersRun,
   },
   {
     id: "price_1MecqLJna0QE1h10mZRIRcwE",
@@ -85,7 +118,7 @@ export const products = [
     description: "sneakers freepik",
     price: 154,
     currency: "USD",
-    image: "products/sneakers/fashion-shoes-and-sneakers.png",
+    image: fasionShoeAndSneakers,
   },
   {
     id: "price_1MecpXJna0QE1h10B48JsYbV",
@@ -93,7 +126,7 @@ export const products = [
     description: "sneakers freepik",
     price: 124,
     currency: "USD",
-    image: "products/sneakers/Fashion-Shoe.png",
+    image: fashionShoe,
   },
   {
     id: "price_1MecoaJna0QE1h10mPRraOAC",
@@ -101,7 +134,7 @@ export const products = [
     description: "sneakers freepik",
     price: 100,
     currency: "USD",
-    image: "products/sneakers/a-pair-of-trainers.png",
+    image: aPairOfTrainers,
   },
   {
     id: "price_1Meco7Jna0QE1h10xTXuMRZA",
@@ -109,7 +142,7 @@ export const products = [
     description: "jackets freepik",
     price: 220,
     currency: "USD",
-    image: "products/sneakers/Still Life Rendering of jacket Front display.png",
+    image: stillLifeRenderFront,
   },
   {
     id: "price_1MecnRJna0QE1h10rKh80sfw",
@@ -117,7 +150,7 @@ export const products = [
     description: "jackets from freepik",
     price: 250,
     currency: "USD",
-    image: "products/sneakers/Still Life Rendering of Red jacket display.png",
+    image: stillLifeRenderRedJacket,
   },
   {
     id: "price_1MecmVJna0QE1h10VUZMZMB3",
@@ -125,7 +158,7 @@ export const products = [
     description: "jackets from freepik",
     price: 180,
     currency: "USD",
-    image: "products/sneakers/Orange Jacket.png",
+    image: orangeJacket,
   },
   {
     id: "price_1Mecm0Jna0QE1h10MIsRHy90",
@@ -133,7 +166,7 @@ export const products = [
     description: "jackets from freepik",
     price: 220,
     currency: "USD",
-    image: "products/sneakers/Still Life Rendering of jacket Front display 2.png",
+    image: stillLifeRenderJacketFront2,
   },
   {
     id: "price_1Mecl6Jna0QE1h10hizd6fJS",
@@ -141,7 +174,7 @@ export const products = [
     description: "jackets from freepik",
     price: 200,
     currency: "USD",
-    image: "products/sneakers/Front View of Hoodie Jeans.png",
+    image: frontViewOfHoodie,
   },
   {
     id: "price_1MeckVJna0QE1h10KOotv53u",
@@ -149,7 +182,7 @@ export const products = [
     description: "hats from freepik",
     price: 140,
     currency: "USD",
-    image: "products/sneakers/Great Cap fasion white elegance.png",
+    image: greatCapFasion,
   },
   {
     id: "price_1MecjwJna0QE1h10xrSglNGJ",
@@ -157,7 +190,7 @@ export const products = [
     description: "hats from freepik",
     price: 180,
     currency: "USD",
-    image: "products/sneakers/Fasion Beauty Sunwear.png",
+    image: fasionBeautySunwear,
   },
   {
     id: "price_1MecjIJna0QE1h10dzyMaOml",
@@ -165,7 +198,7 @@ export const products = [
     description: "hats from freepik",
     price: 170,
     currency: "USD",
-    image: "products/sneakers/Canvas Hat Blank Fasion Sport.png",
+    image: canvasHatBlank,
   },
   {
     id: "price_1MecioJna0QE1h10qer7fbld",
@@ -173,7 +206,7 @@ export const products = [
     description: "hats from freepik",
     price: 200,
     currency: "USD",
-    image: "products/sneakers/Background Hats Ladies Clothing Sun.png",
+    image: backgroundHatsLadiesClothing,
   },
   {
     id: "price_1MeciRJna0QE1h10GOWCYXc6",
@@ -181,7 +214,7 @@ export const products = [
     description: "hats from freepik",
     price: 160,
     currency: "USD",
-    image: "products/sneakers/Background Hat Vintage Female.png",
+    image: backgroundHatVintageFemale,
   },
   {
     id: "price_1MechxJna0QE1h10igSu3rNb",
@@ -189,7 +222,7 @@ export const products = [
     description: "hats from freepik",
     price: 120,
     currency: "USD",
-    image: "products/sneakers/Acessory Traditional Clothing.png",
+    image: acessoryTraditional,
   },
   {
     id: "price_1MecgfJna0QE1h10jFsHA8N7",
@@ -197,7 +230,7 @@ export const products = [
     description: "bag from freepik",
     price: 150,
     currency: "USD",
-    image: "products/sneakers/leather hand bag.png",
+    image: leatherHandBag,
   },
   {
     id: "price_1Mecg9Jna0QE1h104IaC6VyZ",
@@ -205,7 +238,7 @@ export const products = [
     description: "bag from freepik",
     price: 110,
     currency: "USD",
-    image: "products/sneakers/female hand bag.png",
+    image: femaleHandBag,
   },
   {
     id: "price_1MecdCJna0QE1h10O1aaf2SO",
@@ -213,7 +246,7 @@ export const products = [
     description: "bag from freepik",
     price: 120,
     currency: "USD",
-    image: "products/sneakers/elegance yellow bag.png",
+    image: eleganceYellowBag,
   },
   {
     id: "price_1MecbzJna0QE1h10mhPsF8ZJ",
@@ -221,7 +254,7 @@ export const products = [
     description: "bag from freepik",
     price: 75,
     currency: "USD",
-    image: "products/sneakers/Capcius female purse.png",
+    image: capciusFemalePurse,
   },
   {
     id: "price_1MeccbJna0QE1h10jta0lkXW",
@@ -229,16 +262,16 @@ export const products = [
     description: "bag from freepik",
     price: 90,
     currency: "USD",
-    image: "products/sneakers/cotton tote bags.png",
+    image: cottonToteBags,
   },
-  {
-    id: "price_1MeccbJna0QE1h10jta0lkXW",
-    name: "Black tote bag",
-    description: "bag from freepik",
-    price: 100,
-    currency: "USD",
-    image: "products/sneakers/Black tote bag.png",
-  },
+  // {
+  // id: "price_1MeccbJna0QE1h10jta0lkXW",
+  // name: "Black tote bag",
+  // description: "bag from freepik",
+  // price: 100,
+  // currency: "USD",
+  // image: blackToteBag,
+  // },
 ];
 
 export default products;
