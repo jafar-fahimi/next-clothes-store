@@ -1,17 +1,27 @@
 // import SHOP_DATA from "utils/shop.data";
-import { PriceProps, titleTypes } from "utils/types";
+import { ItemPropsType, PriceProps, titleTypes } from "utils/types";
 import ProductItem from "./productItem";
+
+type myProductsType = {
+  id: string;
+  name: string;
+  description: string;
+  price: 135;
+  currency: string;
+  image: string;
+};
 
 type Props = {
   pitem: titleTypes;
-  data: PriceProps[];
+  // data: PriceProps[];
+  data: myProductsType[];
 };
 export default function ProductHome({ pitem, data = [] }: Props) {
   // console.log("pitem is:", pitem, pitem === "hats");
   const pitem2 = pitem || "items"; // just to avoid pitem-is-undefined error; exist in initial-load
   // took near 10 hours!
 
-  const itemData: PriceProps[] = data.filter((d) => d.product.description.includes(pitem));
+  const itemData: myProductsType[] = data.filter((d) => d.description.includes(pitem));
   // console.log(`produtcHome pitem is: ${pitem} ${typeof pitem}, itemData is : ${itemData}`);
 
   return (
@@ -20,11 +30,11 @@ export default function ProductHome({ pitem, data = [] }: Props) {
       <div className="flex flex-wrap gap-5 gap-y-9 justify-center">
         {itemData.map((itemD) => (
           <ProductItem
-            id={itemD.product.id}
-            key={itemD.product.id}
-            name={itemD.product.name}
-            price={+itemD.unit_amount}
-            imageUrl={itemD.product.images[0]}
+            id={itemD.id}
+            key={itemD.id}
+            name={itemD.name}
+            price={+itemD.price}
+            imageUrl={itemD.image}
           />
         ))}
       </div>
