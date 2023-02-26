@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import AllCatagories from "components/catagory/allCatagories";
-import Catagory from "components/catagory/catagory";
 
 function HomePage() {
   return (
