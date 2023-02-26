@@ -1,4 +1,4 @@
-const products = [
+export const products = [
   {
     id: "price_1MecxUJna0QE1h10NuNpc3AS",
     name: "watch show",
