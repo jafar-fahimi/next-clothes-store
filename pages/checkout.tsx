@@ -1,15 +1,37 @@
 import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/itemSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
+import axios from "axios";
 
 type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
 type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
+
+let cartItems2: ItemPropsType[];
+
+const redirectToCheckout = async () => {
+  // Create Stripe checkout
+  const {
+    data: { id },
+  } = await axios.post("/api/checkout_sessions", {
+    items: Object.entries(cartItems2).map(([_, { id, qty }]) => ({
+      price: id,
+      qty,
+    })),
+  });
+
+  // Redirect to checkout
+  const stripe = await getStripe();
+  await stripe.redirectToCheckout({ sessionId: id });
+};
+
 export default function Checkout() {
   const dispatch = useDispatch();
   const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
     (state: { item: stateItemType }) => state.item
   );
+  cartItems2 = itemStateArray;
 
   return (
     <section className="max-w-4xl mt-8 mx-auto">
@@ -56,7 +78,10 @@ export default function Checkout() {
       </table>
       <div className="flex flex-col items-end">
         <span className="uppercase text-3xl">Total: {totalPrice}$</span>
-        <button className="bg-blue-500 px-2 py-1 rounded-lg text-white mt-8 font-semibold">
+        <button
+          onClick={redirectToCheckout}
+          className="bg-blue-500 px-2 py-1 rounded-lg text-white mt-8 font-semibold"
+        >
           Pay with 💳
         </button>
       </div>
