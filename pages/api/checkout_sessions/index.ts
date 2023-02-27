@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           price: item.id,
           quantity: item.qty,
         })),
-        success_url: `${req.headers.origin}/success`,
+        success_url: `${req.headers.origin}/success?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/`,
       };
       const session = await stripe.checkout.sessions.create(sessionItem);
