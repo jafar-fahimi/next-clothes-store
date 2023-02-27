@@ -22,7 +22,7 @@ export default function CheckoutSuccessPage() {
       console.log(err.message);
     }
   }, [URL]);
-  console.log(checkoutSession);
+  // console.log('', checkoutSession);
 
   const customer = checkoutSession?.customer_details;
   const products = checkoutSession?.line_items?.data?.map((item: any) => ({

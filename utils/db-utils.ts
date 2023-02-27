@@ -8,16 +8,17 @@ export async function connectDatabase() {
   return client;
 }
 
-export async function insertDocument(client: MongoClient, collection: any, document: Object) {
+export async function insertData(client: MongoClient, collection: any, document: Object) {
   const db = client.db(); // // client.db('ecommerce-crown');
   const result = await db.collection(collection).insertOne(document);
-  client.close(); // optional maybe
+  // client.close(); // optional maybe
   return result;
 }
 
-export async function getAllDocuments(client: MongoClient, collection: any, sort: any) {
+export async function getAllData(client: MongoClient, collection: any, sort: any) {
   const db = client.db();
   const documents = await db.collection(collection).find().sort(sort).toArray();
-  client.close(); // optional maybe
+  // sort = {_id: -1} descending based on _id
+  // client.close(); // optional maybe
   return documents;
 }

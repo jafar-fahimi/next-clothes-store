@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { ItemPropsType } from "utils/types";
-import { connectDatabase } from "utils/db-utils";
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {});
 // a new stripe instance

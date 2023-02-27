@@ -63,7 +63,7 @@ export default function Checkout() {
               <td className="w-36">
                 <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
               </td>
-              <td className="text-2xl w-32">{item.name}</td>
+              <td className="text-xl w-32">{item.name}</td>
               <td>{item.price}$</td>
               <td className="flex items-end">
                 <button
