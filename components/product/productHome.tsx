@@ -1,14 +1,15 @@
 // import SHOP_DATA from "utils/shop.data";
-import { ItemPropsType, PriceProps, titleTypes } from "utils/types";
+import { StaticImageData } from "next/image";
+import { titleTypes } from "utils/types";
 import ProductItem from "./productItem";
 
 type myProductsType = {
   id: string;
   name: string;
   description: string;
-  price: 135;
+  price: number;
   currency: string;
-  image: string;
+  image: string | StaticImageData;
 };
 
 type Props = {
