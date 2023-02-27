@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render. // don't need; we have getStripe
@@ -14,20 +14,24 @@ type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItem
 
 let cartItems2: ItemPropsType[];
 
-const redirectToCheckout = async () => {
-  try {
-    const stripe = await getStripe();
-    const { data } = await axios.post("/api/checkout_sessions", {
-      items: cartItems2,
-    });
-    stripe.redirectToCheckout({ sessionId: data.session.id });
-  } catch (err: any) {
-    console.log("err", err.message);
-  }
-};
-
 export default function Checkout() {
+  const redirectToCheckout = async () => {
+    try {
+      setStripeIsLoading(true);
+      const stripe = await getStripe();
+      const { data } = await axios.post("/api/checkout_sessions", {
+        items: cartItems2,
+      });
+      stripe.redirectToCheckout({ sessionId: data.session.id });
+      setStripeIsLoading(false);
+    } catch (err: any) {
+      console.log("err", err.message);
+      setStripeError(err.message);
+    }
+  };
   const dispatch = useDispatch();
+  const [stripeIsLoading, setStripeIsLoading] = useState(false);
+  const [stripeError, setStripeError] = useState(null);
   const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
     (state: { item: stateItemType }) => state.item
   );
@@ -44,6 +48,7 @@ export default function Checkout() {
     }
   }, []);
 
+  if (stripeError) alert(`Stripe Error: ${stripeError}`);
   return (
     <section className="max-w-4xl mt-8 mx-auto">
       <table>
@@ -93,9 +98,12 @@ export default function Checkout() {
         <span className="uppercase text-3xl">Total: {totalPrice}$</span>
         <button
           onClick={redirectToCheckout}
-          className="bg-blue-500 px-2 py-1 rounded-lg text-white mt-8 font-semibold"
+          className={`bg-blue-500 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
+            stripeIsLoading && "opacity-70"
+          }`}
+          // disabled={stripeError}
         >
-          Pay with 💳
+          {stripeIsLoading ? "Loading..." : "Pay with 💳"}
         </button>
       </div>
     </section>
