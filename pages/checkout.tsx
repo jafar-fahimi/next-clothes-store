@@ -48,7 +48,11 @@ export default function Checkout() {
     }
   }, []);
 
-  if (stripeError) alert(`Stripe Error: ${stripeError}`);
+  if (stripeError) {
+    alert(`Stripe Error: ${stripeError}`);
+    setStripeIsLoading(false);
+    setStripeError(null);
+  }
   return (
     <section className="max-w-4xl mt-8 mx-auto">
       <table>
