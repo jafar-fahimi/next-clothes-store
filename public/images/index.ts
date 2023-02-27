@@ -52,8 +52,11 @@ import collectionWatches from "./products/watches/collection-of-watches.png";
 import femaleWatch from "./products/watches/female-watch.png";
 import pocketWatch from "./products/watches/pocket-watch.png";
 import watchShow from "./products/watches/watch-show.png";
+//
+import hatsCollection from "./Home-Images/hats-collections.png";
 
 export {
+  hatsCollection,
   backgroundHatVintageFemale,
   backgroundHatsLadiesClothing,
   canvasHatBlank,

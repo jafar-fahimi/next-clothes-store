@@ -19,6 +19,7 @@ import {
   femaleWatch,
   frontViewOfHoodie,
   greatCapFasion,
+  hatsCollection,
   leatherHandBag,
   newPairWhiteSne,
   orangeJacket,
@@ -264,14 +265,22 @@ export const products = [
     currency: "USD",
     image: cottonToteBags,
   },
-  // {
-  // id: "price_1MeccbJna0QE1h10jta0lkXW",
-  // name: "Black tote bag",
-  // description: "bag from freepik",
-  // price: 100,
-  // currency: "USD",
-  // image: blackToteBag,
-  // },
+  {
+    id: "price_1MeVJLJna0QE1h100ZBEZT2q",
+    name: "Black tote bag",
+    description: "bag from freepik",
+    price: 100,
+    currency: "USD",
+    image: blackToteBag,
+  },
+  {
+    id: "price_1MfxIgJna0QE1h10zbsuK1r9",
+    name: "Hats",
+    description: "hats freepik",
+    price: 200,
+    currency: "USD",
+    image: hatsCollection,
+  },
 ];
 
 export default products;
