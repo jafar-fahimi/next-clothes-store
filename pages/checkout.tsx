@@ -17,12 +17,10 @@ let cartItems2: ItemPropsType[];
 const redirectToCheckout = async () => {
   try {
     const stripe = await getStripe();
-    const {
-      data: { id },
-    } = await axios.post("/api/checkout_sessions", {
+    const { data } = await axios.post("/api/checkout_sessions", {
       items: cartItems2,
     });
-    stripe.redirectToCheckout({ sessionId: id });
+    stripe.redirectToCheckout({ sessionId: data.session.id });
   } catch (err: any) {
     console.log("err", err.message);
   }
