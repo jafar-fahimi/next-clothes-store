@@ -1,14 +1,11 @@
 // to retrieve d session using sessionId
 import { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { sessionId } = req.query;
-  console.log("sessionId is", sessionId);
-
   try {
     if (typeof sessionId == "string" && !sessionId.startsWith("cs_")) {
       throw Error("Incorrect CheckoutSession sessionId.");
