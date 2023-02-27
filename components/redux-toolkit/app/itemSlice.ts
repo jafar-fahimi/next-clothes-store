@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { hatsCollection } from "public/images";
 import { ItemPropsType } from "utils/types";
 
 const allItems: ItemPropsType[] = [
-  { id: "1", name: "Brown Brim", imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png", price: 25, qty: 3 },
+  { id: "price_1MfxIgJna0QE1h10zbsuK1r9", name: "Brown Brim", imageUrl: hatsCollection, price: 25, qty: 3 },
 ];
 
 type StateAction = {
