@@ -1,3 +1,4 @@
+// just for test purpose!
 import store from "./app/store";
 import { addToCart, minusFromCart, deleteFromCart } from "./app/itemSlice";
 

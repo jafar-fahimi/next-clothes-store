@@ -1,4 +1,4 @@
-// to retrieve d session using sessionId
+// to retrieve d session using sessionId, after successful payment
 import { NextApiRequest, NextApiResponse } from "next";
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
