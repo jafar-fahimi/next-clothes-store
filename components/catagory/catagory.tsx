@@ -4,8 +4,12 @@ import { titleTypes } from "utils/types";
 type Props = { srcProp: string | StaticImageData; cat: titleTypes };
 
 export default function Catagory({ srcProp, cat }: Props) {
+  let cat2 = undefined;
+  if (cat == "watches") cat2 = "watch";
+  if (cat == "bags") cat2 = "bag";
+
   return (
-    <Link className="relative" href={`/${cat.toLowerCase()}`}>
+    <Link className="relative" href={`/${!cat2 ? cat.toLowerCase() : cat2}`}>
       <div className="w-96 -z-10 group">
         <Image
           alt="Catagory Item Image"

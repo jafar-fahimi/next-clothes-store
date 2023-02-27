@@ -9,8 +9,8 @@ export default function AllCatagories() {
         <Catagory srcProp={hatsCollection} cat="hats" />
         <Catagory srcProp={jacket} cat="jackets" />
         <Catagory srcProp={sneakers} cat="sneakers" />
-        <Catagory srcProp={rolexwatches} cat="watch" />
-        <Catagory srcProp={bagCollection} cat="bag" />
+        <Catagory srcProp={rolexwatches} cat="watches" />
+        <Catagory srcProp={bagCollection} cat="bags" />
       </div>
     </section>
   );
