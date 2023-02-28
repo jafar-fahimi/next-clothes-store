@@ -121,7 +121,7 @@ const Signin: NextPage = function () {
               Sign in
             </button>
             <span
-              onClick={() => signInWithGoogle()}
+              onClick={async () => await signInWithGoogle()}
               className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
             >
               {/* can't be button! took me 2 days! */}
