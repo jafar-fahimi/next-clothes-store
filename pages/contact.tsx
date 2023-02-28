@@ -1,9 +1,8 @@
-import { TextareaHTMLAttributes, useRef, useState } from "react";
-import { Switch } from "@headlessui/react";
+import { useRef } from "react";
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes: any) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function Example() {
   const sendDataHandler = async () => {
@@ -16,24 +15,23 @@ export default function Example() {
           phone: phoneRef.current?.value,
           message: messageRef.current?.value,
           company: companyRef.current?.value,
+          lastName: lastNameRef.current?.value,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      alert(`result is ${result}`);
+      console.log("result ", result);
     } catch (err) {
-      console.log("err ", err);
-      console.log("err.message ", err?.message);
-      alert("err.message is : ", err);
+      console.log(`err is ${err}`);
     }
   };
-  const [agreed, setAgreed] = useState(false);
+  // const [agreed, setAgreed] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-12 lg:px-8">
