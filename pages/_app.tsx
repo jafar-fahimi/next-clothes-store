@@ -2,7 +2,6 @@ import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import { Provider } from "react-redux";
 import store from "components/redux-toolkit/app/store";
-
 type Props = {
   Component: any;
   pageProps: any;
