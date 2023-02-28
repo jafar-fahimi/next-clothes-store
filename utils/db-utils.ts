@@ -1,26 +1,25 @@
-import { MongoClient } from "mongodb";
-
+var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
+import { MongoClient as mongoC } from "mongodb";
+let client: any;
 export async function connectDatabase() {
   // events is our database that contain both newsletter & comments collections/tables
-  const client = await MongoClient.connect(
-    "mongodb+srv://user-1:4IqsmqIm0v4vddOz@cluster1.r2tfvft.mongodb.net/?retryWrites=true&w=majority"
+  if (client) client.close();
+  client = await MongoClient.connect(
+    "mongodb+srv://user:svvhUCzOcIUyhdLD@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority?directConnection=true"
   ); // use %23 for !, "" for #$
-  // "mongodb+srv://user-1:4IqsmqIm0v4vddOz@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority?directConnection=true"
 
   return client;
 }
 
-export async function insertData(client: MongoClient, collection: any, document: Object) {
-  const db = client.db(); // // client.db('ecommerce-crown');
+export async function insertData(client: mongoC, collection: any, document: Object) {
+  const db = client.db("ecommerce-crown"); // client.db('ecommerce-crown');
   const result = await db.collection(collection).insertOne(document);
-  // client.close(); // optional maybe
   return result;
 }
 
-export async function getAllData(client: MongoClient, collection: any, sort: any) {
+export async function getAllData(client: mongoC, collection: any, sort: any) {
   const db = client.db();
   const documents = await db.collection(collection).find().sort(sort).toArray();
   // sort = {_id: -1} descending based on _id
-  // client.close(); // optional maybe
   return documents;
 }
