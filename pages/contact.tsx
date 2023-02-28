@@ -32,7 +32,7 @@ export default function Example() {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
   return (
-    <section className="isolate bg-white py-4 px-6 sm:py-12 lg:px-8">
+    <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
       {/* <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
         <svg
           className="relative left-1/2 -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-40rem)] sm:h-[42.375rem]"
@@ -61,10 +61,10 @@ export default function Example() {
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact sales</h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Aute magna irure deserunt veniam aliqua magna enim voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur quia.
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form action="#" method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">

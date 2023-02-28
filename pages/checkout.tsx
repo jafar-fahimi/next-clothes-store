@@ -5,6 +5,7 @@ import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
 import React, { useState } from "react";
+
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render. // don't need; we have getStripe
@@ -79,19 +80,54 @@ export default function Checkout() {
                   onClick={() => dispatch(minusFromCart(item))}
                   className="font-extrabold text-2xl focus:ring-4"
                 >
-                  &lt;
+                  <svg
+                    fill="none"
+                    stroke="#000"
+                    className="w-6 h-6"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    ></path>
+                  </svg>
                 </button>
                 &nbsp;{item.qty}&nbsp;
                 <button
                   onClick={() => dispatch(addToCart(item))}
                   className="font-extrabold text-2xl focus:ring-4"
                 >
-                  &gt;
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+                  </svg>
                 </button>
               </td>
               <td>
                 <button className="text-2xl" onClick={() => dispatch(deleteFromCart(item))}>
-                  X
+                  <svg
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="2"
+                    color="#000"
+                    className="w-7 h-7"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
                 </button>
               </td>
             </tr>
