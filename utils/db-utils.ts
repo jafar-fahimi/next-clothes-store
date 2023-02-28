@@ -3,8 +3,10 @@ import { MongoClient } from "mongodb";
 export async function connectDatabase() {
   // events is our database that contain both newsletter & comments collections/tables
   const client = await MongoClient.connect(
-    "mongodb+srv://user-1:abc123!@#@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority"
-  );
+    "mongodb+srv://user-1:4IqsmqIm0v4vddOz@cluster1.r2tfvft.mongodb.net/?retryWrites=true&w=majority"
+  ); // use %23 for !, "" for #$
+  // "mongodb+srv://user-1:4IqsmqIm0v4vddOz@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority?directConnection=true"
+
   return client;
 }
 
