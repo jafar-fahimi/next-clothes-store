@@ -49,7 +49,7 @@ export default function ProductItem(props: RealProps) {
           </Link>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="flex px-2 pb-1 justify-between">
         <span>{shop_data_item.name}</span>
         <span>${shop_data_item.price}</span>
       </div>
