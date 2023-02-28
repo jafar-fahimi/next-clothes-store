@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useRef } from "react";
 
 // function classNames(...classes: any) {
@@ -7,23 +8,19 @@ import { useRef } from "react";
 export default function Example() {
   const sendDataHandler = async () => {
     try {
-      const result = await fetch("/api/message", {
-        method: "POST",
-        body: JSON.stringify({
-          name: nameRef.current?.value,
-          email: emailRef.current?.value,
-          phone: phoneRef.current?.value,
-          message: messageRef.current?.value,
-          company: companyRef.current?.value,
-          lastName: lastNameRef.current?.value,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      // fetch POST work but also throw Typeerror: failed to fetch
+      const result = await axios.post("/api/message", {
+        name: nameRef.current?.value,
+        email: emailRef.current?.value,
+        phone: phoneRef.current?.value,
+        message: messageRef.current?.value,
+        company: companyRef.current?.value,
+        lastName: lastNameRef.current?.value,
       });
       console.log("result ", result);
     } catch (err) {
       console.log(`err is ${err}`);
+      alert(err);
     }
   };
   // const [agreed, setAgreed] = useState(false);

@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === "POST") {
     const { email, name, message, lastName, phone } = req.body;
-
     // server side validation
     if (!email.includes("@") || !name || name.trim() === "" || !message || message.trim() === "") {
       res.status(422).json({ message: "Invalid input." });
