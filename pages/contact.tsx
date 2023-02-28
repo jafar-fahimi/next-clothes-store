@@ -1,28 +1,42 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 
 // function classNames(...classes: any) {
 //   return classes.filter(Boolean).join(" ");
 // }
-
 export default function Example() {
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const router = useRouter();
   const sendDataHandler = async () => {
     try {
-      // fetch POST work but also throw Typeerror: failed to fetch
-      const result = await axios.post("/api/message", {
-        name: nameRef.current?.value,
-        email: emailRef.current?.value,
-        phone: phoneRef.current?.value,
-        message: messageRef.current?.value,
-        company: companyRef.current?.value,
-        lastName: lastNameRef.current?.value,
+      setIsSubmitLoading(true);
+      const result = await axios({
+        url: "/api/message",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          name: nameRef.current?.value,
+          email: emailRef.current?.value,
+          phone: phoneRef.current?.value,
+          message: messageRef.current?.value,
+          company: companyRef.current?.value,
+          lastName: lastNameRef.current?.value,
+        },
+        method: "POST",
       });
-      console.log("result ", result);
-      alert("Message Sent Successfully!");
-    } catch (err) {
-      console.log(`err is ${err}`);
-      alert(err);
+      setIsSubmitLoading(false);
+
+      console.log("result ", result.response.data);
+      // alert("Message Sent Successfully!");
+    } catch (err: any) {
+      setIsSubmitLoading(false);
+      // In the catch block, the error which will always be 500 internal server error
+      // console.log(`err is : ${err.response.data}`);
+      // alert(err.response.data);
     }
+    router.push("/");
   };
   // const [agreed, setAgreed] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -210,11 +224,17 @@ export default function Example() {
         </div>
         <div className="mt-10">
           <button
-            onClick={() => sendDataHandler()}
+            onClick={(eve: any) => {
+              sendDataHandler();
+              eve.preventDefault();
+            }}
+            disabled={isSubmitLoading}
             type="submit"
-            className="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            className={`block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+              isSubmitLoading && "opacity-75"
+            }`}
           >
-            Lets talk
+            {isSubmitLoading ? "Sending..." : "Lets talk"}
           </button>
         </div>
       </form>
