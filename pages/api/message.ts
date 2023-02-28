@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       result = await insertData(client, "messages", newComment);
       // newComment.id = result.insertedId; // not necessary
-      res.status(201).json({ message: "Message Sent.", comment: newComment });
+      res.status(200).json({ message: "Message Sent.", comment: newComment });
     } catch (error) {
       res.status(500).json({ message: "Sending message failed!" });
     }
