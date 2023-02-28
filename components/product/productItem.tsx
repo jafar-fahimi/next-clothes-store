@@ -27,11 +27,11 @@ export default function ProductItem(props: RealProps) {
   // console.log("shop-data-item in productItme is ; ", shop_data_item);
 
   return (
-    <div className="relative" key={shop_data_item.id}>
+    <div className="relative border-slate-100 border-2 shadow-lg" key={shop_data_item.id}>
       <div className="w-64 -z-10 group">
         <Image
           alt={shop_data_item.name}
-          className="w-full"
+          className="w-full h-full"
           width={300}
           height={100}
           src={shop_data_item.imageUrl}

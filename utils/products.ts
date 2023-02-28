@@ -195,7 +195,7 @@ export const products = [
   },
   {
     id: "price_1MecjIJna0QE1h10dzyMaOml",
-    name: "Canvas Hat Blank Fasion Sport",
+    name: "Sporty Canvas Hat Blank",
     description: "hats from freepik",
     price: 170,
     currency: "USD",
@@ -203,7 +203,7 @@ export const products = [
   },
   {
     id: "price_1MecioJna0QE1h10qer7fbld",
-    name: "Background Hats Ladies Clothing Sun",
+    name: "Ladies Sun Hat",
     description: "hats from freepik",
     price: 200,
     currency: "USD",
@@ -211,7 +211,7 @@ export const products = [
   },
   {
     id: "price_1MeciRJna0QE1h10GOWCYXc6",
-    name: "Background Hat Vintage Female",
+    name: "Vintage Female Hat",
     description: "hats from freepik",
     price: 160,
     currency: "USD",
