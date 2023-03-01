@@ -143,15 +143,25 @@ export default function Navbar() {
             <li className="relative box-border px-4 font-normal focus:font-semibold">
               <div
                 onClick={() => setCartOverview(!cartOverview)}
-                className="hover:cursor-pointer  hover:font-semibold  relative"
+                className="hover:cursor-pointer hover:font-semibold  relative"
               >
                 <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
                   {totalItems}
                 </span>
               </div>
-              {cartOverview && (
-                <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
+              <Popover
+                className="absolute flex flex-col justify-between top-14 w-full z-10 bg-transparent p-4"
+                open={cartOverview}
+                id={id}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                onClose={() => setCartOverview(false)}
+              >
+                <div className="w-full z-10 bg-white p-3">
                   <div className="space-y-4 mb-8 overflow-y-auto">
                     {itemStateArray.map((item) => (
                       <OneItem
@@ -166,12 +176,12 @@ export default function Navbar() {
                   </div>
                   <Link
                     href="/checkout"
-                    className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 transition-all duration-300 text-center"
+                    className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 text-center"
                   >
                     go to checkout
                   </Link>
                 </div>
-              )}
+              </Popover>
             </li>
           </ul>
         </div>
