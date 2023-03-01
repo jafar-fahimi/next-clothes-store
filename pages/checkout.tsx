@@ -55,96 +55,104 @@ export default function Checkout() {
     setStripeError(null);
   }
   return (
-    <section className="max-w-4xl mt-8 mx-auto">
-      <table>
-        <tbody>
-          <tr className="text-lg flex space-x-32 border-b-2 border-black/30 pb-3 mb-4">
-            <td className="w-36">Product</td>
-            <td>Description</td>
-            <td>Price</td>
-            <td>Quantity</td>
-            <td>Remove</td>
-          </tr>
-          {itemStateArray.map((item) => (
-            <tr
-              className="text-xl flex space-x-32 border-b-2 border-black/30 items-center pb-3 mb-3"
-              key={item.id}
-            >
-              <td className="w-36">
-                <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
-              </td>
-              <td className="text-xl w-32">{item.name}</td>
-              <td>{item.price}$</td>
-              <td className="flex items-end">
-                <button
-                  onClick={() => dispatch(minusFromCart(item))}
-                  className="font-extrabold text-2xl focus:ring-4"
-                >
-                  <svg
-                    fill="none"
-                    stroke="#000"
-                    className="w-6 h-6"
-                    stroke-width="1.8"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15.75 19.5L8.25 12l7.5-7.5"
-                    ></path>
-                  </svg>
-                </button>
-                &nbsp;{item.qty}&nbsp;
-                <button
-                  onClick={() => dispatch(addToCart(item))}
-                  className="font-extrabold text-2xl focus:ring-4"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                    stroke-width="1.8"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-                  </svg>
-                </button>
-              </td>
-              <td>
-                <button className="text-2xl" onClick={() => dispatch(deleteFromCart(item))}>
-                  <svg
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="2"
-                    color="#000"
-                    className="w-7 h-7"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </button>
-              </td>
+    <section className="w-full mt-8">
+      <div className="max-w-4xl flex flex-col mx-auto items-center">
+        <table>
+          <tbody>
+            <tr className="text-lg flex space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
+              <td className="w-40">Product</td>
+              <td className="w-28">Description</td>
+              <td>Price</td>
+              <td>Quantity</td>
+              <td>Total</td>
+              <td>Remove</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex flex-col items-end">
-        <span className="uppercase text-3xl">Total: {totalPrice}$</span>
-        <button
-          onClick={redirectToCheckout}
-          className={`bg-blue-500 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
-            stripeIsLoading && "opacity-70"
-          }`}
-          // disabled={stripeError}
-        >
-          {stripeIsLoading ? "Loading..." : "Pay with 💳"}
-        </button>
+            {itemStateArray.map((item) => (
+              <tr
+                className="text-lg flex space-x-32 border-b-2 border-black/30 items-center justify-evenly pb-3 mb-3"
+                key={item.id}
+              >
+                <td className="w-36">
+                  <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
+                </td>
+                <td className="text-xl w-28">{item.name}</td>
+                <td>{item.price}$</td>
+                <td className="flex items-end">
+                  <button
+                    onClick={() => dispatch(minusFromCart(item))}
+                    className="font-extrabold text-2xl focus:ring-4"
+                  >
+                    <svg
+                      fill="none"
+                      stroke="#000"
+                      className="w-6 h-6"
+                      stroke-width="1.8"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                      ></path>
+                    </svg>
+                  </button>
+                  &nbsp;{item.qty}&nbsp;
+                  <button
+                    onClick={() => dispatch(addToCart(item))}
+                    className="font-extrabold text-2xl focus:ring-4"
+                  >
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      stroke-width="1.8"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      ></path>
+                    </svg>
+                  </button>
+                </td>
+                <td>{item.total}</td>
+                <td>
+                  <button className="text-2xl" onClick={() => dispatch(deleteFromCart(item))}>
+                    <svg
+                      fill="none"
+                      stroke="#000"
+                      stroke-width="2"
+                      color="#000"
+                      className="w-7 h-7"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex flex-col mt-10 items-end self-end">
+          <span className="uppercase text-3xl">Total: {totalPrice}$</span>
+          <button
+            onClick={redirectToCheckout}
+            className={`bg-blue-500 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
+              stripeIsLoading && "opacity-70"
+            }`}
+            // disabled={stripeError}
+          >
+            {stripeIsLoading ? "Loading..." : "Pay with 💳"}
+          </button>
+        </div>
       </div>
     </section>
   );
