@@ -29,6 +29,7 @@ export default function SignUp() {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         router.push("/");
+        // router.push("/").then(() => router.push("/"));
       })
       .catch((err) => {
         alert(err.message);

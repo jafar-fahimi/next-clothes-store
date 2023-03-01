@@ -28,7 +28,7 @@ export default function Example() {
       });
       setIsSubmitLoading(false);
 
-      console.log("result ", result.response.data);
+      // console.log("result ", result.response.data);
       // alert("Message Sent Successfully!");
     } catch (err: any) {
       setIsSubmitLoading(false);

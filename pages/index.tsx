@@ -4,11 +4,16 @@ import AllCatagories from "components/catagory/allCatagories";
 import { connectDatabase, getAllData } from "utils/db-utils";
 import { useRecoilState } from "recoil";
 import { productState } from "atoms/productAtom";
+import { useDispatch } from "react-redux";
+import { setAllData } from "components/redux-toolkit/app/itemSlice";
 
 function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
 
+  // by setAllData; define state.allExistingCarts!
+  const dispatch = useDispatch();
+  dispatch(setAllData(products));
   return (
     <React.Fragment>
       <Head>

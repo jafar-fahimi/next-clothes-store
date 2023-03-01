@@ -1,11 +1,10 @@
-import { addToCart, deleteFromCart, minusFromCart } from "components/redux-toolkit/app/itemSlice";
+import { addToCart, deleteFromCart, minusFromCart, setCart } from "components/redux-toolkit/app/itemSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
 import React, { useState } from "react";
-import products from "utils/products";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -25,11 +24,14 @@ export default function Checkout() {
       });
       stripe.redirectToCheckout({ sessionId: data.session.id });
       setStripeIsLoading(false);
+      // after successfully payment, make cart empty:
+      dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
     } catch (err: any) {
       console.log("err", err.message);
       setStripeError(err.message);
     }
   };
+
   const dispatch = useDispatch();
   const [stripeIsLoading, setStripeIsLoading] = useState(false);
   const [stripeError, setStripeError] = useState(null);

@@ -17,7 +17,8 @@ const initialItems: ItemPropsType[] = [
   },
 ];
 
-type StateAction = {
+type StateType = {
+  allExistingCarts: ItemPropsType[];
   cartItems: ItemPropsType[];
   totalPrice: number;
   totalItems: number;
@@ -36,16 +37,19 @@ type setCartPayloadType = {
 const itemSlice = createSlice({
   name: "cart",
   initialState: {
+    allExistingCarts: [],
     cartItems: initialItems,
     totalPrice: initialItems.reduce((acc, cur) => acc + cur.price * cur.qty, 0),
     totalItems: initialItems.reduce((acc, cur) => acc + cur.qty, 0),
   },
   reducers: {
-    addToCart(state: StateAction, action: { payload: ItemPropsType }) {
-      if (state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1) {
+    addToCart(state: StateType, action: { payload: ItemPropsType }) {
+      const existingItemAtAll = state.allExistingCarts.find((item) => item.id == action.payload.id);
+      const existingItemInCart = state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1;
+      if (existingItemInCart) {
         // if the item exist in cart
-        const index = state.cartItems.findIndex((item) => item.id === action.payload.id);
-        const thisItem = state.cartItems[index];
+        const existingItemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
+        const thisItem = state.cartItems[existingItemIndex];
         if (thisItem.total <= 0) {
           localStorage.setItem("state", JSON.stringify(state));
           return;
@@ -55,13 +59,14 @@ const itemSlice = createSlice({
       } else {
         action.payload["qty"] = 1;
         // action.payload.total = 99; // set it from useRecoilValue
+        existingItemAtAll != undefined && (action.payload.total = existingItemAtAll.total -= 1);
         state.cartItems.push(action.payload);
       }
       state.totalPrice = Number(state.totalPrice + action.payload.price);
       state.totalItems = state.totalItems + 1;
       localStorage.setItem("state", JSON.stringify(state));
     },
-    deleteFromCart: (state: StateAction, action: { payload: ItemPropsType }) => {
+    deleteFromCart: (state: StateType, action: { payload: ItemPropsType }) => {
       const toDeleteItem = state.cartItems.find((item) => item.name === action.payload.name);
       if (toDeleteItem) {
         // decreasing totalPrice:
@@ -76,7 +81,7 @@ const itemSlice = createSlice({
       }
       localStorage.setItem("state", JSON.stringify(state));
     },
-    minusFromCart: (state: StateAction, action: { payload: ItemPropsType }) => {
+    minusFromCart: (state: StateType, action: { payload: ItemPropsType }) => {
       const prevItem = state.cartItems.find((item: { name: string }) => item.name == action.payload.name);
       if (prevItem) {
         if (prevItem.qty == 0) {
@@ -94,7 +99,7 @@ const itemSlice = createSlice({
       } else return;
       localStorage.setItem("state", JSON.stringify(state));
     },
-    setCart: (state: StateAction, action: { payload: setCartPayloadType }) => {
+    setCart: (state: StateType, action: { payload: setCartPayloadType }) => {
       // setCart is just used in <Layout /> to take data from localStorage if any.
       state.cartItems = action.payload.stateCartItems;
       state.totalItems = action.payload.stateTotalItems;
@@ -103,17 +108,12 @@ const itemSlice = createSlice({
       console.log("action.payload is ", action.payload);
       // localStorage.setItem("state", JSON.stringify(state));
     },
-    setAllData: (state: StateAction, action: { payload: setCartPayloadType }) => {
-      // setCart is just used in <Layout /> to take data from localStorage if any.
-      state.cartItems = action.payload.stateCartItems;
-      state.totalItems = action.payload.stateTotalItems;
-      state.totalPrice = action.payload.stateTotalPrice;
-
+    setAllData: (state: StateType, action: { payload: ItemPropsType[] }) => {
+      state.allExistingCarts = action.payload;
       console.log("action.payload is ", action.payload);
-      // localStorage.setItem("state", JSON.stringify(state));
     },
   },
 });
 
 export default itemSlice.reducer;
-export const { addToCart, minusFromCart, deleteFromCart, setCart } = itemSlice.actions;
+export const { addToCart, minusFromCart, deleteFromCart, setCart, setAllData } = itemSlice.actions;

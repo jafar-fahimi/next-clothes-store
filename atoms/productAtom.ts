@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-export const productState = atom<null>({
+export const productState = atom<[]>({
   key: "productState",
-  default: null,
+  default: [],
 });
 
 // export function UseCartItems2() {

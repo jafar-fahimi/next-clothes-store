@@ -1,5 +1,5 @@
 var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
-import { MongoClient as mongoC } from "mongodb";
+import { MongoClient as mongoC, ObjectId } from "mongodb";
 let client: any;
 export async function connectDatabase() {
   // events is our database that contain both newsletter & comments collections/tables
@@ -14,7 +14,7 @@ export async function connectDatabase() {
 export async function insertData(client: mongoC, collection: any, document: [] | {}) {
   const db = client.db("ecommerce-crown"); // client.db('ecommerce-crown');
   const now = new Date().getTime(); // _id:now to be able to take data descending!
-  const result = await db.collection(collection).insertOne({ _id: now, document });
+  const result = await db.collection(collection).insertOne({ _id: now as unknown as ObjectId, document });
   return result;
 }
 
