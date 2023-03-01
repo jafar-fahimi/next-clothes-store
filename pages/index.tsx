@@ -5,20 +5,9 @@ import { connectDatabase, getAllData } from "utils/db-utils";
 import { useRecoilState } from "recoil";
 import { productState } from "atoms/productAtom";
 
-function HomePage() {
-  // here in home page we fetch products from mongodb, then put them on RecoilState
-  // const fetchProductsFromMongodb = async () => {
-  //   const client = await connectDatabase();
-  //   const mongodbProducts = await getAllData(client, "products", { id: -1 });
-  //   return mongodbProducts;
-  // };
-  // const data = await fetchProductsFromMongodb();
-  // const [productsFromMongo, setProductsFromMongo] = useRecoilState(productState);
-  // console.log("data is :", data);
-  // setProductsFromMongo(data);
-  // React.useEffect(() => {
-  //   // fetchProductsFromMongodb().then((data) => {});
-  // }, []);
+function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
+  const [products, setProducts] = useRecoilState(productState);
+  setProducts(res[0].document);
 
   return (
     <React.Fragment>
@@ -34,3 +23,23 @@ function HomePage() {
   );
 }
 export default HomePage;
+export async function getStaticProps() {
+  // next-js-typeerror-failed-to-parse-url-from-api-projects // when fetching localhost
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error: any) {
+    console.log("error is ", error.message.response);
+  }
+
+  let res;
+  try {
+    res = await getAllData(client, "products", { _id: -1 });
+  } catch (error: any) {
+    console.log("error is ", error.message.response);
+  }
+
+  return {
+    props: { res },
+  };
+}
