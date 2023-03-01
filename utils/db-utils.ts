@@ -11,9 +11,10 @@ export async function connectDatabase() {
   return client;
 }
 
-export async function insertData(client: mongoC, collection: any, document: Object) {
+export async function insertData(client: mongoC, collection: any, document: [] | {}) {
   const db = client.db("ecommerce-crown"); // client.db('ecommerce-crown');
-  const result = await db.collection(collection).insertOne(document);
+  const now = new Date().getTime(); // _id:now to be able to take data descending!
+  const result = await db.collection(collection).insertOne({ _id: now, document });
   return result;
 }
 

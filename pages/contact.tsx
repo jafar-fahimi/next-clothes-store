@@ -11,7 +11,7 @@ export default function Example() {
   const sendDataHandler = async () => {
     try {
       setIsSubmitLoading(true);
-      const result = await axios({
+      const result: any = await axios({
         url: "/api/message",
         headers: {
           "Content-Type": "application/json",
