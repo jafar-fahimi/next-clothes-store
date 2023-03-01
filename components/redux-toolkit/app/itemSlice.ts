@@ -105,12 +105,12 @@ const itemSlice = createSlice({
       state.totalItems = action.payload.stateTotalItems;
       state.totalPrice = action.payload.stateTotalPrice;
 
-      console.log("action.payload is ", action.payload);
+      // console.log("action.payload is ", action.payload);
       // localStorage.setItem("state", JSON.stringify(state));
     },
     setAllData: (state: StateType, action: { payload: ItemPropsType[] }) => {
       state.allExistingCarts = action.payload;
-      console.log("action.payload is ", action.payload);
+      // console.log("action.payload is ", action.payload);
     },
   },
 });
