@@ -52,4 +52,5 @@ export type ItemPropsType = {
   imageUrl: string | StaticImageData;
   price: number;
   qty: number;
+  total: number;
 };

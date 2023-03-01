@@ -10,6 +10,7 @@ type myProductsType = {
   price: number;
   currency: string;
   image: string | StaticImageData;
+  total: number;
 };
 
 type Props = {
@@ -36,6 +37,7 @@ export default function ProductHome({ pitem, data = [] }: Props) {
             name={itemD.name}
             price={+itemD.price}
             imageUrl={itemD.image}
+            total={itemD.total}
           />
         ))}
       </div>

@@ -39,6 +39,7 @@ export const products = [
     description: "watch freepik",
     price: 165.1,
     currency: "USD",
+    total: 100,
     image: watchShow,
   },
   {
@@ -47,6 +48,7 @@ export const products = [
     description: "watch freepik",
     price: 135,
     currency: "USD",
+    total: 100,
     image: pocketWatch,
   },
   {
@@ -55,6 +57,7 @@ export const products = [
     description: "watch freepik",
     price: 230,
     currency: "USD",
+    total: 100,
     image: femaleWatch,
   },
   {
@@ -63,6 +66,7 @@ export const products = [
     description: "watch freepik",
     price: 160,
     currency: "USD",
+    total: 100,
     image: collectionWatch,
   },
   {
@@ -71,6 +75,7 @@ export const products = [
     description: "watch freepik",
     price: 110,
     currency: "USD",
+    total: 100,
     image: birthdayWatch,
   },
   {
@@ -79,6 +84,7 @@ export const products = [
     description: "sneakers freepik",
     price: 225,
     currency: "USD",
+    total: 100,
     image: unbrandedModern,
   },
   {
@@ -87,6 +93,7 @@ export const products = [
     description: "sneakers freepik",
     price: 195,
     currency: "USD",
+    total: 100,
     image: pairWork,
   },
   {
@@ -95,6 +102,7 @@ export const products = [
     description: "sneakers freepik",
     price: 190,
     currency: "USD",
+    total: 100,
     image: fashionShoe,
   },
   {
@@ -103,6 +111,7 @@ export const products = [
     description: "sneakers freepik",
     price: 135,
     currency: "USD",
+    total: 100,
     image: newPairWhiteSne,
   },
   {
@@ -111,6 +120,7 @@ export const products = [
     description: "sneakers freepik",
     price: 210,
     currency: "USD",
+    total: 100,
     image: femaleSneakersRun,
   },
   {
@@ -119,6 +129,7 @@ export const products = [
     description: "sneakers freepik",
     price: 154,
     currency: "USD",
+    total: 100,
     image: fasionShoeAndSneakers,
   },
   {
@@ -127,6 +138,7 @@ export const products = [
     description: "sneakers freepik",
     price: 124,
     currency: "USD",
+    total: 100,
     image: fashionShoe,
   },
   {
@@ -135,6 +147,7 @@ export const products = [
     description: "sneakers freepik",
     price: 100,
     currency: "USD",
+    total: 100,
     image: aPairOfTrainers,
   },
   {
@@ -143,6 +156,7 @@ export const products = [
     description: "jackets freepik",
     price: 220,
     currency: "USD",
+    total: 100,
     image: stillLifeRenderFront,
   },
   {
@@ -151,6 +165,7 @@ export const products = [
     description: "jackets from freepik",
     price: 250,
     currency: "USD",
+    total: 100,
     image: stillLifeRenderRedJacket,
   },
   {
@@ -159,6 +174,7 @@ export const products = [
     description: "jackets from freepik",
     price: 180,
     currency: "USD",
+    total: 100,
     image: orangeJacket,
   },
   {
@@ -167,6 +183,7 @@ export const products = [
     description: "jackets from freepik",
     price: 220,
     currency: "USD",
+    total: 100,
     image: stillLifeRenderJacketFront2,
   },
   {
@@ -175,6 +192,7 @@ export const products = [
     description: "jackets from freepik",
     price: 200,
     currency: "USD",
+    total: 100,
     image: frontViewOfHoodie,
   },
   {
@@ -183,6 +201,7 @@ export const products = [
     description: "hats from freepik",
     price: 140,
     currency: "USD",
+    total: 100,
     image: greatCapFasion,
   },
   {
@@ -191,6 +210,7 @@ export const products = [
     description: "hats from freepik",
     price: 180,
     currency: "USD",
+    total: 100,
     image: fasionBeautySunwear,
   },
   {
@@ -199,6 +219,7 @@ export const products = [
     description: "hats from freepik",
     price: 170,
     currency: "USD",
+    total: 100,
     image: canvasHatBlank,
   },
   {
@@ -207,6 +228,7 @@ export const products = [
     description: "hats from freepik",
     price: 200,
     currency: "USD",
+    total: 100,
     image: backgroundHatsLadiesClothing,
   },
   {
@@ -215,6 +237,7 @@ export const products = [
     description: "hats from freepik",
     price: 160,
     currency: "USD",
+    total: 100,
     image: backgroundHatVintageFemale,
   },
   {
@@ -223,6 +246,7 @@ export const products = [
     description: "hats from freepik",
     price: 120,
     currency: "USD",
+    total: 100,
     image: acessoryTraditional,
   },
   {
@@ -231,6 +255,7 @@ export const products = [
     description: "bag from freepik",
     price: 150,
     currency: "USD",
+    total: 100,
     image: leatherHandBag,
   },
   {
@@ -239,6 +264,7 @@ export const products = [
     description: "bag from freepik",
     price: 110,
     currency: "USD",
+    total: 100,
     image: femaleHandBag,
   },
   {
@@ -247,6 +273,7 @@ export const products = [
     description: "bag from freepik",
     price: 120,
     currency: "USD",
+    total: 100,
     image: eleganceYellowBag,
   },
   {
@@ -255,6 +282,7 @@ export const products = [
     description: "bag from freepik",
     price: 75,
     currency: "USD",
+    total: 100,
     image: capciusFemalePurse,
   },
   {
@@ -263,6 +291,7 @@ export const products = [
     description: "bag from freepik",
     price: 90,
     currency: "USD",
+    total: 100,
     image: cottonToteBags,
   },
   {
@@ -271,6 +300,7 @@ export const products = [
     description: "bag from freepik",
     price: 100,
     currency: "USD",
+    total: 100,
     image: blackToteBag,
   },
   {
@@ -279,6 +309,7 @@ export const products = [
     description: "hats freepik",
     price: 200,
     currency: "USD",
+    total: 100,
     image: hatsCollection,
   },
 ];

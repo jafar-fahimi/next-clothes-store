@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const initialItems: ItemPropsType[] = [
-    { id: "price_1MfxIgJna0QE1h10zbsuK1r9", name: "Brown Brim", imageUrl: hatsCollection, price: 25, qty: 3 },
+    { id: "price_1MfxIgJna0QE1h10zbsuK1r9", name: "Brown Brim", imageUrl: hatsCollection, price: 25, qty: 3, total:97 },
   ];
   const totalItemsValue = initialItems.reduce((acc, cur) => acc + cur.qty, 0);
   const totalPriceValue = initialItems.reduce((acc, cur) => acc + cur.price * cur.qty, 0);

@@ -9,6 +9,7 @@ type Props = {
     name: string;
     price: number;
     imageUrl: string;
+    total: number;
   };
 };
 type RealProps = {
@@ -16,6 +17,7 @@ type RealProps = {
   name: string;
   price: number;
   imageUrl: string | StaticImageData;
+  total: number;
 };
 export default function ProductItem(props: RealProps) {
   // console.log("props in productItem: ", props);
