@@ -1,4 +1,3 @@
-import { backdropClasses } from "@mui/material";
 import {
   acessoryTraditional,
   aPairOfTrainers,

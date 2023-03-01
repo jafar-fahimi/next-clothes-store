@@ -4,7 +4,14 @@ import { ItemPropsType } from "utils/types";
 
 // initial value for cartItems
 const initialItems: ItemPropsType[] = [
-  { id: "price_1MfxIgJna0QE1h10zbsuK1r9", name: "Brown Brim", imageUrl: hatsCollection, price: 25, qty: 3 },
+  {
+    id: "price_1MfxIgJna0QE1h10zbsuK1r9",
+    name: "Brown Brim",
+    imageUrl: hatsCollection,
+    price: 25,
+    qty: 3,
+    total: 97,
+  },
 ];
 type StateAction = {
   cartItems: ItemPropsType[];
@@ -28,10 +35,18 @@ const itemSlice = createSlice({
   reducers: {
     addToCart(state: StateAction, action: { payload: ItemPropsType }) {
       if (state.cartItems.findIndex((item) => item.id === action.payload.id) !== -1) {
+        // if the item exist in cart
         const index = state.cartItems.findIndex((item) => item.id === action.payload.id);
-        state.cartItems[index].qty++;
+        const thisItem = state.cartItems[index];
+        if (thisItem.total <= 0) {
+          localStorage.setItem("state", JSON.stringify(state));
+          return;
+        }
+        thisItem.qty += 1;
+        thisItem.total -= 1;
       } else {
         action.payload["qty"] = 1;
+        action.payload.total = 99;
         state.cartItems.push(action.payload);
       }
       state.totalPrice = Number(state.totalPrice + action.payload.price);
@@ -39,13 +54,13 @@ const itemSlice = createSlice({
       localStorage.setItem("state", JSON.stringify(state));
     },
     deleteFromCart: (state: StateAction, action: { payload: ItemPropsType }) => {
-      const prevItem = state.cartItems.find((item) => item.name == action.payload.name);
-      if (prevItem) {
+      const toDeleteItem = state.cartItems.find((item) => item.name === action.payload.name);
+      if (toDeleteItem) {
         // decreasing totalPrice:
-        const toDeleteItem = state.cartItems.find((item) => item.name === action.payload.name);
         state.totalPrice -= (toDeleteItem?.price as number) * (toDeleteItem?.qty as number);
         // as; to declare that it's never undefined
         state.totalItems -= toDeleteItem?.qty as number;
+        toDeleteItem.total = 100;
         const nextStateItems = state.cartItems.filter((item) => item.name !== action.payload.name);
         state.cartItems = nextStateItems;
       } else {
@@ -64,6 +79,7 @@ const itemSlice = createSlice({
           prevItem.qty = 0;
         } else {
           prevItem.qty--;
+          prevItem.total += 1;
           state.totalPrice -= +prevItem.price;
           state.totalItems -= 1;
         }

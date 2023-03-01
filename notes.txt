@@ -13,3 +13,8 @@ APIs are broadly accepted and used in web applications. There are four different
 
 what is js sdk:
 SDK stands for "software development kit," which in a JavaScript context often means a library for interacting with a specific REST API.
+
+steps:
+1 in index.js ssr to fetch products from mongodb & store them on products.
+2 add total & existing in checkout page. 
+3 on pay button -> in itemSlice change all Data & again upload them to mongodb.

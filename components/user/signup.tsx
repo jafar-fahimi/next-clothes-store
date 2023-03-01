@@ -1,4 +1,4 @@
-import { AuthError, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "firebaseApp";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";

@@ -16,7 +16,7 @@ export default function OneItem(props: Props) {
       <div className="flex flex-col text-sm lg:text-[16px]">
         <h4>{props.name}</h4>
         <span>
-          {props.qty} x {props.price}
+          {props.qty} x {props.price}$
         </span>
       </div>
     </div>
