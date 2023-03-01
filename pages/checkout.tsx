@@ -5,6 +5,7 @@ import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
 import React, { useState } from "react";
+import products from "utils/products";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -14,7 +15,6 @@ type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
 type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
 
 let cartItems2: ItemPropsType[];
-
 export default function Checkout() {
   const redirectToCheckout = async () => {
     try {
@@ -55,13 +55,13 @@ export default function Checkout() {
     setStripeError(null);
   }
   return (
-    <section className="w-full mt-8">
+    <section className="w-full scale-[80%] md:scale-100 mt-4 sm:mt-8">
       <div className="max-w-4xl flex flex-col mx-auto items-center">
         <table>
           <tbody>
-            <tr className="text-lg flex space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
-              <td className="w-40">Product</td>
-              <td className="w-28">Description</td>
+            <tr className="text-lg flex space-x-12 md:space-x-20 lg:space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
+              <td className="sm:w-40">Product</td>
+              <td className="sm:w-28">Description</td>
               <td>Price</td>
               <td>Quantity</td>
               <td>Total</td>
@@ -69,13 +69,13 @@ export default function Checkout() {
             </tr>
             {itemStateArray.map((item) => (
               <tr
-                className="text-lg flex space-x-32 border-b-2 border-black/30 items-center justify-evenly pb-3 mb-3"
+                className="text-lg flex space-x-0 md:space-x-20 lg:space-x-32 border-b-2 border-black/30 items-center justify-evenly pb-3 mb-3"
                 key={item.id}
               >
-                <td className="w-36">
+                <td className="md:w-36 w-20">
                   <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
                 </td>
-                <td className="text-xl w-28">{item.name}</td>
+                <td className="text-xl md:w-28">{item.name}</td>
                 <td>{item.price}$</td>
                 <td className="flex items-end">
                   <button
@@ -86,14 +86,14 @@ export default function Checkout() {
                       fill="none"
                       stroke="#000"
                       className="w-6 h-6"
-                      stroke-width="1.8"
+                      strokeWidth={1.8}
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M15.75 19.5L8.25 12l7.5-7.5"
                       ></path>
                     </svg>
@@ -107,16 +107,12 @@ export default function Checkout() {
                       fill="none"
                       stroke="currentColor"
                       className="w-6 h-6"
-                      stroke-width="1.8"
+                      strokeWidth={1.8}
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                      ></path>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
                     </svg>
                   </button>
                 </td>
@@ -126,14 +122,14 @@ export default function Checkout() {
                     <svg
                       fill="none"
                       stroke="#000"
-                      stroke-width="2"
+                      strokeWidth={2}
                       color="#000"
                       className="w-7 h-7"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                     >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                   </button>
                 </td>
