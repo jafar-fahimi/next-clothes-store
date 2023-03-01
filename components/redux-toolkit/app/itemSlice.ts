@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { productState } from "atoms/productAtom";
+// import UseCartItems from "atoms/useCartItems";
 import { hatsCollection } from "public/images";
 import { ItemPropsType } from "utils/types";
+// import { useRecoilValue } from "recoil";
 
 // initial value for cartItems
 const initialItems: ItemPropsType[] = [
@@ -13,11 +16,16 @@ const initialItems: ItemPropsType[] = [
     total: 97,
   },
 ];
+
 type StateAction = {
   cartItems: ItemPropsType[];
   totalPrice: number;
   totalItems: number;
 };
+
+// const existingItemsArray = useRecoilValue(productState);
+// const existingItemsArray = UseCartItems2();
+// console.log("existingItemsArray : ", existingItemsArray);
 
 type setCartPayloadType = {
   stateCartItems: ItemPropsType[];
@@ -46,7 +54,7 @@ const itemSlice = createSlice({
         thisItem.total -= 1;
       } else {
         action.payload["qty"] = 1;
-        action.payload.total = 99;
+        // action.payload.total = 99; // set it from useRecoilValue
         state.cartItems.push(action.payload);
       }
       state.totalPrice = Number(state.totalPrice + action.payload.price);
@@ -87,6 +95,15 @@ const itemSlice = createSlice({
       localStorage.setItem("state", JSON.stringify(state));
     },
     setCart: (state: StateAction, action: { payload: setCartPayloadType }) => {
+      // setCart is just used in <Layout /> to take data from localStorage if any.
+      state.cartItems = action.payload.stateCartItems;
+      state.totalItems = action.payload.stateTotalItems;
+      state.totalPrice = action.payload.stateTotalPrice;
+
+      console.log("action.payload is ", action.payload);
+      // localStorage.setItem("state", JSON.stringify(state));
+    },
+    setAllData: (state: StateAction, action: { payload: setCartPayloadType }) => {
       // setCart is just used in <Layout /> to take data from localStorage if any.
       state.cartItems = action.payload.stateCartItems;
       state.totalItems = action.payload.stateTotalItems;
