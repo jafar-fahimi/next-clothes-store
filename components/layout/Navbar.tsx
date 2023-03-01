@@ -7,6 +7,7 @@ import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
 import { auth } from "firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Popover } from "@mui/material";
 
 type Props = {
   id: number;
@@ -19,6 +20,10 @@ type Props = {
 type selectorType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 export default function Navbar() {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   const {
     cartItems: itemStateArray,
     totalPrice,
@@ -67,8 +72,18 @@ export default function Navbar() {
               {totalItems}
             </span>
           </div>
-          {cartOverview && (
-            <div className="absolute flex flex-col justify-between top-14 right-5 w-72 z-10 border-2 border-black bg-white p-4 ">
+          <Popover
+            className="absolute flex flex-col justify-between top-14 w-full z-10 bg-transparent p-4"
+            open={cartOverview}
+            id={id}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            onClose={() => setCartOverview(false)}
+          >
+            <div className="w-full z-10 bg-white p-3">
               <div className="space-y-4 mb-8 overflow-y-auto">
                 {itemStateArray.map((item) => (
                   <OneItem
@@ -83,12 +98,12 @@ export default function Navbar() {
               </div>
               <Link
                 href="/checkout"
-                className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4"
+                className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 text-center"
               >
                 go to checkout
               </Link>
             </div>
-          )}
+          </Popover>
         </li>
       </ul>
 
