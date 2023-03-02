@@ -5,6 +5,8 @@ import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { productState } from "atoms/productAtom";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -23,12 +25,14 @@ export default function Checkout() {
     (state: { item: stateItemType }) => state.item
   );
   cartItems2 = itemStateArray;
+  const preExistData = useRecoilValue(productState);
   const redirectToCheckout = async () => {
     try {
       setStripeIsLoading(true);
       const stripe = await getStripe();
       const { data } = await axios.post("/api/checkout_sessions", {
         items: cartItems2,
+        preExistData,
       });
 
       // after successfully payment, make cart empty:
