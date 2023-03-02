@@ -42,13 +42,13 @@ export default function Navbar() {
     <nav className="w-full flex py-6 justify-between items-center navbar ">
       <Image src={nextLogo} alt="hoobank" width={100} height={50} />
       <ul className="list-none sm:flex hidden justify-end items-center flex-1 text-sm border-box md:text-lg lg:text-xl">
-        <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+        <li className="cursor-pointer mx-4  font-normal text-black hover:text-slate-500 focus:font-semibold">
           <Link href="/">Shop</Link>
         </li>
-        <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+        <li className="cursor-pointer mx-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
           <Link href="contact">Contact</Link>
         </li>
-        <li className="cursor-pointer mx-4 font-normal hover:font-semibold focus:font-semibold">
+        <li className="cursor-pointer mx-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
           {!user ? (
             <a href="signin">Sign In</a>
           ) : (
@@ -65,7 +65,7 @@ export default function Navbar() {
         <li className="relative mx-4 font-normal focus:font-semibold">
           <div
             onClick={() => setCartOverview(!cartOverview)}
-            className="hover:cursor-pointer  hover:font-semibold  relative"
+            className="hover:cursor-pointer  text-black hover:text-slate-500 relative"
           >
             <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
@@ -120,13 +120,13 @@ export default function Navbar() {
           } p-6 bg-black-gradient absolute top-10 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
           <ul className="list-none flex items-start justify-center py-4 px-4 bg-white flex-1 flex-col gap-4 border-2 border-black">
-            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
               <Link href="/">Shop</Link>
             </li>
-            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
               <Link href="contact">Contact</Link>
             </li>
-            <li className="cursor-pointer box-border px-4 font-normal hover:font-semibold focus:font-semibold">
+            <li className="cursor-pointer box-border px-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
               {!user ? (
                 <a href="signin">Sign In</a>
               ) : (
@@ -143,7 +143,7 @@ export default function Navbar() {
             <li className="relative box-border px-4 font-normal focus:font-semibold">
               <div
                 onClick={() => setCartOverview(!cartOverview)}
-                className="hover:cursor-pointer hover:font-semibold  relative"
+                className="hover:cursor-pointer text-black hover:text-slate-500  relative"
               >
                 <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
