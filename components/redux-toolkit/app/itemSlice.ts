@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { productState } from "atoms/productAtom";
-// import UseCartItems from "atoms/useCartItems";
 import { hatsCollection } from "public/images";
 import { ItemPropsType } from "utils/types";
-// import { useRecoilValue } from "recoil";
 
 // initial value for cartItems
 const initialItems: ItemPropsType[] = [
@@ -23,10 +20,6 @@ type StateType = {
   totalPrice: number;
   totalItems: number;
 };
-
-// const existingItemsArray = useRecoilValue(productState);
-// const existingItemsArray = UseCartItems2();
-// console.log("existingItemsArray : ", existingItemsArray);
 
 type setCartPayloadType = {
   stateCartItems: ItemPropsType[];
@@ -104,13 +97,10 @@ const itemSlice = createSlice({
       state.cartItems = action.payload.stateCartItems;
       state.totalItems = action.payload.stateTotalItems;
       state.totalPrice = action.payload.stateTotalPrice;
-
-      // console.log("action.payload is ", action.payload);
-      // localStorage.setItem("state", JSON.stringify(state));
+      localStorage.setItem("state", JSON.stringify(state));
     },
     setAllData: (state: StateType, action: { payload: ItemPropsType[] }) => {
       state.allExistingCarts = action.payload;
-      // console.log("action.payload is ", action.payload);
     },
   },
 });

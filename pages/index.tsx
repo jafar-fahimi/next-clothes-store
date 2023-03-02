@@ -6,11 +6,12 @@ import { useRecoilState } from "recoil";
 import { productState } from "atoms/productAtom";
 import { useDispatch } from "react-redux";
 import { setAllData } from "components/redux-toolkit/app/itemSlice";
+import { GetServerSideProps, GetStaticProps } from "next";
 
 function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
-
+  // console.log("document length ", res[0].document.length);
   // by setAllData; define state.allExistingCarts!
   const dispatch = useDispatch();
   dispatch(setAllData(products));
@@ -28,7 +29,7 @@ function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
   );
 }
 export default HomePage;
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   // next-js-typeerror-failed-to-parse-url-from-api-projects // when fetching localhost
   let client;
   try {
@@ -47,4 +48,4 @@ export async function getStaticProps() {
   return {
     props: { res },
   };
-}
+};

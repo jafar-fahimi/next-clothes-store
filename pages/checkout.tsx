@@ -15,6 +15,14 @@ type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItem
 
 let cartItems2: ItemPropsType[];
 export default function Checkout() {
+  const dispatch = useDispatch();
+
+  const [stripeIsLoading, setStripeIsLoading] = useState(false);
+  const [stripeError, setStripeError] = useState(null);
+  const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
+    (state: { item: stateItemType }) => state.item
+  );
+  cartItems2 = itemStateArray;
   const redirectToCheckout = async () => {
     try {
       setStripeIsLoading(true);
@@ -22,23 +30,17 @@ export default function Checkout() {
       const { data } = await axios.post("/api/checkout_sessions", {
         items: cartItems2,
       });
-      stripe.redirectToCheckout({ sessionId: data.session.id });
-      setStripeIsLoading(false);
+
       // after successfully payment, make cart empty:
       dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
+      localStorage.setItem("state", JSON.stringify([]));
+      stripe?.redirectToCheckout({ sessionId: data.session.id });
+      setStripeIsLoading(false);
     } catch (err: any) {
-      console.log("err", err.message);
+      console.log("err is : ", err.message);
       setStripeError(err.message);
     }
   };
-  
-  const dispatch = useDispatch();
-  const [stripeIsLoading, setStripeIsLoading] = useState(false);
-  const [stripeError, setStripeError] = useState(null);
-  const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
-    (state: { item: stateItemType }) => state.item
-  );
-  cartItems2 = itemStateArray;
 
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
