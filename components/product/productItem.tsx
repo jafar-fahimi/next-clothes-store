@@ -20,13 +20,11 @@ type RealProps = {
   total: number;
 };
 export default function ProductItem(props: RealProps) {
-  // console.log("props in productItem: ", props);
   const dispatch = useDispatch();
   const itemStateArray: Props[] = useSelector(
     (state: { item: { cartItems: Props[] } }) => state.item.cartItems
   );
   const shop_data_item = { ...props, qty: 1 };
-  // console.log("shop-data-item in productItme is ; ", shop_data_item);
 
   return (
     <div className="relative border-slate-100 border-2 shadow-lg" key={shop_data_item.id}>
@@ -43,7 +41,6 @@ export default function ProductItem(props: RealProps) {
             href="#"
             className="block py-2 px-8 font-normal uppercase"
             onClick={() => {
-              console.log(itemStateArray);
               return dispatch(addToCart(shop_data_item));
             }}
           >

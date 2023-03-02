@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
-import { connectDatabase, insertData } from "utils/db-utils";
-import products from "utils/products";
+import { connectDatabase, insertData } from "utils/db-utils"; 
 import { ItemPropsType } from "utils/types";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -43,8 +42,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       throw new Error("Connecting to the mongodb database failed!");
     }
     try {
-      const newChangedData: any[] = [];
-      const localProducts = products;
+      const newChangedData: ItemPropsType[] = [];
+      // const localProducts = products;
       const { preExistData } = req.body;
       // localProducts here is not same to products; Next has changed Img urls
       // so when fetching data back from mongodb don't use data's imgUrl
@@ -65,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       // console.log("tempLocalProductsId: ❤️", tempLocalProductsId);
       // console.log("bodyItems 😁😁", bodyItems);
       let result;
-      console.log("newChangedData 💳:", newChangedData);
+      // console.log("newChangedData 💳:", newChangedData);
       console.log("preExistData 🔝🔝:", preExistData);
       result = await insertData(client, "products", newChangedData as []);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
