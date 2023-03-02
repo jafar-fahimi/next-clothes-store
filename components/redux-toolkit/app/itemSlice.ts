@@ -3,16 +3,7 @@ import { hatsCollection } from "public/images";
 import { ItemPropsType } from "utils/types";
 
 // initial value for cartItems
-const initialItems: ItemPropsType[] = [
-  {
-    id: "price_1MfxIgJna0QE1h10zbsuK1r9",
-    name: "Brown Brim",
-    imageUrl: hatsCollection,
-    price: 25,
-    qty: 3,
-    total: 97,
-  },
-];
+const initialItems: ItemPropsType[] = [];
 
 type StateType = {
   allExistingCarts: ItemPropsType[];
@@ -75,18 +66,18 @@ const itemSlice = createSlice({
       localStorage.setItem("state", JSON.stringify(state));
     },
     minusFromCart: (state: StateType, action: { payload: ItemPropsType }) => {
-      const prevItem = state.cartItems.find((item: { name: string }) => item.name == action.payload.name);
-      if (prevItem) {
-        if (prevItem.qty == 0) {
+      const toMinusItem = state.cartItems.find((item: { name: string }) => item.name == action.payload.name);
+      if (toMinusItem) {
+        if (toMinusItem.qty == 1) {
           const nextStateItems = state.cartItems.filter((item) => item.name !== action.payload.name);
           state.cartItems = nextStateItems;
         }
-        if (!prevItem.qty) {
-          prevItem.qty = 0;
+        if (!toMinusItem.qty) {
+          toMinusItem.qty = 0;
         } else {
-          prevItem.qty--;
-          prevItem.total += 1;
-          state.totalPrice -= +prevItem.price;
+          toMinusItem.qty--;
+          toMinusItem.total += 1;
+          state.totalPrice -= +toMinusItem.price;
           state.totalItems -= 1;
         }
       } else return;
