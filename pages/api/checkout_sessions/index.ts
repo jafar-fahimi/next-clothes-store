@@ -45,26 +45,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const newChangedData: any[] = [];
       const localProducts = products;
+      const { preExistData } = req.body;
       // localProducts here is not same to products; Next has changed Img urls
       // so when fetching data back from mongodb don't use data's imgUrl
       const tempLocalProductsId: string[] = [];
       const bodyItems = req.body.items;
       for (let i = 0; i < bodyItems.length; i += 1) {
-        for (let j = 0; j < localProducts.length; j += 1) {
-          if (bodyItems[i].id == localProducts[j].id) {
+        for (let j = 0; j < preExistData.length; j += 1) {
+          if (bodyItems[i].id == preExistData[j].id) {
             // we send equalent localProduct to mongodb not bodyItems, since bodyItems don't have all details:
-            newChangedData.push({ ...localProducts[j], total: bodyItems[i].total });
-          } else if (!tempLocalProductsId.includes(localProducts[j].id)) {
-            newChangedData.push(localProducts[j]);
+            newChangedData.push({ ...preExistData[j], total: bodyItems[i].total });
+          } else if (!tempLocalProductsId.includes(preExistData[j].id)) {
+            newChangedData.push(preExistData[j]);
           }
           //tempLocalProductsId is to avoid duplicate data sending.
-          tempLocalProductsId.push(localProducts[j].id);
+          tempLocalProductsId.push(preExistData[j].id);
         }
       }
-      console.log("tempLocalProductsId: ❤️", tempLocalProductsId);
-      console.log("bodyItems 😁😁", bodyItems);
+      // console.log("tempLocalProductsId: ❤️", tempLocalProductsId);
+      // console.log("bodyItems 😁😁", bodyItems);
       let result;
       console.log("newChangedData 💳:", newChangedData);
+      console.log("preExistData 🔝🔝:", preExistData);
       result = await insertData(client, "products", newChangedData as []);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
       console.log("result insertData is ,", result);
