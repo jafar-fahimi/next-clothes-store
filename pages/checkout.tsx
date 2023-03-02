@@ -80,10 +80,15 @@ export default function Checkout() {
                 className="text-lg flex space-x-0 md:space-x-20 lg:space-x-32 border-b-2 border-black/30 items-center justify-evenly pb-3 mb-3"
                 key={item.id}
               >
-                <td className="md:w-36 w-20">
+                <td className="md:w-28 w-12 sm:w-[20%]">
                   <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
                 </td>
-                <td className="text-xl md:w-28">{item.name}</td>
+                <td className="text-xl md:w-28 w-14 sm:bg-white sm:w-20">
+                  {item.name
+                    .split(" ")
+                    .map((n) => n[0].toUpperCase() + n.slice(1))
+                    .join(" ")}
+                </td>
                 <td>{item.price}$</td>
                 <td className="flex items-end">
                   <button
