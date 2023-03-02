@@ -11,7 +11,6 @@ import { GetServerSideProps, GetStaticProps } from "next";
 function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
-  // console.log("document length ", res[0].document.length);
   // by setAllData; define state.allExistingCarts!
   const dispatch = useDispatch();
   dispatch(setAllData(products));

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { hatsCollection } from "public/images";
 import { ItemPropsType } from "utils/types";
 
 // initial value for cartItems

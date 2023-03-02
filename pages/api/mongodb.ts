@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
 import { connectDatabase, getAllData } from "utils/db-utils";
 
 type Res = {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "components/redux-toolkit/app/itemSlice";
 
 type Props = {
@@ -21,9 +21,6 @@ type RealProps = {
 };
 export default function ProductItem(props: RealProps) {
   const dispatch = useDispatch();
-  const itemStateArray: Props[] = useSelector(
-    (state: { item: { cartItems: Props[] } }) => state.item.cartItems
-  );
   const shop_data_item = { ...props, qty: 1 };
 
   return (
@@ -40,9 +37,7 @@ export default function ProductItem(props: RealProps) {
           <Link
             href="#"
             className="block py-2 px-8 font-normal uppercase"
-            onClick={() => {
-              return dispatch(addToCart(shop_data_item));
-            }}
+            onClick={() => dispatch(addToCart(shop_data_item))}
           >
             Add&nbsp;To&nbsp;Cart
           </Link>

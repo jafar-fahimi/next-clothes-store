@@ -1,4 +1,3 @@
-// import SHOP_DATA from "utils/shop.data";
 import { StaticImageData } from "next/image";
 import { titleTypes } from "utils/types";
 import ProductItem from "./productItem";
@@ -15,17 +14,14 @@ type myProductsType = {
 
 type Props = {
   pitem: titleTypes;
-  // data: PriceProps[];
   data: myProductsType[];
 };
 export default function ProductHome({ pitem, data = [] }: Props) {
-  // console.log("pitem is:", pitem, pitem === "hats");
   const pitem2 = pitem || "items"; // just to avoid pitem-is-undefined error; exist in initial-load
   // took near 10 hours!
 
   const itemData: myProductsType[] = data.filter((d) => d.description.includes(pitem));
   // console.log(`produtcHome pitem is: ${pitem} ${typeof pitem}, itemData is : ${itemData}`);
-  // console.log("itemData is ", itemData);
 
   return (
     <section>

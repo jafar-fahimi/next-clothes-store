@@ -12,8 +12,6 @@ type Inputs = {
 export default function SignUp() {
   const [localLoading, setLocalLoading] = useState(false);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
-  //   const confirmPasswordRef = useRef<MutableRefObject<LegacyRef<HTMLInputElement> | undefined>>();
-  //   const confirmPasswordRef = useRef<LegacyRef<HTMLInputElement> | undefined>();
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
   const router = useRouter();
