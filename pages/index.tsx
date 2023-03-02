@@ -29,7 +29,7 @@ function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
   );
 }
 export default HomePage;
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   // next-js-typeerror-failed-to-parse-url-from-api-projects // when fetching localhost
   let client;
   try {
