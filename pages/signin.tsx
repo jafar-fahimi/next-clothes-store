@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  AuthError,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  User,
-} from "firebase/auth";
-import { auth, googleProvider } from "firebaseApp";
+import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, createUserDocFromAuth, signInWithGoogle } from "utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -38,27 +32,9 @@ const Signin: NextPage = function () {
     router.push("/");
   }
 
-  const signInWithGoogle = async () => {
-    await signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+  const signInAndLogGoogleUser = async () => {
+    const { user } = await signInWithGoogle();
+    await createUserDocFromAuth(user); // loging user data in firestore.
   };
 
   const signIn = async (email: string, password: string) => {
@@ -120,7 +96,7 @@ const Signin: NextPage = function () {
               Sign in
             </button>
             <span
-              onClick={async () => await signInWithGoogle()}
+              onClick={signInAndLogGoogleUser}
               className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
             >
               {/* can't be button! took me 2 days! */}
