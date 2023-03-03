@@ -12,11 +12,11 @@ type Props = {
 function MyApp({ Component, pageProps }: Props) {
   return (
     <Provider store={store}>
-      <Layout>
-        <RecoilRoot>
+      <RecoilRoot>
+        <Layout>
           <Component {...pageProps} />
-        </RecoilRoot>
-      </Layout>
+        </Layout>
+      </RecoilRoot>
     </Provider>
   );
 }

@@ -10,7 +10,7 @@ export default function Catagory({ srcProp, cat }: Props) {
 
   return (
     <Link className="relative border-slate-100 border-2" href={`/${!cat2 ? cat.toLowerCase() : cat2}`}>
-      <div className="w-96 h-60 -z-10 group">
+      <div className="-z-10 group">
         <Image
           alt="Catagory Item Image"
           className="group-hover:scale-105 transition-all w-full h-full duration-500 flex-1"
