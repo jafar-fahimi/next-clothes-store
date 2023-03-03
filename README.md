@@ -6,6 +6,7 @@ This is a [Next.js](https://nextjs.org/) ecommerce project bootstrapped with
 - Style by Tailwindcss.
 - Sending Message via contact page to mongodb & store messages in mongodby
 - firebase authentication by name/email & google account
+- storing signed-in users in firebase firestore
 - Storing shopping items in mongod; on checkout page after stripe payment is done
 - getStaticProps with revalidate; fetching update data from mongodb in home page
 - storing updated shopping data in recoil state atom.
