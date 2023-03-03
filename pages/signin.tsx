@@ -6,6 +6,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SignUp from "components/user/signup";
+import { useRecoilState } from "recoil";
+import { userAtom } from "atoms/userAtom";
 
 type Inputs = {
   email: string;
@@ -19,7 +21,18 @@ const Signin: NextPage = function () {
   const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<null | AuthError>(null);
   const router = useRouter();
+  const [signedInUser, setSignedInUser] = useRecoilState(userAtom);
 
+  function setSignedInUserData(email: string, displayName: string, uid: string) {
+    // to set userAtom & localStorage so that we can go from 1 page to another.
+    // if we don't set localStorage & userAtom in each page there's check to see if we have value.
+    setSignedInUser({
+      uid,
+      email,
+      displayName,
+    });
+    localStorage.setItem("userData", JSON.stringify({ email, displayName, uid }));
+  }
   const {
     register,
     handleSubmit,
@@ -32,7 +45,11 @@ const Signin: NextPage = function () {
   const signInAndLogGoogleUser = async () => {
     try {
       const { user } = await signInWithGoogle();
-      await createUserDocFromAuth(user); // loging user data in firestore.
+      // loging user data(displayName, email, password) in firestore.
+      await createUserDocFromAuth(user);
+
+      // set userAtom value: is used when buying items to store data with user in firestore.
+      setSignedInUserData(user.email as string, user.displayName as string, user.uid as string);
       router.push("/");
     } catch (error: any) {
       alert("Error occurred while sigining with google; " + error.message);
@@ -44,11 +61,25 @@ const Signin: NextPage = function () {
     // await func; so that its done completely, before other codes. not for then.
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // set userAtom value: is used when buying items to store data with user in firestore.
+        setSignedInUserData(
+          userCredential.user.email as string,
+          userCredential.user.displayName as string,
+          userCredential.user.uid as string
+        );
         router.push("/");
       })
-      .catch((err) => {
-        alert(err.message);
-        setError(err.message);
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/wrong-password":
+            alert("Incorrect Password for email.");
+            break;
+          case "auth/user-not-found":
+            alert("There is no user associated with this email.");
+            break;
+          default:
+            alert(error);
+        }
       })
       .finally(() => {
         setLocalLoading(false);
@@ -101,13 +132,14 @@ const Signin: NextPage = function () {
             <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all  text-sm sm:text-base duration-300">
               Sign in
             </button>
-            <span
+            <button
+              type="button"
               onClick={signInAndLogGoogleUser}
               className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
             >
-              {/* can't be button! took me 2 days! */}
+              {/* can't be button! took me 2 days! since by def button is; submit */}
               Sign in with google
-            </span>
+            </button>
           </div>
         </form>
       </div>

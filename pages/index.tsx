@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import AllCatagories from "components/catagory/allCatagories";
 import { connectDatabase, getAllData } from "utils/db-utils";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { productState } from "atoms/productAtom";
 import { useDispatch } from "react-redux";
 import { setAllData } from "components/redux-toolkit/app/itemSlice";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
+import { userAtom } from "atoms/userAtom";
 
-function HomePage({ res }: { res: { _id: number; document: [] }[] }) {
+type Props = {
+  res: { _id: number; document: [] }[];
+};
+function HomePage({ res }: Props) {
+  const router = useRouter(); // if user is not signed-in go to signin page
+  const userDetails = useRecoilValue(userAtom);
+  useEffect(() => {
+    const userInfo =
+      localStorage.getItem("userData") !== "undefined"
+        ? JSON.parse(localStorage.getItem("userData") as string)
+        : null;
+    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+  }, []);
+
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
   // by setAllData; define state.allExistingCarts!
