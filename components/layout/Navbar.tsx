@@ -5,7 +5,7 @@ import nextLogo from "public/next.svg";
 import { menu, close, bagIcon2 } from "public/assets/";
 import OneItem from "./oneItem";
 import { useSelector } from "react-redux";
-import { auth } from "firebaseApp";
+import { auth } from "utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Popover } from "@mui/material";
 
