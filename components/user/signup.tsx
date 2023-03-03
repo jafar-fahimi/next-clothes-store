@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "firebaseApp";
+import { auth, createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils/firebase";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -13,26 +13,37 @@ export default function SignUp() {
   const [localLoading, setLocalLoading] = useState(false);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
 
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<Inputs>();
 
   const signUp = async (email: string, password: string) => {
-    setLocalLoading(true);
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        router.push("/");
-        // router.push("/").then(() => router.push("/"));
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
-      .finally(() => setLocalLoading(false));
+    try {
+      setLocalLoading(true);
+      const { user }: any = await createAuthUserWithEmailAndPassword(email, password);
+      if (nameRef.current !== null) {
+        var result = await createUserDocFromAuth(user, { displayName: nameRef.current.value });
+      }
+      setLocalLoading(false);
+      // console.log(result);
+      router.push("/");
+    } catch (error: any) {
+      setLocalLoading(false);
+      if (error.code === "auth/email-already-in-use") {
+        alert("Cannot create user, email is already in use");
+      } else {
+        console.log("user creation encountered an error", error);
+      }
+    }
+    resetField("email");
+    resetField("password");
   };
 
   const onSubmitSignUp: SubmitHandler<Inputs> = async ({ email, password }) => {
@@ -47,6 +58,7 @@ export default function SignUp() {
         <input
           type="text"
           placeholder="Display Name"
+          ref={nameRef}
           className={`border-0 placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none `}
           required
         />
