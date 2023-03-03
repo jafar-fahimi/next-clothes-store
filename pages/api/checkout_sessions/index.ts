@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
-import { connectDatabase, insertData } from "utils/db-utils"; 
+import { connectDatabase, insertData } from "utils/db-utils";
+import { createUserOrdersFromAuth } from "utils/firebase";
 import { ItemPropsType } from "utils/types";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -28,6 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         cancel_url: `${req.headers.origin}/`,
       };
       const session = await stripe.checkout.sessions.create(sessionItem);
+      await createUserOrdersFromAuth(session, req.body.userDetails);
+      // console.log("session is ", session);
       res.status(200).json({ session });
     } catch (err: any) {
       console.log("err : ", err.message);
@@ -61,14 +64,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           tempLocalProductsId.push(preExistData[j].id);
         }
       }
-      // console.log("tempLocalProductsId: ❤️", tempLocalProductsId);
-      // console.log("bodyItems 😁😁", bodyItems);
+
       let result;
-      // console.log("newChangedData 💳:", newChangedData);
-      console.log("preExistData 🔝🔝:", preExistData);
       result = await insertData(client, "products", newChangedData as []);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
-      console.log("result insertData is ,", result);
     } catch (error: any) {
       console.log("error is : ", error.message);
       // res.status(500).json({ statusCode: 500, message: (error as unknown as Error).message });
