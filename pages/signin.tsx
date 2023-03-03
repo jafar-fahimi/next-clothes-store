@@ -16,25 +16,27 @@ type Inputs = {
 const Signin: NextPage = function () {
   // or: = () => {}
   const [user, loading] = useAuthState(auth);
-  const router = useRouter();
   const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<null | AuthError>(null);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<Inputs>();
 
   if (loading || localLoading) return <h2>Loading...</h2>;
-  if (user) {
-    alert("You are signed in!");
-    router.push("/");
-  }
 
   const signInAndLogGoogleUser = async () => {
-    const { user } = await signInWithGoogle();
-    await createUserDocFromAuth(user); // loging user data in firestore.
+    try {
+      const { user } = await signInWithGoogle();
+      await createUserDocFromAuth(user); // loging user data in firestore.
+      router.push("/");
+    } catch (error: any) {
+      alert("Error occurred while sigining with google; " + error.message);
+    }
   };
 
   const signIn = async (email: string, password: string) => {
@@ -48,7 +50,11 @@ const Signin: NextPage = function () {
         alert(err.message);
         setError(err.message);
       })
-      .finally(() => setLocalLoading(false));
+      .finally(() => {
+        setLocalLoading(false);
+        resetField("email");
+        resetField("password");
+      });
   };
 
   const onSubmitSignIn: SubmitHandler<Inputs> = async ({ email, password }) => {
