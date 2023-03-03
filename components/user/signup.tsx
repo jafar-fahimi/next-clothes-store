@@ -2,6 +2,8 @@ import { createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { userAtom } from "atoms/userAtom";
 
 type Inputs = {
   email: string;
@@ -14,6 +16,7 @@ export default function SignUp() {
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
   const [nameInput, setNameInput] = useState<string>("");
   const router = useRouter();
+  const [signedInUser, setSignedInUser] = useRecoilState(userAtom);
 
   const {
     register,
@@ -30,16 +33,31 @@ export default function SignUp() {
       // same as directly await crea... both is-called = start-working-now
       setLocalLoading(false);
 
+      setSignedInUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      });
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          email: user.email,
+          displayName: user.displayName,
+          uid: user.uid,
+        })
+      );
+
       router.push("/");
     } catch (error: any) {
       setLocalLoading(false);
       if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email is already in use");
+        alert("Cannot create user, email is already in use.");
       } else {
-        console.log("user creation encountered an error", error);
-        alert("user creation encountered an error; " + error.message);
+        alert("user creation encountered an error. \n" + error.message);
       }
     }
+    // resetting values:
+    setNameInput("");
     resetField("email");
     resetField("password");
   };
@@ -82,13 +100,13 @@ export default function SignUp() {
           }`}
           {...register("password", {
             required: true,
-            minLength: 4,
+            minLength: 6,
             maxLength: 60,
           })}
         />
         <p className="py-2 mb-8 text-[13px] font-light text-orange-500">
           {errors.password && (
-            <span className="absolute"> Your password must contain between 4 and 60 characters.</span>
+            <span className="absolute"> Your password must contain between 6 and 60 characters.</span>
           )}
         </p>
         <input

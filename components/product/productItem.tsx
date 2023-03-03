@@ -3,15 +3,6 @@ import Image, { StaticImageData } from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "components/redux-toolkit/app/itemSlice";
 
-type Props = {
-  shop_data_item: {
-    id: number;
-    name: string;
-    price: number;
-    imageUrl: string;
-    total: number;
-  };
-};
 type RealProps = {
   id: string;
   name: string;
