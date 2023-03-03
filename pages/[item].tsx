@@ -2,9 +2,10 @@ import { productState } from "atoms/productAtom";
 import ProductHome from "components/product/productHome";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import products from "utils/products";
 import { PriceProps, titleTypes } from "utils/types";
 import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { userAtom } from "atoms/userAtom";
 
 type Props = {
   prices: PriceProps[];
@@ -12,10 +13,18 @@ type Props = {
 const HatsPage: NextPage<Props> = () => {
   const router = useRouter();
 
+  const userDetails = useRecoilValue(userAtom);
+  useEffect(() => {
+    const userInfo =
+      localStorage.getItem("userData") !== "undefined"
+        ? JSON.parse(localStorage.getItem("userData") as string)
+        : null;
+    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+  }, []);
+
   type dataProps = { item: titleTypes };
   const item: any = router.query.item as unknown as dataProps;
   const mongoDbProducts = useRecoilValue(productState);
-  // console.log("mongodb products", mongoDbProducts);
   return <ProductHome pitem={item} data={mongoDbProducts || []} />;
 };
 

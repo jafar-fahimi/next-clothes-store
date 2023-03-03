@@ -1,8 +1,11 @@
+import React from "react";
+import { userAtom } from "atoms/userAtom";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
 
-export default function Example() {
+export default function Contact() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const router = useRouter();
   const sendDataHandler = async () => {
@@ -39,6 +42,18 @@ export default function Example() {
   const emailRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
+
+  // if user is not signed-in go to signin page
+  const userDetails = useRecoilValue(userAtom);
+
+  React.useEffect(() => {
+    const userInfo =
+      localStorage.getItem("userData") !== "undefined"
+        ? JSON.parse(localStorage.getItem("userData") as string)
+        : null;
+    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+  }, []);
+
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">

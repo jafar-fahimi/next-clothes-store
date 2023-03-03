@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import getStripe from "utils/get-stripe";
 import { ItemPropsType } from "utils/types";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { productState } from "atoms/productAtom";
+import { userAtom } from "atoms/userAtom";
+import { useRouter } from "next/router";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -15,24 +17,33 @@ import { productState } from "atoms/productAtom";
 type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
 type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
 
-let cartItems2: ItemPropsType[];
 export default function Checkout() {
   const dispatch = useDispatch();
-
   const [stripeIsLoading, setStripeIsLoading] = useState(false);
   const [stripeError, setStripeError] = useState(null);
   const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
     (state: { item: stateItemType }) => state.item
   );
-  cartItems2 = itemStateArray;
   const preExistData = useRecoilValue(productState);
+
+  const router = useRouter();
+  const userDetails = useRecoilValue(userAtom); // if user is not signed-in go to signin page
+  useEffect(() => {
+    const userInfo =
+      localStorage.getItem("userData") !== "undefined"
+        ? JSON.parse(localStorage.getItem("userData") as string)
+        : null;
+    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+  }, []);
+
   const redirectToCheckout = async () => {
     try {
       setStripeIsLoading(true);
       const stripe = await getStripe();
       const { data } = await axios.post("/api/checkout_sessions", {
-        items: cartItems2,
+        items: itemStateArray,
         preExistData,
+        userDetails,
       });
 
       // after successfully payment, make cart empty:
@@ -41,7 +52,7 @@ export default function Checkout() {
       stripe?.redirectToCheckout({ sessionId: data.session.id });
       setStripeIsLoading(false);
     } catch (err: any) {
-      console.log("err is : ", err.message);
+      alert("Error occured while proceeding your payment; ", err.message);
       setStripeError(err.message);
     }
   };
