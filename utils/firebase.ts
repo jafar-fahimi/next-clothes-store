@@ -62,7 +62,7 @@ export const createUserDocFromAuth = async (userAuth: any, additionalInformation
   // doc(db, 'collection/table', 'identifier; unique-id of this row')
   // it's just a ref; points to some unique point/path in db. // don't exist actually now.
   const userSnapshot = await getDoc(userDocRef); // return d data in d previous ref.
-  console.log(userSnapshot.exists()); // false now
+  // console.log(userSnapshot.exists()); // false if user with userAuth.id doesn't exist
 
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
@@ -70,13 +70,13 @@ export const createUserDocFromAuth = async (userAuth: any, additionalInformation
     try {
       // displayName is used & shown for users set in firestore.
       await setDoc(userDocRef, {
-        displayName: "firebase",
+        displayName,
         email,
         createdAt: createdDate,
         ...additionalInformation,
       });
     } catch (error: any) {
-      console.log("error at creating the user", error.message);
+      alert("error at creating the user; " + error.message);
     }
   }
   return userDocRef; // if userSnapshot.exist() & not exist!
@@ -84,6 +84,8 @@ export const createUserDocFromAuth = async (userAuth: any, additionalInformation
 
 export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {
   if (!email || !password) return;
+  // const res = await createUserWithEmailAndPassword(auth, email, password);
+  // return res; // same as:
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 

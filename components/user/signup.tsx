@@ -1,5 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils/firebase";
+import { createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils/firebase";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -13,8 +12,7 @@ export default function SignUp() {
   const [localLoading, setLocalLoading] = useState(false);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
-  const nameRef = useRef<HTMLInputElement | null>(null);
-
+  const [nameInput, setNameInput] = useState<string>("");
   const router = useRouter();
 
   const {
@@ -28,11 +26,10 @@ export default function SignUp() {
     try {
       setLocalLoading(true);
       const { user }: any = await createAuthUserWithEmailAndPassword(email, password);
-      if (nameRef.current !== null) {
-        var result = await createUserDocFromAuth(user, { displayName: nameRef.current.value });
-      }
+      var result = await createUserDocFromAuth(user, { displayName: nameInput });
+      // same as directly await crea... both is-called = start-working-now
       setLocalLoading(false);
-      // console.log(result);
+
       router.push("/");
     } catch (error: any) {
       setLocalLoading(false);
@@ -40,6 +37,7 @@ export default function SignUp() {
         alert("Cannot create user, email is already in use");
       } else {
         console.log("user creation encountered an error", error);
+        alert("user creation encountered an error; " + error.message);
       }
     }
     resetField("email");
@@ -58,9 +56,10 @@ export default function SignUp() {
         <input
           type="text"
           placeholder="Display Name"
-          ref={nameRef}
-          className={`border-0 placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none `}
+          className="border-0 placeholder-slate-600 py-[2px] border-b-2 block w-full lg:text-xl outline-none "
           required
+          value={nameInput}
+          onChange={(eve) => setNameInput(eve.target.value)}
         />
         <p className="py-2 mb-4 text-[13px] font-light text-orange-500"></p>
         <input

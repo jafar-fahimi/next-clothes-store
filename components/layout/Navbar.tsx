@@ -49,18 +49,7 @@ export default function Navbar() {
           <Link href="contact">Contact</Link>
         </li>
         <li className="cursor-pointer mx-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
-          {!user ? (
-            <a href="signin">Sign In</a>
-          ) : (
-            <button
-              onClick={() => {
-                auth.signOut();
-                console.log("signed out from navbar;", user.displayName);
-              }}
-            >
-              Sign out
-            </button>
-          )}
+          {!user ? <a href="signin">Sign In</a> : <button onClick={() => auth.signOut()}>Sign out</button>}
         </li>
         <li className="relative mx-4 font-normal focus:font-semibold">
           <div
