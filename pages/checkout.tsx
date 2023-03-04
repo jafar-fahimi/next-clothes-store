@@ -27,14 +27,17 @@ export default function Checkout() {
   const preExistData = useRecoilValue(productState);
 
   const router = useRouter();
-  const userDetails = useRecoilValue(userAtom); // if user is not signed-in go to signin page
-
+  let userInfo;
+  const userDetailsFromRecoil = useRecoilValue(userAtom);
+  let userDetailsFromRecoilOrLs: {};
   useEffect(() => {
-    const userInfo =
+    // if user is not signed-in go to signin page
+    userInfo =
       localStorage.getItem("userData") !== "undefined"
         ? JSON.parse(localStorage.getItem("userData") as string)
         : null;
-    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+    userDetailsFromRecoilOrLs = userDetailsFromRecoil?.uid !== "" ? userDetailsFromRecoil : userInfo;
+    if (userDetailsFromRecoil?.uid === "" && userInfo?.uid === "") router.push("/signin");
   }, []);
 
   const redirectToCheckout = async () => {
@@ -44,7 +47,7 @@ export default function Checkout() {
       const { data } = await axios.post("/api/checkout_sessions", {
         items: itemStateArray,
         preExistData,
-        userDetails,
+        userDetails: userDetailsFromRecoilOrLs,
       });
 
       // after successfully payment, make cart empty:

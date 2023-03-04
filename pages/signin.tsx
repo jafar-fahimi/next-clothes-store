@@ -132,13 +132,13 @@ const Signin: NextPage = function () {
             )}
           </p>
           <div className="flex justify-between gap-x-4 mt-4">
-            <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all  text-sm sm:text-base duration-300">
+            <button className="flex-1 scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-black text-white hover:text-black hover:bg-white border-2 border-transparent hover:border-black transition-all  text-sm sm:text-base duration-300">
               Sign in
             </button>
             <button
               type="button"
               onClick={signInAndLogGoogleUser}
-              className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-1 sm:py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
+              className="flex-1 hover:cursor-pointer text-center scale-90 sm:scale-100 uppercase box-border sm:px-6 py-4 bg-blue-600 text-white hover:text-blue-600 hover:bg-white border-2 border-transparent text-sm sm:text-base hover:border-blue-600 transition-all duration-300"
             >
               {/* can't be button! took me 2 days! since by def button is; submit */}
               Sign in with google

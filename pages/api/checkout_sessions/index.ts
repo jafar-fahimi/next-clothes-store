@@ -15,6 +15,7 @@ type Res = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Res>) {
   if (req.method === "POST") {
+    let session;
     try {
       const sessionItem = {
         mode: "payment",
@@ -28,48 +29,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         success_url: `${req.headers.origin}/success?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/`,
       };
-      const session = await stripe.checkout.sessions.create(sessionItem);
-      await createUserOrdersFromAuth(session, req.body.userDetails);
-      // console.log("session is ", session);
+      session = await stripe.checkout.sessions.create(sessionItem);
       res.status(200).json({ session });
     } catch (err: any) {
-      console.log("err : ", err.message);
-      throw new Error(err.message);
+      console.error("error! : " + err.message); // alert don't work in server side
+      throw new Error(err);
     }
+
+    await createUserOrdersFromAuth(session, {
+      ...req.body.userDetails,
+      "purchased-items": { ...req.body.items },
+    });
 
     // send decreased items to mongodb via :
     let client;
     try {
       client = await connectDatabase();
-    } catch (error) {
-      throw new Error("Connecting to the mongodb database failed!");
+    } catch (error: any) {
+      console.error(error.message);
+      throw new Error(error);
     }
     try {
       const newChangedData: ItemPropsType[] = [];
-      // const localProducts = products;
       const { preExistData } = req.body;
       // localProducts here is not same to products; Next has changed Img urls
       // so when fetching data back from mongodb don't use data's imgUrl
       const tempLocalProductsId: string[] = [];
       const bodyItems = req.body.items;
+
       for (let i = 0; i < bodyItems.length; i += 1) {
         for (let j = 0; j < preExistData.length; j += 1) {
-          if (bodyItems[i].id == preExistData[j].id) {
-            // we send equalent localProduct to mongodb not bodyItems, since bodyItems don't have all details:
+          if (bodyItems[i].id === preExistData[j].id) {
             newChangedData.push({ ...preExistData[j], total: bodyItems[i].total });
-          } else if (!tempLocalProductsId.includes(preExistData[j].id)) {
-            newChangedData.push(preExistData[j]);
+            tempLocalProductsId.push(bodyItems[i].id);
           }
-          //tempLocalProductsId is to avoid duplicate data sending.
-          tempLocalProductsId.push(preExistData[j].id);
         }
       }
+      for (let i = 0; i < preExistData.length; i += 1)
+        if (!tempLocalProductsId.includes(preExistData[i].id)) {
+          newChangedData.push(preExistData[i]);
+          tempLocalProductsId.push(preExistData[i].id);
+        }
 
       let result;
       result = await insertData(client, "products", newChangedData as []);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
     } catch (error: any) {
-      console.log("error is : ", error.message);
+      console.error("error is : ", error.message);
       // res.status(500).json({ statusCode: 500, message: (error as unknown as Error).message });
     }
     client.close();
@@ -78,4 +84,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(405).end("Method Not Allowed");
   }
 }
-// tempLocalProductsId: ❤️ [ 'price_1MeckVJna0QE1h10KOotv53u' ]

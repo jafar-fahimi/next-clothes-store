@@ -81,33 +81,28 @@ export const createUserDocFromAuth = async (userAuth: any, additionalInformation
   }
   return userDocRef; // if userSnapshot.exist() & not exist!
 };
-// 
-export const createUserOrdersFromAuth = async (userAuth: any, additionalInformation: {}) => {
+
+export const createUserOrdersFromAuth = async (userAuth: any, additionalInformation: any) => {
   if (!userAuth) return;
 
   const userDocRef = doc(db, "users-orders", userAuth.id);
-  // doc(db, 'collection/table', 'identifier; unique-id of this row')
-  // it's just a ref; points to some unique point/path in db. // don't exist actually now.
-  const userSnapshot = await getDoc(userDocRef); // return d data in d previous ref.
-  // console.log(userSnapshot.exists()); // false if user with userAuth.id doesn't exist
+  const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
+    const { displayName = "", email = "" } = { ...additionalInformation, ...userAuth };
     const createdDate = new Date();
     try {
-      // displayName is used & shown for users set in firestore.
       await setDoc(userDocRef, {
         displayName,
         email,
         createdAt: createdDate,
         ...additionalInformation,
       });
-      console.log("additionalInformation :", additionalInformation);
     } catch (error: any) {
-      alert("error at storing user orders; " + error.message);
+      console.error("Error at storing user orders; " + error.message);
     }
   }
-  return userDocRef; // if userSnapshot.exist() & not exist!
+  return userDocRef;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {

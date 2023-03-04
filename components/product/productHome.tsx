@@ -21,7 +21,6 @@ export default function ProductHome({ pitem, data = [] }: Props) {
   // took near 10 hours!
 
   const itemData: myProductsType[] = data.filter((d) => d.description.includes(pitem));
-  // console.log(`produtcHome pitem is: ${pitem} ${typeof pitem}, itemData is : ${itemData}`);
 
   return (
     <section>

@@ -16,7 +16,7 @@ export default function ProductItem(props: RealProps) {
 
   return (
     <div className="relative border-slate-100 border-2 shadow-lg" key={shop_data_item.id}>
-      <div className="w-64 -z-10 group">
+      <div className="w-64 -z-10 group shadow-sm mb-2">
         <Image
           alt={shop_data_item.name}
           className="w-full h-full"
