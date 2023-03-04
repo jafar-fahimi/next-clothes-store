@@ -35,7 +35,12 @@ export default function ProductItem(props: RealProps) {
         </div>
       </div>
       <div className="flex px-2 pb-1 justify-between">
-        <span>{shop_data_item.name}</span>
+        <span>
+          {shop_data_item.name
+            .split(" ")
+            .map((n) => n[0].toUpperCase() + n.slice(1))
+            .join(" ")}
+        </span>
         <span>${shop_data_item.price}</span>
       </div>
     </div>

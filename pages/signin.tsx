@@ -22,16 +22,19 @@ const Signin: NextPage = function () {
   const [error, setError] = useState<null | AuthError>(null);
   const router = useRouter();
   const [signedInUser, setSignedInUser] = useRecoilState(userAtom);
+  // after refreshing page signedInUser become null as first.
+  // The setSignedInUser is updating the value but the updated value can only be accessed on the next render. So I have to use a useEffect to see signedInUser.
 
   function setSignedInUserData(email: string, displayName: string, uid: string) {
     // to set userAtom & localStorage so that we can go from 1 page to another.
     // if we don't set localStorage & userAtom in each page there's check to see if we have value.
     setSignedInUser({
-      uid,
-      email,
-      displayName,
+      uid: uid as string,
+      email: email as string,
+      displayName: displayName as string,
     });
     localStorage.setItem("userData", JSON.stringify({ email, displayName, uid }));
+    return;
   }
   const {
     register,

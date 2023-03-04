@@ -28,6 +28,7 @@ export default function Checkout() {
 
   const router = useRouter();
   const userDetails = useRecoilValue(userAtom); // if user is not signed-in go to signin page
+
   useEffect(() => {
     const userInfo =
       localStorage.getItem("userData") !== "undefined"
@@ -52,7 +53,7 @@ export default function Checkout() {
       stripe?.redirectToCheckout({ sessionId: data.session.id });
       setStripeIsLoading(false);
     } catch (err: any) {
-      alert("Error occured while proceeding your payment; ", err.message);
+      alert("Error occured while proceeding your payment: " + err.message);
       setStripeError(err.message);
     }
   };
@@ -162,7 +163,7 @@ export default function Checkout() {
           </tbody>
         </table>
         <div className="flex flex-col mt-10 items-end self-end">
-          <span className="uppercase text-3xl">Total: {totalPrice}$</span>
+          <span className="uppercase text-3xl">Total: {totalPrice.toFixed(2)}$</span>
           <button
             onClick={redirectToCheckout}
             className={`bg-blue-500 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
