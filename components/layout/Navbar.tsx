@@ -24,7 +24,7 @@ type Props = {
 type selectorType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -107,6 +107,49 @@ export default function Navbar() {
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
+        <div className="sm:hidden relative box-border px-4 font-normal focus:font-semibold">
+          <div
+            onClick={() => setCartOverview(!cartOverview)}
+            className="hover:cursor-pointer text-black hover:text-slate-500  relative"
+          >
+            <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
+              {totalItems}
+            </span>
+          </div>
+          <Popover
+            className="absolute flex flex-col justify-between top-14 w-full z-10 bg-transparent p-4"
+            open={cartOverview}
+            id={id}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            onClose={() => setCartOverview(false)}
+          >
+            <div className="w-full z-10 bg-white p-3">
+              <div className="space-y-4 mb-8 overflow-y-auto">
+                {itemStateArray.map((item) => (
+                  <OneItem
+                    id={item.id}
+                    key={item.id}
+                    name={item.name}
+                    imageUrl={item.imageUrl}
+                    qty={item.qty}
+                    price={item.price}
+                  />
+                ))}
+              </div>
+              <Link
+                href="/checkout"
+                className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 text-center"
+              >
+                go to checkout
+              </Link>
+            </div>
+          </Popover>
+        </div>
         <Image
           src={toggle ? close : menu}
           alt="menu"
@@ -131,49 +174,6 @@ export default function Navbar() {
               ) : (
                 <button onClick={() => setOpenModal(true)}>Sign out</button>
               )}
-            </li>
-            <li className="relative box-border px-4 font-normal focus:font-semibold">
-              <div
-                onClick={() => setCartOverview(!cartOverview)}
-                className="hover:cursor-pointer text-black hover:text-slate-500  relative"
-              >
-                <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
-                  {totalItems}
-                </span>
-              </div>
-              <Popover
-                className="absolute flex flex-col justify-between top-14 w-full z-10 bg-transparent p-4"
-                open={cartOverview}
-                id={id}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                onClose={() => setCartOverview(false)}
-              >
-                <div className="w-full z-10 bg-white p-3">
-                  <div className="space-y-4 mb-8 overflow-y-auto">
-                    {itemStateArray.map((item) => (
-                      <OneItem
-                        id={item.id}
-                        key={item.id}
-                        name={item.name}
-                        imageUrl={item.imageUrl}
-                        qty={item.qty}
-                        price={item.price}
-                      />
-                    ))}
-                  </div>
-                  <Link
-                    href="/checkout"
-                    className="block uppercase px-8 w-full border-2 border-black py-4 hover:bg-black hover:text-white active:ring-4 text-center"
-                  >
-                    go to checkout
-                  </Link>
-                </div>
-              </Popover>
             </li>
           </ul>
         </div>
