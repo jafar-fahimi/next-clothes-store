@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
-import { auth, createUserDocFromAuth, signInWithGoogle } from "utils/firebase";
+import { auth, signInWithGoogle } from "utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SignUp from "components/user/signup";
-import { useRecoilState } from "recoil";
-import { userAtom } from "atoms/userAtom";
 
 type Inputs = {
   email: string;
@@ -18,24 +16,9 @@ type Inputs = {
 const Signin: NextPage = function () {
   // or: = () => {}
   const [user, loading] = useAuthState(auth);
-  const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<null | AuthError>(null);
   const router = useRouter();
-  const [signedInUser, setSignedInUser] = useRecoilState(userAtom);
-  // after refreshing page signedInUser become null as first.
-  // The setSignedInUser is updating the value but the updated value can only be accessed on the next render. So I have to use a useEffect to see signedInUser.
 
-  function setSignedInUserData(email: string, displayName: string, uid: string) {
-    // to set userAtom & localStorage so that we can go from 1 page to another.
-    // if we don't set localStorage & userAtom in each page there's check to see if we have value.
-    setSignedInUser({
-      uid: uid as string,
-      email: email as string,
-      displayName: displayName as string,
-    });
-    localStorage.setItem("userData", JSON.stringify({ email, displayName, uid }));
-    return;
-  }
   const {
     register,
     handleSubmit,
@@ -43,16 +26,11 @@ const Signin: NextPage = function () {
     formState: { errors },
   } = useForm<Inputs>();
 
-  if (loading || localLoading) return <h2>Loading...</h2>;
+  if (loading) return <h2 className="mt-10">Loading...</h2>;
 
   const signInAndLogGoogleUser = async () => {
     try {
       const { user } = await signInWithGoogle();
-      // loging user data(displayName, email, password) in firestore.
-      await createUserDocFromAuth(user);
-
-      // set userAtom value: is used when buying items to store data with user in firestore.
-      setSignedInUserData(user.email as string, user.displayName as string, user.uid as string);
       router.push("/");
     } catch (error: any) {
       alert("Error occurred while sigining with google; " + error.message);
@@ -60,18 +38,9 @@ const Signin: NextPage = function () {
   };
 
   const signIn = async (email: string, password: string) => {
-    setLocalLoading(true);
     // await func; so that its done completely, before other codes. not for then.
     await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // set userAtom value: is used when buying items to store data with user in firestore.
-        setSignedInUserData(
-          userCredential.user.email as string,
-          userCredential.user.displayName as string,
-          userCredential.user.uid as string
-        );
-        router.push("/");
-      })
+      .then((userCredential) => router.push("/"))
       .catch((error) => {
         switch (error.code) {
           case "auth/wrong-password":
@@ -85,7 +54,6 @@ const Signin: NextPage = function () {
         }
       })
       .finally(() => {
-        setLocalLoading(false);
         resetField("email");
         resetField("password");
       });
@@ -146,7 +114,7 @@ const Signin: NextPage = function () {
           </div>
         </form>
       </div>
-      <div className=" w-full sm:px-8">
+      <div className="py-12 md:py-0 w-full sm:px-8">
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
         <SignUp />

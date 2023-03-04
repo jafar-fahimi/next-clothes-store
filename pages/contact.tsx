@@ -45,13 +45,8 @@ export default function Contact() {
 
   // if user is not signed-in go to signin page
   const userDetails = useRecoilValue(userAtom);
-
   React.useEffect(() => {
-    const userInfo =
-      localStorage.getItem("userData") !== "undefined"
-        ? JSON.parse(localStorage.getItem("userData") as string)
-        : null;
-    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+    if (userDetails.uid === "") router.push("/signin");
   }, []);
 
   return (

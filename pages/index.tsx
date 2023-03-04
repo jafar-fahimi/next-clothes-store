@@ -17,13 +17,9 @@ function HomePage({ res }: Props) {
   const router = useRouter(); // if user is not signed-in go to signin page
   const userDetails = useRecoilValue(userAtom);
   useEffect(() => {
-    const userInfo =
-      localStorage.getItem("userData") !== "undefined"
-        ? JSON.parse(localStorage.getItem("userData") as string)
-        : null;
-    if (userDetails?.uid === "" && userInfo?.uid === "") router.push("/signin");
+    if (userDetails.uid === "") router.push("/signin");
   }, []);
-
+  
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
   // by setAllData; define state.allExistingCarts!

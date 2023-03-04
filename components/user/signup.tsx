@@ -32,21 +32,6 @@ export default function SignUp() {
       var result = await createUserDocFromAuth(user, { displayName: nameInput });
       // same as directly await crea... both is-called = start-working-now
       setLocalLoading(false);
-
-      setSignedInUser({
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-      });
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          email: user.email,
-          displayName: user.displayName,
-          uid: user.uid,
-        })
-      );
-
       router.push("/");
     } catch (error: any) {
       setLocalLoading(false);

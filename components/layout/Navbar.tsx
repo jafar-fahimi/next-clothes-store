@@ -12,8 +12,6 @@ import { Popover } from "@mui/material";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { useRecoilState } from "recoil";
-import { userAtom } from "atoms/userAtom";
 
 type Props = {
   id: number;
@@ -26,7 +24,6 @@ type Props = {
 type selectorType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 export default function Navbar() {
-  const [userDetail, setUserDetail] = useRecoilState(userAtom);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -85,7 +82,7 @@ export default function Navbar() {
             }}
             onClose={() => setCartOverview(false)}
           >
-            <div className="w-full z-10 bg-white p-3">
+            <div className="w-full bg-transparent z-10 p-3">
               <div className="space-y-4 mb-8 overflow-y-auto">
                 {itemStateArray.map((item) => (
                   <OneItem
@@ -218,7 +215,8 @@ export default function Navbar() {
                           </Dialog.Title>
                           <div className="mt-2">
                             <p className="text-sm text-gray-500">
-                              Are you sure you want to sign out your account? This action cannot be undone.
+                              Are you sure you want to sign out your account? <br />
+                              This action cannot be undone.
                             </p>
                           </div>
                         </div>
@@ -230,11 +228,6 @@ export default function Navbar() {
                         className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                         onClick={() => {
                           setOpenModal(false);
-                          setUserDetail({ uid: "", displayName: "", email: "" });
-                          localStorage.setItem(
-                            "userData",
-                            JSON.stringify({ email: "", displayName: "", uid: "" })
-                          );
                           auth.signOut();
                         }}
                       >
