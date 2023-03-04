@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // doc to fetch d acutal document, getDoc is really getDocData, setDoc -> setDocData
@@ -116,6 +117,8 @@ export const signInAuthUserWithEmailAndPassword = async (email: string, password
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+export const onAuthStateChangedListener = (callback: (user: any) => void) =>
+  onAuthStateChanged(auth, callback);
 
 export { auth, googleProvider };
 export default app;
