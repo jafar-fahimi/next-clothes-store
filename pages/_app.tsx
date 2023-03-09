@@ -1,15 +1,16 @@
+import React from "react";
 import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import { Provider } from "react-redux";
-import store from "components/redux-toolkit/app/store";
 import { RecoilRoot } from "recoil";
+import store from "components/redux-toolkit/app/store";
 
 type Props = {
   Component: any;
   pageProps: any;
 };
 
-function MyApp({ Component, pageProps }: Props) {
+const MyApp = ({ Component, pageProps }: Props) => {
   return (
     <Provider store={store}>
       <RecoilRoot>
@@ -19,6 +20,6 @@ function MyApp({ Component, pageProps }: Props) {
       </RecoilRoot>
     </Provider>
   );
-}
+};
 
 export default MyApp;

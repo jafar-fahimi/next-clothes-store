@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { productState } from "atoms/productAtom";
 import { userAtom } from "atoms/userAtom";
 import { useRouter } from "next/router";
+import { NextPage } from "next";
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -17,7 +18,7 @@ import { useRouter } from "next/router";
 type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
 type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
 
-export default function Checkout() {
+const Checkout: NextPage = () => {
   const dispatch = useDispatch();
   const [stripeIsLoading, setStripeIsLoading] = useState(false);
   const [stripeError, setStripeError] = useState(null);
@@ -173,4 +174,5 @@ export default function Checkout() {
       </div>
     </section>
   );
-}
+};
+export default Checkout;

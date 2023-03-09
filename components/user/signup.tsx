@@ -1,6 +1,6 @@
 import { createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils/firebase";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { FunctionComponent, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { userAtom } from "atoms/userAtom";
@@ -10,7 +10,7 @@ type Inputs = {
   password: string;
 };
 
-export default function SignUp() {
+const SignUp: FunctionComponent = () => {
   const [localLoading, setLocalLoading] = useState(false);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -115,4 +115,5 @@ export default function SignUp() {
       </form>
     </div>
   );
-}
+};
+export default SignUp;

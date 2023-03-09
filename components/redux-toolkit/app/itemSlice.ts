@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ItemPropsType } from "utils/types";
+// import { ItemPropsType } from "utils/types";
 
 // initial value for cartItems
 const initialItems: ItemPropsType[] = [];

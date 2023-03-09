@@ -6,20 +6,21 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { productState } from "atoms/productAtom";
 import { useDispatch } from "react-redux";
 import { setAllData } from "components/redux-toolkit/app/itemSlice";
-import { GetStaticProps } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { userAtom } from "atoms/userAtom";
+import { MongoClient } from "mongodb";
 
 type Props = {
   res: { _id: number; document: [] }[];
 };
-function HomePage({ res }: Props) {
+const HomePage: NextPage<Props> = ({ res }) => {
   const router = useRouter(); // if user is not signed-in go to signin page
   const userDetails = useRecoilValue(userAtom);
   useEffect(() => {
     if (userDetails.uid === "") router.push("/signin");
   }, []);
-  
+
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
   // by setAllData; define state.allExistingCarts!
@@ -37,7 +38,7 @@ function HomePage({ res }: Props) {
       </section>
     </React.Fragment>
   );
-}
+};
 export default HomePage;
 export const getStaticProps: GetStaticProps = async () => {
   // next-js-typeerror-failed-to-parse-url-from-api-projects // when fetching localhost
@@ -50,7 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   let res;
   try {
-    res = await getAllData(client, "products", { _id: -1 });
+    res = await getAllData(client as MongoClient, "products", { _id: -1 });
   } catch (error: any) {
     console.log("error is ", error.message.response);
   }

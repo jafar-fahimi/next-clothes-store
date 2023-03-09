@@ -1,10 +1,12 @@
+import React from "react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { titleTypes } from "utils/types";
+import { FunctionComponent } from "react";
 type Props = { srcProp: string | StaticImageData; cat: titleTypes };
 
-export default function Catagory({ srcProp, cat }: Props) {
-  let cat2 = undefined;
+const Catagory: FunctionComponent<Props> = ({ srcProp, cat }) => {
+  let cat2: string | undefined = undefined;
   if (cat == "watches") cat2 = "watch";
   if (cat == "bags") cat2 = "bag";
 
@@ -25,4 +27,5 @@ export default function Catagory({ srcProp, cat }: Props) {
       </div>
     </Link>
   );
-}
+};
+export default Catagory;

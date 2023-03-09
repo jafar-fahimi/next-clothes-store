@@ -1,8 +1,8 @@
-import React from "react";
-import Catagory from "./catagory";
 import { rolexwatches, bagCollection, jacket, sneakers, hatsCollection } from "public/images";
+import React, { FunctionComponent } from "react";
+import Catagory from "./catagory";
 
-export default function AllCatagories() {
+const AllCatagories: FunctionComponent = function () {
   return (
     <section className="w-full">
       <div className="flex flex-col items-center w-full flex-wrap sm:flex-row justify-center gap-x-4 gap-y-4 mb-2">
@@ -14,4 +14,5 @@ export default function AllCatagories() {
       </div>
     </section>
   );
-}
+};
+export default AllCatagories;

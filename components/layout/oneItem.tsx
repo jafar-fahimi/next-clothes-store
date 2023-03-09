@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from "next/image";
-import React from "react";
+import React, { FunctionComponent } from "react";
 type Props = {
   id: number;
   name: string;
@@ -9,7 +9,7 @@ type Props = {
   countInStock?: number;
 };
 
-export default function OneItem(props: Props) {
+const OneItem: FunctionComponent<Props> = (props) => {
   return (
     <div className="flex gap-x-4 items-center">
       <Image
@@ -32,4 +32,5 @@ export default function OneItem(props: Props) {
       </div>
     </div>
   );
-}
+};
+export default OneItem;

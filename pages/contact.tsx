@@ -4,8 +4,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { NextPage } from "next";
 
-export default function Contact() {
+const Contact: NextPage = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const router = useRouter();
   const sendDataHandler = async () => {
@@ -219,4 +220,4 @@ export default function Contact() {
       </form>
     </section>
   );
-}
+};

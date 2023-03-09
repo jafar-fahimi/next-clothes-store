@@ -1,13 +1,13 @@
 import { userAtom } from "atoms/userAtom";
 import { setCart } from "components/redux-toolkit/app/itemSlice";
 import { User } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRecoilState } from "recoil";
 import { createUserDocFromAuth, onAuthStateChangedListener } from "utils/firebase";
 import Navbar from "./Navbar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useRecoilState(userAtom);
   // The setSignedInUser is updating the value but the updated value can only be accessed on the next render. So I have to use a useEffect to see signedInUser.
@@ -45,4 +45,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {children}
     </section>
   );
-}
+};
+
+export default Layout;

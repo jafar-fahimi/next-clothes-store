@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FunctionComponent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import nextLogo from "public/next.svg";
@@ -23,7 +23,7 @@ type Props = {
 
 type selectorType = { cartItems: Props[]; totalPrice: number; totalItems: number };
 type stateItemType = { cartItems: Props[]; totalPrice: number; totalItems: number };
-export default function Navbar() {
+const Navbar: FunctionComponent = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -251,4 +251,5 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+};
+export default Navbar;

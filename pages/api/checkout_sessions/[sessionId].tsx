@@ -1,10 +1,10 @@
 // to retrieve d session using sessionId, after successful payment
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   const { sessionId } = req.query;
   try {
     if (typeof sessionId == "string" && !sessionId.startsWith("cs_")) {
@@ -15,4 +15,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: (err as unknown as Error).message });
   }
-}
+};
+export default handler;

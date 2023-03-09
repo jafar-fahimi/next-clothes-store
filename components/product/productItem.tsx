@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "components/redux-toolkit/app/itemSlice";
+import { FunctionComponent } from "react";
 
 type RealProps = {
   id: string;
@@ -10,7 +11,7 @@ type RealProps = {
   imageUrl: string | StaticImageData;
   total: number;
 };
-export default function ProductItem(props: RealProps) {
+const ProductItem: FunctionComponent<RealProps> = (props) => {
   const dispatch = useDispatch();
   const shop_data_item = { ...props, qty: 1 };
 
@@ -28,7 +29,10 @@ export default function ProductItem(props: RealProps) {
           <Link
             href="#"
             className="block py-2 px-8 font-normal uppercase"
-            onClick={() => dispatch(addToCart(shop_data_item))}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(addToCart(shop_data_item));
+            }}
           >
             Add&nbsp;To&nbsp;Cart
           </Link>
@@ -45,4 +49,5 @@ export default function ProductItem(props: RealProps) {
       </div>
     </div>
   );
-}
+};
+export default ProductItem;

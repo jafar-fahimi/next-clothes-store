@@ -1,4 +1,6 @@
+import React from "react"; // 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead
 import { StaticImageData } from "next/image";
+import { FunctionComponent } from "react";
 import { titleTypes } from "utils/types";
 import ProductItem from "./productItem";
 
@@ -16,7 +18,7 @@ type Props = {
   pitem: titleTypes;
   data: myProductsType[];
 };
-export default function ProductHome({ pitem, data = [] }: Props) {
+const ProductHome: FunctionComponent<Props> = ({ pitem, data = [] }) => {
   const pitem2 = pitem || "items"; // just to avoid pitem-is-undefined error; exist in initial-load
   // took near 10 hours!
 
@@ -39,4 +41,5 @@ export default function ProductHome({ pitem, data = [] }: Props) {
       </div>
     </section>
   );
-}
+};
+export default ProductHome;

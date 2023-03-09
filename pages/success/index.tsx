@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function CheckoutSuccessPage() {
+const CheckoutSuccessPage: NextPage = () => {
   const [checkoutSession, setCheckoutSession] = useState<any>();
   const {
     query: { sessionId },
@@ -170,4 +171,5 @@ export default function CheckoutSuccessPage() {
       </div>
     </div>
   );
-}
+};
+export default CheckoutSuccessPage;

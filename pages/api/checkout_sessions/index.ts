@@ -1,4 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { MongoClient } from "mongodb";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { connectDatabase, insertData } from "utils/db-utils";
 import { createUserOrdersFromAuth } from "utils/firebase";
@@ -13,9 +14,9 @@ type Res = {
   products?: [];
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Res>) {
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<Res>) => {
   if (req.method === "POST") {
-    let session;
+    let session: Stripe.Checkout.Session;
     try {
       const sessionItem = {
         mode: "payment",
@@ -72,15 +73,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
 
       let result;
-      result = await insertData(client, "products", newChangedData as []);
+      result = await insertData(client as MongoClient, "products", newChangedData as []);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
     } catch (error: any) {
       console.error("error is : ", error.message);
       // res.status(500).json({ statusCode: 500, message: (error as unknown as Error).message });
     }
-    client.close();
+    client?.close();
   } else {
     // res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
-}
+};
+export default handler;
