@@ -54,3 +54,11 @@ export type ItemPropsType = {
   qty: number;
   total: number;
 };
+
+// for firebase.ts:
+export type UserAuthType = {
+  uid?: string | null;
+  id?: string | null;
+  displayName: string | null;
+  email: string | string;
+};
