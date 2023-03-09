@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
@@ -7,11 +6,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   onAuthStateChanged,
+  User,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // doc to fetch d acutal document, getDoc is really getDocData, setDoc -> setDocData
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,6 +24,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
+const db = getFirestore();
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
@@ -54,12 +53,11 @@ export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 //   // ...
 // });
 
-const db = getFirestore();
-
-export const createUserDocFromAuth = async (userAuth: any, additionalInformation = {}) => {
+// to store userAuth data(displayName,uid,email) inside firestore; doc(db, "users", userAuth.uid) if it not exists:
+export const createUserDocFromAuth = async (userAuth: User, additionalInformation = {}) => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, "users", userAuth.uid as string);
   // doc(db, 'collection/table', 'identifier; unique-id of this row')
   // it's just a ref; points to some unique point/path in db. // don't exist actually now.
   const userSnapshot = await getDoc(userDocRef); // return d data in d previous ref.
@@ -83,14 +81,15 @@ export const createUserDocFromAuth = async (userAuth: any, additionalInformation
   return userDocRef; // if userSnapshot.exist() & not exist!
 };
 
-export const createUserOrdersFromAuth = async (userAuth: any, additionalInformation: any) => {
-  if (!userAuth) return;
+// to store user's order data(displayName,uid,email) inside firestore; doc(db, "users-orders", userAuth.uid) if it not exists:
+export const createUserOrdersFromAuth = async (sessionAuth: any, additionalInformation: any) => {
+  if (!sessionAuth) return;
 
-  const userDocRef = doc(db, "users-orders", userAuth.id);
-  const userSnapshot = await getDoc(userDocRef);
+  const userDocRef = doc(db, "users-orders", sessionAuth.id as string);
+  const userSnapshot = await getDoc(userDocRef); // really getDocData! setDocData
 
   if (!userSnapshot.exists()) {
-    const { displayName = "", email = "" } = { ...additionalInformation, ...userAuth };
+    const { displayName = "", email = "" } = { ...additionalInformation, ...sessionAuth };
     const createdDate = new Date();
     try {
       await setDoc(userDocRef, {
@@ -112,11 +111,13 @@ export const createAuthUserWithEmailAndPassword = async (email: string, password
   // return res; // same as:
   return await createUserWithEmailAndPassword(auth, email, password);
 };
-
+////
 export const signInAuthUserWithEmailAndPassword = async (email: string, password: string) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+// onAuthStateChanged is fired (callback is called) when auth changes:
 export const onAuthStateChangedListener = (callback: (user: any) => void) =>
   onAuthStateChanged(auth, callback);
 
