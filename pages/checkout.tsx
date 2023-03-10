@@ -2,7 +2,7 @@ import { addToCart, deleteFromCart, minusFromCart, setCart } from "components/re
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import getStripe from "utils/get-stripe";
-import { ItemPropsType, selectorType, stateItemType } from "utils/types";
+import { selectorType, stateItemType } from "utils/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";

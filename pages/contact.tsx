@@ -1,9 +1,7 @@
 import React from "react";
-import { userAtom } from "atoms/userAtom";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
 import { NextPage } from "next";
 
 const Contact: NextPage = () => {
@@ -43,15 +41,6 @@ const Contact: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
-
-  // if user is not signed-in go to signin page
-  const userDetails = useRecoilValue(userAtom);
-
-  React.useEffect(() => {
-    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
-    if (userDetails.uid === "" && (activeUserLocalStorage === null || activeUserLocalStorage?.uid === ""))
-      router.push("/signin");
-  }, [userDetails]);
 
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">

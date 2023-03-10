@@ -1,29 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Head from "next/head";
 import AllCatagories from "components/catagory/allCatagories";
 import { connectDatabase, getAllData } from "utils/db-utils";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { productState } from "atoms/productAtom";
 import { useDispatch } from "react-redux";
 import { setAllData } from "components/redux-toolkit/app/itemSlice";
 import { GetStaticProps, NextPage } from "next";
-import { useRouter } from "next/router";
-import { userAtom } from "atoms/userAtom";
 import { MongoClient } from "mongodb";
 
 type Props = {
   res: { _id: number; document: [] }[];
 };
 const HomePage: NextPage<Props> = ({ res }) => {
-  const router = useRouter(); // if user is not signed-in go to signin page
-  let userDetails = useRecoilValue(userAtom);
-  
-  useEffect(() => {
-    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
-    if (userDetails.uid === "" && (activeUserLocalStorage === null || activeUserLocalStorage?.uid === ""))
-      router.push("/signin");
-  }, [userDetails]);
-
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
   // by setAllData; define state.allExistingCarts!
