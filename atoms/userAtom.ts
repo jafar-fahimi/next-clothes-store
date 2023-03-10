@@ -11,3 +11,8 @@ export const userAtom = atom<UserAtomType>({
     displayName: "",
   },
 });
+
+export const userWantsPayment = atom<boolean>({
+  key: "user-wants-payment",
+  default: false,
+});
