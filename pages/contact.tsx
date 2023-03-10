@@ -46,9 +46,12 @@ const Contact: NextPage = () => {
 
   // if user is not signed-in go to signin page
   const userDetails = useRecoilValue(userAtom);
+
   React.useEffect(() => {
-    if (userDetails.uid === "") router.push("/signin");
-  }, []);
+    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
+    if (userDetails.uid === "" && (activeUserLocalStorage === null || activeUserLocalStorage?.uid === ""))
+      router.push("/signin");
+  }, [userDetails]);
 
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
@@ -221,3 +224,4 @@ const Contact: NextPage = () => {
     </section>
   );
 };
+export default Contact;

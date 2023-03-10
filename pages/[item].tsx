@@ -15,8 +15,10 @@ const HatsPage: NextPage<Props> = () => {
 
   const userDetails = useRecoilValue(userAtom);
   useEffect(() => {
-    if (userDetails.uid === "") router.push("/signin");
-  }, []);
+    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
+    if (userDetails.uid === "" && (activeUserLocalStorage === null || activeUserLocalStorage?.uid === ""))
+      router.push("/signin");
+  }, [userDetails]);
 
   type dataProps = { item: titleTypes };
   const item: any = router.query.item as unknown as dataProps;

@@ -16,10 +16,13 @@ type Props = {
 };
 const HomePage: NextPage<Props> = ({ res }) => {
   const router = useRouter(); // if user is not signed-in go to signin page
-  const userDetails = useRecoilValue(userAtom);
+  let userDetails = useRecoilValue(userAtom);
+  
   useEffect(() => {
-    if (userDetails.uid === "") router.push("/signin");
-  }, []);
+    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
+    if (userDetails.uid === "" && (activeUserLocalStorage === null || activeUserLocalStorage?.uid === ""))
+      router.push("/signin");
+  }, [userDetails]);
 
   const [products, setProducts] = useRecoilState(productState);
   setProducts(res[0].document);
@@ -40,6 +43,7 @@ const HomePage: NextPage<Props> = ({ res }) => {
   );
 };
 export default HomePage;
+
 export const getStaticProps: GetStaticProps = async () => {
   // next-js-typeerror-failed-to-parse-url-from-api-projects // when fetching localhost
   let client;

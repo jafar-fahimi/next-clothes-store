@@ -15,7 +15,7 @@ type Inputs = {
 // function Signin(): NextPage { // wrong; Type 'Element' is not assignable to type 'NextPage<{}, {}>'.
 const Signin: NextPage = function () {
   // or: = () => {}
-  const [user, loading] = useAuthState(auth);
+  let [user, loading] = useAuthState(auth);
   const [error, setError] = useState<null | AuthError>(null);
   const router = useRouter();
 
@@ -40,7 +40,10 @@ const Signin: NextPage = function () {
   const signIn = async (email: string, password: string) => {
     // await func; so that its done completely, before other codes. not for then.
     await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => router.push("/"))
+      .then((userCredential) => {
+        loading = true;
+        router.push("/");
+      })
       .catch((error) => {
         switch (error.code) {
           case "auth/wrong-password":

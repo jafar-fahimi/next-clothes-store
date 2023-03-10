@@ -31,8 +31,13 @@ const Checkout: NextPage = () => {
   // let userInfo;
   const userDetailsFromRecoil = useRecoilValue(userAtom);
   React.useEffect(() => {
-    if (userDetailsFromRecoil.uid === "") router.push("/signin");
-  }, []);
+    const activeUserLocalStorage = JSON.parse(localStorage.getItem("active-user") as string);
+    if (
+      userDetailsFromRecoil.uid === "" &&
+      (activeUserLocalStorage === null || activeUserLocalStorage?.uid === "")
+    )
+      router.push("/signin");
+  }, [userDetailsFromRecoil]);
 
   const redirectToCheckout = async () => {
     try {
