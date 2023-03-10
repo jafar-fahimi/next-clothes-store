@@ -62,3 +62,6 @@ export type UserAuthType = {
   displayName: string | null;
   email: string | string;
 };
+
+export type selectorType = { cartItems: ItemPropsType[]; totalPrice: number };
+export type stateItemType = { cartItems: ItemPropsType[]; totalPrice: number; totalItems: number };
