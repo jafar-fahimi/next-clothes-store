@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ItemPropsType } from "utils/types";
 // import { ItemPropsType } from "utils/types";
+declare var localStorage: any;// to avoid error: Cannot find name 'localStorage'.
 
 // initial value for cartItems
 const initialItems: ItemPropsType[] = [];

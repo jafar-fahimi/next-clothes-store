@@ -3,6 +3,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+declare var fetch: any; // to avoid error: Cannot find name 'fetch'.
+
 const CheckoutSuccessPage: NextPage = () => {
   const [checkoutSession, setCheckoutSession] = useState<any>();
   const {

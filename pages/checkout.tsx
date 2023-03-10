@@ -11,6 +11,10 @@ import { userAtom, userWantsPayment } from "atoms/userAtom";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 
+declare var alert: any;
+declare var window: any;
+declare var localStorage: any;
+
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render. // don't need; we have getStripe

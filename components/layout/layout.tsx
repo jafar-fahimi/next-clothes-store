@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { createUserDocFromAuth, onAuthStateChangedListener } from "utils/firebase";
 import Navbar from "./Navbar";
 
+declare var localStorage: any;
+
 const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useRecoilState(userAtom);
