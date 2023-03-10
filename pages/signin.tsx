@@ -14,6 +14,10 @@ import { userAtom, userWantsPayment } from "atoms/userAtom";
 import { setCart } from "components/redux-toolkit/app/itemSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectorType, stateItemType } from "utils/types";
+import ReactLoading from "react-loading";
+
+declare var alert: any;
+declare var localStorage: any;
 
 type Inputs = {
   email: string;
@@ -24,6 +28,7 @@ type Inputs = {
 const Signin: NextPage = function () {
   // or: = () => {}
   let [user, loading] = useAuthState(auth);
+  const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<null | AuthError>(null);
   const router = useRouter();
 
@@ -43,6 +48,7 @@ const Signin: NextPage = function () {
   );
   const redirectToStripeCheckout = async () => {
     try {
+      setLocalLoading(true);
       const stripe = await getStripe();
       const { data } = await axios.post("/api/checkout_sessions", {
         items: itemStateArray,
@@ -55,7 +61,9 @@ const Signin: NextPage = function () {
       localStorage.setItem("state", JSON.stringify([]));
       setUserWantsStripePayment(false);
       stripe?.redirectToCheckout({ sessionId: data.session.id });
+      setLocalLoading(false);
     } catch (err: any) {
+      setLocalLoading(false);
       setUserWantsStripePayment(false);
       alert("Error occured while proceeding your payment: " + err.message);
     }
@@ -63,6 +71,7 @@ const Signin: NextPage = function () {
 
   const signInAndLogGoogleUser = async () => {
     try {
+      setLocalLoading(true);
       const { user } = await signInWithGoogle();
       if (userWantsStripePayment)
         redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
@@ -70,10 +79,12 @@ const Signin: NextPage = function () {
     } catch (error: any) {
       alert("Error occurred while sigining with google; " + error.message);
     }
+    setLocalLoading(false);
   };
 
   const signIn = async (email: string, password: string) => {
     // await func; so that its done completely, before other codes. not for then.
+    setLocalLoading(true);
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         loading = true;
@@ -94,6 +105,7 @@ const Signin: NextPage = function () {
         }
       })
       .finally(() => {
+        setLocalLoading(false);
         resetField("email");
         resetField("password");
       });
@@ -103,11 +115,16 @@ const Signin: NextPage = function () {
     await signIn(email, password);
   };
 
-  if (loading) return <h2 className="mt-10">Loading...</h2>;
+  if (loading || localLoading)
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <ReactLoading type="spokes" color="rgb(37,99,235)" height={140} width={100} />
+      </div>
+    );
 
   return (
-    <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
-      <div className="w-full sm:px-8">
+    <section className="flex flex-col px-2 sm:gap-x-8 md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
+      <div className="w-full">
         <h2 className="text-xl font-semibold">I already have an account</h2>
         <p className="text-sm mb-8 mt-1">Sign in with your email and password</p>
         <form onSubmit={handleSubmit(onSubmitSignIn)} action="#" method="post">
@@ -156,7 +173,7 @@ const Signin: NextPage = function () {
           </div>
         </form>
       </div>
-      <div className="py-12 md:py-0 w-full sm:px-8">
+      <div className="py-12 md:py-0 w-full">
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
         <SignUp redirectToStripeCheckout={redirectToStripeCheckout} />

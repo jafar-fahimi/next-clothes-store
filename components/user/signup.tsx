@@ -4,6 +4,9 @@ import React, { FunctionComponent, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom, userWantsPayment } from "atoms/userAtom";
+import ReactLoading from "react-loading";
+
+declare var alert: any;
 
 type Inputs = {
   email: string;
@@ -32,9 +35,10 @@ const SignUp: FunctionComponent<any> = ({ redirectToStripeCheckout }) => {
       const { user }: any = await createAuthUserWithEmailAndPassword(email, password);
       var result = await createUserDocFromAuth(user, { displayName: nameInput });
       // same as directly await crea... both is-called = start-working-now
-      setLocalLoading(false);
-      if (userWantsStripePayment) redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
+      if (userWantsStripePayment)
+        redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
       else router.push("/");
+      setLocalLoading(false);
     } catch (error: any) {
       setLocalLoading(false);
       if (error.code === "auth/email-already-in-use") {
@@ -53,7 +57,12 @@ const SignUp: FunctionComponent<any> = ({ redirectToStripeCheckout }) => {
     if (confirmPasswordRef.current?.value === password) await signUp(email, password);
     else setMatchPasswordErr(true);
   };
-  if (localLoading) return <h3 className="text-3xl">Loading...</h3>;
+  if (localLoading)
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <ReactLoading type="spokes" color="rgb(37,99,235)" height={140} width={100} />
+      </div>
+    );
 
   return (
     <div>
