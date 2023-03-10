@@ -6,6 +6,14 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SignUp from "components/user/signup";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { productState } from "atoms/productAtom";
+import getStripe from "utils/get-stripe";
+import axios from "axios";
+import { userAtom, userWantsPayment } from "atoms/userAtom";
+import { setCart } from "components/redux-toolkit/app/itemSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectorType, stateItemType } from "utils/types";
 
 type Inputs = {
   email: string;
@@ -26,12 +34,39 @@ const Signin: NextPage = function () {
     formState: { errors },
   } = useForm<Inputs>();
 
-  if (loading) return <h2 className="mt-10">Loading...</h2>;
+  const [userWantsStripePayment, setUserWantsStripePayment] = useRecoilState(userWantsPayment);
+  const preExistData = useRecoilValue(productState);
+  const userDetailsFromRecoilAtom = useRecoilValue(userAtom);
+  const dispatch = useDispatch();
+  const { cartItems: itemStateArray, totalPrice }: selectorType = useSelector(
+    (state: { item: stateItemType }) => state.item
+  );
+  const redirectToStripeCheckout = async () => {
+    try {
+      const stripe = await getStripe();
+      const { data } = await axios.post("/api/checkout_sessions", {
+        items: itemStateArray,
+        preExistData,
+        userDetails: userDetailsFromRecoilAtom,
+      });
+
+      // after successfully payment, make cart empty:
+      dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
+      localStorage.setItem("state", JSON.stringify([]));
+      setUserWantsStripePayment(false);
+      stripe?.redirectToCheckout({ sessionId: data.session.id });
+    } catch (err: any) {
+      setUserWantsStripePayment(false);
+      alert("Error occured while proceeding your payment: " + err.message);
+    }
+  };
 
   const signInAndLogGoogleUser = async () => {
     try {
       const { user } = await signInWithGoogle();
-      router.push("/");
+      if (userWantsStripePayment)
+        redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
+      else router.push("/");
     } catch (error: any) {
       alert("Error occurred while sigining with google; " + error.message);
     }
@@ -42,7 +77,9 @@ const Signin: NextPage = function () {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         loading = true;
-        router.push("/");
+        if (userWantsStripePayment)
+          redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
+        else router.push("/");
       })
       .catch((error) => {
         switch (error.code) {
@@ -65,6 +102,8 @@ const Signin: NextPage = function () {
   const onSubmitSignIn: SubmitHandler<Inputs> = async ({ email, password }) => {
     await signIn(email, password);
   };
+
+  if (loading) return <h2 className="mt-10">Loading...</h2>;
 
   return (
     <section className="flex flex-col md:flex-row md:justify-center mx-auto gap-y-10 md:gap-y-0">
@@ -120,7 +159,7 @@ const Signin: NextPage = function () {
       <div className="py-12 md:py-0 w-full sm:px-8">
         <h2 className="text-xl font-semibold">New to My Ecommerce Website</h2>
         <p className="text-sm mb-8 mt-1">You can easily make an account. Feel free to sign up.</p>
-        <SignUp />
+        <SignUp redirectToStripeCheckout={redirectToStripeCheckout} />
       </div>
     </section>
   );

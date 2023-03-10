@@ -2,21 +2,22 @@ import { createAuthUserWithEmailAndPassword, createUserDocFromAuth } from "utils
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import { userAtom } from "atoms/userAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userAtom, userWantsPayment } from "atoms/userAtom";
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-const SignUp: FunctionComponent = () => {
+const SignUp: FunctionComponent<any> = ({ redirectToStripeCheckout }) => {
   const [localLoading, setLocalLoading] = useState(false);
   const [matchPasswordErr, setMatchPasswordErr] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
   const [nameInput, setNameInput] = useState<string>("");
   const router = useRouter();
   const [signedInUser, setSignedInUser] = useRecoilState(userAtom);
+  const userWantsStripePayment = useRecoilValue(userWantsPayment);
 
   const {
     register,
@@ -32,7 +33,8 @@ const SignUp: FunctionComponent = () => {
       var result = await createUserDocFromAuth(user, { displayName: nameInput });
       // same as directly await crea... both is-called = start-working-now
       setLocalLoading(false);
-      router.push("/");
+      if (userWantsStripePayment) redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
+      else router.push("/");
     } catch (error: any) {
       setLocalLoading(false);
       if (error.code === "auth/email-already-in-use") {
