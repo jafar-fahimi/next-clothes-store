@@ -18,3 +18,5 @@ steps:
 1 in index.js ssr to fetch products from mongodb & store them on products.
 2 add total & existing in checkout page. 
 3 on pay button -> in itemSlice change all Data & again upload them to mongodb.
+
+// use next-auth & comments email must come to gmail.

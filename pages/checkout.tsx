@@ -89,34 +89,35 @@ const Checkout: NextPage = () => {
     setStripeError(null);
   }
   return (
-    <section className="w-full scale-[80%] md:scale-100 mt-4 sm:mt-8">
-      <div className="max-w-4xl flex flex-col mx-auto items-center">
-        <table>
-          <tbody>
-            <tr className="text-lg flex space-x-12 md:space-x-20 lg:space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
-              <td className="sm:w-40">Product</td>
-              <td className="sm:w-28">Description</td>
-              <td>Price</td>
-              <td>Quantity</td>
-              <td>Total</td>
-              <td>Remove</td>
-            </tr>
+    // scale-75 or smaller makes the content very down on smaller screens; so add -mt
+    <section className="overflow-auto w-full mt-4 sm:mt-8">
+      <div className="max-w-4xl h-auto flex flex-col mx-auto items-center justify-start">
+        <section className="scale-50 -mt-96 xsm:-mt-20 sm:-mt-0 xsm:scale-75 md:scale-100">
+          <div>
+            <div className="text-lg w-full flex space-x-12 md:space-x-20 lg:space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
+              <span>Product</span>
+              <span>Description</span>
+              <span>Price</span>
+              <span>Quantity</span>
+              <span>Total</span>
+              <span>Remove</span>
+            </div>
             {itemStateArray.map((item) => (
-              <tr
-                className="text-lg flex space-x-0 md:space-x-20 lg:space-x-32 border-b-2 border-black/30 items-center justify-evenly pb-3 mb-3"
+              <div
+                className="text-lg flex space-x-0 md:space-x-20 lg:space-x-32 border-b-2 border-black/30 ml-4 xsm:ml-0 items-center justify-evenly pb-3 mb-3"
                 key={item.id}
               >
-                <td className="md:w-28 w-12 sm:w-[20%]">
+                <span className="md:w-28 w-12 xsm:w-[20%] sm:w-auto -ml-12 lg:-ml-0">
                   <Image src={item.imageUrl} width={150} height={180} alt={item.name} />
-                </td>
-                <td className="text-xl md:w-28 w-14 sm:bg-white sm:w-20">
+                </span>
+                <span className="text-xl md:w-28 w-14 sm:bg-white sm:w-20">
                   {item.name
                     .split(" ")
                     .map((n) => n[0].toUpperCase() + n.slice(1))
                     .join(" ")}
-                </td>
-                <td>{item.price}$</td>
-                <td className="flex items-end">
+                </span>
+                <span>{item.price}$</span>
+                <span className="flex items-end">
                   <button
                     onClick={() => dispatch(minusFromCart(item))}
                     className="font-extrabold text-2xl focus:ring-4"
@@ -154,9 +155,9 @@ const Checkout: NextPage = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
                     </svg>
                   </button>
-                </td>
-                <td>{item.total}</td>
-                <td>
+                </span>
+                <span>{item.total}</span>
+                <span>
                   <button className="text-2xl" onClick={() => dispatch(deleteFromCart(item))}>
                     <svg
                       fill="none"
@@ -171,16 +172,16 @@ const Checkout: NextPage = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                   </button>
-                </td>
-              </tr>
+                </span>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </section>
         <div className="flex flex-col mt-10 items-end self-end">
-          <span className="uppercase text-3xl">Total: {totalPrice.toFixed(2)}$</span>
+          <span className="uppercase text-xl sm:text-2xl md:text-3xl">Total: {totalPrice.toFixed(2)}$</span>
           <button
             onClick={redirectToStripeCheckout}
-            className={`bg-blue-500 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
+            className={`bg-blue-500 scale-75 sm:scale-100 px-3 py-2 rounded-md text-white mt-8 font-semibold ${
               stripeIsLoading && "opacity-70"
             }`}
             // disabled={stripeError}

@@ -46,14 +46,14 @@ const Contact: NextPage = () => {
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Sales</h2>
-        <p className="mt-2 text-lg leading-8 text-gray-600">
+        <p className="mt-2 text-lg sm:leading-8 text-gray-600">
           Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur quia.
         </p>
       </div>
       <form action="#" method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div>
-            <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="first-name" className="block text-sm font-semibold sm:leading-6 text-gray-900">
               First name
             </label>
             <div className="mt-2.5">
@@ -69,7 +69,7 @@ const Contact: NextPage = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="last-name" className="block text-sm font-semibold sm:leading-6 text-gray-900">
               Last name
             </label>
             <div className="mt-2.5">
@@ -85,7 +85,7 @@ const Contact: NextPage = () => {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="company" className="block text-sm font-semibold sm:leading-6 text-gray-900">
               Company <span className="text-slate-400 text-xs">(optional)</span>
             </label>
             <div className="mt-2.5">
@@ -100,7 +100,7 @@ const Contact: NextPage = () => {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="email" className="block text-sm font-semibold sm:leading-6 text-gray-900">
               Email
             </label>
             <div className="mt-2.5">
@@ -145,7 +145,7 @@ const Contact: NextPage = () => {
                 required
                 ref={phoneRef}
                 autoComplete="tel"
-                className="block w-full rounded-md border-0 py-2 px-3.5 pl-20 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="block w-full rounded-md border-0 py-2 px-3.5 pl-20 text-sm sm:leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
             </div>
           </div>
@@ -160,7 +160,7 @@ const Contact: NextPage = () => {
                 required
                 ref={messageRef}
                 rows={4}
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-sm sm:leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                 defaultValue={""}
               />
             </div>

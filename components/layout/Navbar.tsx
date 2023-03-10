@@ -110,7 +110,7 @@ const Navbar: FunctionComponent = () => {
         <div className="sm:hidden relative box-border px-4 font-normal focus:font-semibold">
           <div
             onClick={() => setCartOverview(!cartOverview)}
-            className="hover:cursor-pointer text-black hover:text-slate-500  relative"
+            className="hover:cursor-pointer text-black hover:text-slate-500 relative"
           >
             <Image src={bagIcon2} alt="shopping Cart" className="-z-10" width={25} />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pt-2 text-sm">
@@ -159,9 +159,9 @@ const Navbar: FunctionComponent = () => {
         <div
           className={`${
             !toggle ? "hidden" : "flex z-10"
-          } p-6 bg-black-gradient absolute top-10 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+          } p-6 bg-black-gradient absolute top-10 right-0 my-2 min-w-[140px] rounded-xl sidebar`}
         >
-          <ul className="list-none flex items-start justify-center py-4 px-4 bg-white flex-1 flex-col gap-4 border-2 border-black">
+          <ul className="list-none flex items-start justify-center py-4 px-4 bg-white/90 flex-1 flex-col gap-4 border-2 border-black">
             <li className="cursor-pointer box-border px-4 font-normal text-black hover:text-slate-500 focus:font-semibold">
               <Link href="/">Shop</Link>
             </li>
