@@ -13,17 +13,27 @@ const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) 
   // The setSignedInUser is updating the value but the updated value can only be accessed on the next render. So I have to use a useEffect to see signedInUser.
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user: User | null) => {
-      if (user) createUserDocFromAuth(user);
+      if (user) {
+        createUserDocFromAuth(user);
+        localStorage.setItem("active-user", JSON.stringify(user));
+      }
       if (user == null) {
         setUserDetails({ displayName: "", email: "", uid: "" });
+        localStorage.setItem("active-user", JSON.stringify(null));
         dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
-      } else
+      } else {
+        localStorage.setItem(
+          "active-user",
+          JSON.stringify({ displayName: user.displayName || "", email: user.email || "", uid: user.uid })
+        );
         setUserDetails({
           uid: user.uid,
           email: user.email || "",
           displayName: user.displayName || "",
         });
+      }
     });
+    console.log('localStorage.getItem("active-user"); ', localStorage.getItem("active-user"));
     return unsubscribe;
   }, []);
 
