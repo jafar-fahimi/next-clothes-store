@@ -1,4 +1,5 @@
 import React from "react";
+import emailjs from "@emailjs/browser";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -7,6 +8,7 @@ import { NextPage } from "next";
 const Contact: NextPage = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const router = useRouter();
+
   const sendDataHandler = async () => {
     try {
       setIsSubmitLoading(true);
@@ -15,14 +17,7 @@ const Contact: NextPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        data: {
-          name: nameRef.current?.value,
-          email: emailRef.current?.value,
-          phone: phoneRef.current?.value,
-          message: messageRef.current?.value,
-          company: companyRef.current?.value,
-          lastName: lastNameRef.current?.value,
-        },
+        data: formData,
         method: "POST",
       });
       setIsSubmitLoading(false);
@@ -41,6 +36,36 @@ const Contact: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const formData = {
+    name: nameRef?.current?.value || "",
+    email: emailRef.current?.value || "",
+    phone: phoneRef.current?.value || "",
+    message: messageRef.current?.value || "",
+    company: companyRef.current?.value || "",
+    lastName: lastNameRef.current?.value || "",
+  };
+
+  const sendEmail = (e: any) => {
+    e.preventDefault();
+    // service_id, template_id, Your_public_key
+    emailjs
+      .sendForm(
+        "service_4em0vjo",
+        "template_he3rqpk",
+        formRef.current as unknown as HTMLFormElement,
+        "kjkjaVxkmdrFlxDL6"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
@@ -50,7 +75,7 @@ const Contact: NextPage = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur quia.
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
+      <form ref={formRef} action="#" method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm font-semibold sm:leading-6 text-gray-900">
@@ -197,8 +222,9 @@ const Contact: NextPage = () => {
         <div className="mt-10">
           <button
             onClick={(eve: any) => {
-              sendDataHandler();
               eve.preventDefault();
+              sendDataHandler();
+              sendEmail(eve);
             }}
             disabled={isSubmitLoading}
             type="submit"
@@ -214,3 +240,5 @@ const Contact: NextPage = () => {
   );
 };
 export default Contact;
+
+

@@ -16,6 +16,8 @@
 # production
 /build
 
+myNotes.md
+
 # misc
 .DS_Store
 *.pem
