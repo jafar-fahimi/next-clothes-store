@@ -21,7 +21,7 @@ export async function insertData(client: MongoClientType, collection: any, docum
 
 export async function getAllData(client: MongoClientType, collection: any, sort: any) {
   const db = client.db();
-  const documents = await db.collection(collection).find().sort(sort).toArray();
-  // sort = {_id: -1} descending based on _id
+  const documents = await db.collection(collection).find().sort(sort).limit(1).toArray();
+  // sort = {_id: -1} descending based on _id // .limit(1) only takes the last data!
   return documents;
 }

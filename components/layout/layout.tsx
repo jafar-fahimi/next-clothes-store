@@ -35,7 +35,7 @@ const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) 
         });
       }
     });
-    console.log('localStorage.getItem("active-user"); ', localStorage.getItem("active-user"));
+    // console.log('localStorage.getItem("active-user"); ', localStorage.getItem("active-user"));
     return unsubscribe;
   }, []);
 
