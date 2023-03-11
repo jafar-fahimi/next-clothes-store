@@ -1,17 +1,19 @@
+import { Dialog, Transition } from "@headlessui/react";
 import React from "react";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { NextPage } from "next";
 
 const Contact: NextPage = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  // success & error can be set on successMessage;& just if they're set, transition is shown!
 
-  const sendDataHandler = async () => {
+  // sending data to mongodb:
+  const sendDataToMongodb = async () => {
+    setIsSubmitLoading(true);
     try {
-      setIsSubmitLoading(true);
       const result: any = await axios({
         url: "/api/message",
         headers: {
@@ -21,14 +23,11 @@ const Contact: NextPage = () => {
         method: "POST",
       });
       setIsSubmitLoading(false);
-
-      // alert("Message Sent Successfully!");
     } catch (err: any) {
       setIsSubmitLoading(false);
       // In the catch block, the error which will always be 500 internal server error
       // alert(err.response.data);
     }
-    router.push("/");
   };
   const nameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -47,24 +46,36 @@ const Contact: NextPage = () => {
     lastName: lastNameRef.current?.value || "",
   };
 
-  const sendEmail = (e: any) => {
+  const resetFormValues = (): void => {
+    nameRef.current !== null && (nameRef.current.value = "");
+    emailRef.current !== null && (emailRef.current.value = "");
+    phoneRef.current !== null && (phoneRef.current.value = "");
+    messageRef.current !== null && (messageRef.current.value = "");
+    companyRef.current !== null && (companyRef.current.value = "");
+    lastNameRef.current !== null && (lastNameRef.current.value = "");
+  };
+
+  const sendEmailToMyGmail = (e: any) => {
     e.preventDefault();
-    // service_id, template_id, Your_public_key
     emailjs
       .sendForm(
-        "service_4em0vjo",
-        "template_he3rqpk",
+        process.env.EMAILJS_SERVICE_ID as string,
+        process.env.EMAILJS_TEMPLATE_ID as string,
         formRef.current as unknown as HTMLFormElement,
-        "kjkjaVxkmdrFlxDL6"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string
       )
       .then(
         (result) => {
           console.log(result.text);
+          resetFormValues();
+          setSuccessMessage("success");
         },
         (error) => {
+          setSuccessMessage("error");
           console.log(error.text);
         }
-      );
+      )
+      .finally(() => setIsSubmitLoading(false));
   };
 
   return (
@@ -158,10 +169,6 @@ const Contact: NextPage = () => {
                   <option>CA</option>
                   <option>EU</option>
                 </select>
-                {/* <ChevronDownIcon
-                  className="pointer-events-none absolute top-0 right-3 h-full w-5 text-gray-400"
-                  aria-hidden="true"
-                /> */}
               </div>
               <input
                 type="tel"
@@ -189,42 +196,14 @@ const Contact: NextPage = () => {
                 defaultValue={""}
               />
             </div>
-          </div>
-          {/* <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
-            <div className="flex h-6 items-center">
-              <Switch
-                checked={agreed}
-                onChange={setAgreed}
-                className={classNames(
-                  agreed ? "bg-indigo-600" : "bg-gray-200",
-                  "flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                )}
-              >
-                <span className="sr-only">Agree to policies</span>
-                <span
-                  aria-hidden="true"
-                  className={classNames(
-                    agreed ? "translate-x-3.5" : "translate-x-0",
-                    "h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"
-                  )}
-                />
-              </Switch>
-            </div>
-            <Switch.Label className="text-sm leading-6 text-gray-600">
-              By selecting this, you agree to our{" "}
-              <a href="#" className="font-semibold text-indigo-600">
-                privacy&nbsp;policy
-              </a>
-              .
-            </Switch.Label>
-          </Switch.Group> */}
+          </div>{" "}
         </div>
         <div className="mt-10">
           <button
             onClick={(eve: any) => {
               eve.preventDefault();
-              sendDataHandler();
-              sendEmail(eve);
+              sendDataToMongodb();
+              sendEmailToMyGmail(eve);
             }}
             disabled={isSubmitLoading}
             type="submit"
@@ -236,9 +215,79 @@ const Contact: NextPage = () => {
           </button>
         </div>
       </form>
+
+      <Transition appear show={!!successMessage} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={() => setSuccessMessage("")}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel
+                  className={`w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all ${
+                    successMessage === "" && "hidden"
+                  }`}
+                >
+                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                    {`${
+                      successMessage === "success"
+                        ? "Successful Email!"
+                        : successMessage === "error"
+                        ? "Something went wrong!"
+                        : ""
+                    }`}
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">{`${
+                      successMessage === "success"
+                        ? "Your email was sent Successfully!"
+                        : successMessage === "error"
+                        ? "Your email wasn't sent!"
+                        : ""
+                    }`}</p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className={`inline-flex justify-center rounded-md border border-transparent  px-4 py-2 text-sm font-medium ${
+                        successMessage == "success"
+                          ? "text-blue-900 focus-visible:ring-blue-500 hover:bg-blue-200 bg-blue-100"
+                          : successMessage == "error"
+                          ? "text-red-900 focus-visible:ring-red-500 hover:bg-red-200 bg-red-100"
+                          : "hidden"
+                      }  focus:outline-none focus-visible:ring-2
+                      focus-visible:ring-offset-2`}
+                      onClick={() => setSuccessMessage("")}
+                    >
+                      Got it, thanks!
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </section>
   );
 };
 export default Contact;
-
-
