@@ -92,7 +92,7 @@ const Checkout: NextPage = () => {
     // scale-75 or smaller makes the content very down on smaller screens; so add -mt
     <section className="overflow-auto w-full mt-4 sm:mt-8">
       <div className="max-w-4xl h-auto flex flex-col mx-auto items-center justify-start">
-        <section className="scale-50 -mt-96 xsm:-mt-20 sm:-mt-0 xsm:scale-75 md:scale-100">
+        <section className="scale-50 xsm:scale-75 md:scale-100">
           <div>
             <div className="text-lg w-full flex space-x-12 md:space-x-20 lg:space-x-32 border-b-2 justify-evenly border-black/30 pb-3 mb-4">
               <span>Product</span>

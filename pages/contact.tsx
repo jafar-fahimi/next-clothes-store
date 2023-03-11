@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React from "react";
-import emailjs from "@emailjs/browser";
 import axios from "axios";
 import { Fragment, useRef, useState } from "react";
 import { NextPage } from "next";
+import emailJs from "@emailjs/browser";
 
 const Contact: NextPage = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
@@ -22,7 +22,6 @@ const Contact: NextPage = () => {
         data: formData,
         method: "POST",
       });
-      setIsSubmitLoading(false);
     } catch (err: any) {
       setIsSubmitLoading(false);
       // In the catch block, the error which will always be 500 internal server error
@@ -55,27 +54,33 @@ const Contact: NextPage = () => {
     lastNameRef.current !== null && (lastNameRef.current.value = "");
   };
 
-  const sendEmailToMyGmail = (e: any) => {
-    e.preventDefault();
-    emailjs
-      .sendForm(
-        process.env.EMAILJS_SERVICE_ID as string,
-        process.env.EMAILJS_TEMPLATE_ID as string,
+  const sendEmailToMyGmail = async (event: any) => {
+    try {
+      // await axios.post("api/messageToGmail", formRef.current);
+      // const { data } = await axios({
+      //   url: "/api/messageToGmail",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   data: templateParams,
+      //   method: "POST",
+      // });
+      // console.log("formRef.current : ", formRef.current);
+      await emailJs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as unknown as string,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as unknown as string,
+        // or formRef.current
         formRef.current as unknown as HTMLFormElement,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          resetFormValues();
-          setSuccessMessage("success");
-        },
-        (error) => {
-          setSuccessMessage("error");
-          console.log(error.text);
-        }
-      )
-      .finally(() => setIsSubmitLoading(false));
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as unknown as string
+      );
+      setSuccessMessage("success");
+      resetFormValues();
+      setIsSubmitLoading(false);
+    } catch (error: any) {
+      setIsSubmitLoading(false);
+      setSuccessMessage("error");
+      console.log("error: 💕", error);
+    }
   };
 
   return (
@@ -86,7 +91,7 @@ const Contact: NextPage = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur quia.
         </p>
       </div>
-      <form ref={formRef} action="#" method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
+      <form ref={formRef} method="POST" className="mx-auto mt-10 max-w-xl sm:mt-16">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm font-semibold sm:leading-6 text-gray-900">
@@ -196,7 +201,7 @@ const Contact: NextPage = () => {
                 defaultValue={""}
               />
             </div>
-          </div>{" "}
+          </div>
         </div>
         <div className="mt-10">
           <button
@@ -205,8 +210,8 @@ const Contact: NextPage = () => {
               sendDataToMongodb();
               sendEmailToMyGmail(eve);
             }}
-            disabled={isSubmitLoading}
             type="submit"
+            disabled={isSubmitLoading}
             className={`block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
               isSubmitLoading && "opacity-75"
             }`}
@@ -216,7 +221,7 @@ const Contact: NextPage = () => {
         </div>
       </form>
 
-      <Transition appear show={!!successMessage} as={Fragment}>
+      <Transition appear show={successMessage !== ""} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => setSuccessMessage("")}>
           <Transition.Child
             as={Fragment}
@@ -227,10 +232,10 @@ const Contact: NextPage = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed left-1/2 top-1/2" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed left-1/2 top-1/2 w-64 xsm:w-96 -translate-x-1/2 -translate-y-1/2 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -242,7 +247,9 @@ const Contact: NextPage = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  className={`w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all ${
+                  className={`w-full max-w-md transform overflow-hidden rounded-2xl bg-white border-2 ${
+                    successMessage === "success" ? "border-blue-500" : "border-red-500"
+                  } p-6 text-center align-middle shadow-xl transition-all ${
                     successMessage === "" && "hidden"
                   }`}
                 >
