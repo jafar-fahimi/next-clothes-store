@@ -4,6 +4,7 @@ import { connectDatabase, getAllData, insertData } from "utils/db-utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let client;
+  console.log("procec: ... ", process.env.MONGODB_URI_STRING);
   try {
     client = await connectDatabase(process.env.MONGODB_URI_STRING as string);
   } catch (error) {
@@ -12,22 +13,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "POST") {
-    const { email, first_name, message, last_name, company, phone_number } = req.body;
-
+    const { email, name, message, lastName, phone } = req.body;
     // server side validation
-    if (
-      !email.includes("@") ||
-      !first_name ||
-      first_name.trim() === "" ||
-      !message ||
-      message.trim() === ""
-    ) {
+    if (!email.includes("@") || !name || name.trim() === "" || !message || message.trim() === "") {
       res.status(422).json({ message: "Invalid input." });
       client?.close();
       return;
     }
     const id = new Date();
-    const newComment = { email, first_name, message, id, last_name, phone_number };
+    const newComment = { email, name, message, id, lastName, phone };
     // mongodb will create a unique id for us
 
     let result;
