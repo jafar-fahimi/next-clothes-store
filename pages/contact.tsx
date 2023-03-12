@@ -85,6 +85,7 @@ const Contact: NextPage = () => {
     }
   };
 
+  // simple client-side form validation
   const validateForm = (): boolean => {
     function validatePhoneNumber(input_str: any): boolean {
       var re = /^[0-9()-]+$/;
