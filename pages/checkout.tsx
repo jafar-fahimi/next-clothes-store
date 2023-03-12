@@ -56,16 +56,21 @@ const Checkout: NextPage = () => {
       setStripeIsLoading(true);
       const stripe = await getStripe();
       // make sure it is '/api/checkout_sessions/ to work in vercel!
-      const { data } = await axios.post("/api/checkout_sessions", {
+      const { data }: any = await axios.post("/api/checkout_sessions", {
         items: itemStateArray,
         preExistData,
         userDetails: userDetailsFromRecoilAtom,
       });
 
+      if ((data as any).statusCode === 500) {
+        console.error((data as any).message);
+        return;
+      }
+
       // after successfully payment, make cart empty:
       dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
       localStorage.setItem("state", JSON.stringify([]));
-      stripe?.redirectToCheckout({ sessionId: data.session.id });
+      await stripe?.redirectToCheckout({ sessionId: data.session.id });
       setStripeIsLoading(false);
     } catch (err: any) {
       alert("Error occured while proceeding your payment: " + err.message);

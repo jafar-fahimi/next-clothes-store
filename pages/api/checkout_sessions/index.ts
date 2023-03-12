@@ -74,8 +74,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
           tempLocalProductsId.push(preExistData[i].id);
         }
 
-      let result;
-      result = await insertData(client as MongoClient, "products", newChangedData);
+      await insertData(client as MongoClient, "products", newChangedData);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
     } catch (error: any) {
       console.error("error is : ", error.message);
