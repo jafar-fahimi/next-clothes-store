@@ -5,7 +5,7 @@ import { connectDatabase, getAllData, insertData } from "utils/db-utils";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let client;
   try {
-    client = await connectDatabase(process.env.MONGODB_URI_STRING as string);
+    client = await connectDatabase(process.env.MONGODB_URI as string);
   } catch (error) {
     res.status(500).json({ message: "Connecting to the database failed!" });
     return;

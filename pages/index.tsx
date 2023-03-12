@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   let client;
   try {
-    client = await connectDatabase(process.env.MONGODB_URI_STRING as string);
+    client = await connectDatabase(process.env.MONGODB_URI as string);
   } catch (error: any) {
     console.log("Failed in Connecting Database! ", error.message);
     err = "Failed in Connecting Database! " + error.message;
