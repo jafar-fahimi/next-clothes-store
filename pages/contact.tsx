@@ -8,81 +8,119 @@ import emailJs from "@emailjs/browser";
 const Contact: NextPage = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorText, setErrorText] = useState<string>("");
   // success & error can be set on successMessage;& just if they're set, transition is shown!
+
+  const formRef = useRef<HTMLFormElement>(null); // used just in sendEmailToMdbAndMyGmail
+
+  const [formState, setFormState] = useState({
+    first_name: "",
+    email: "",
+    phone_number: "",
+    message: "",
+    company: "",
+    last_name: "",
+  });
+
+  const handleFormChange = (evt: any): void => {
+    const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
+    setFormState({
+      ...formState,
+      [evt.target.name]: value,
+    });
+  };
+
+  const resetFormValues = (): void => {
+    setFormState({
+      first_name: "",
+      email: "",
+      phone_number: "",
+      message: "",
+      company: "",
+      last_name: "",
+    });
+  };
 
   // sending data to mongodb:
   const sendDataToMongodb = async () => {
     setIsSubmitLoading(true);
     try {
-      const result: any = await axios({
+      await axios({
         url: "/api/message",
         headers: {
           "Content-Type": "application/json",
         },
-        data: formData,
+        data: formState,
         method: "POST",
       });
-    } catch (err: any) {
+    } catch (error: any) {
       setIsSubmitLoading(false);
+      setSuccessMessage("error");
+      setErrorText(error.message);
+      throw new Error(error); // will be catched in sendEmailToMdbAndMyGmail
       // In the catch block, the error which will always be 500 internal server error
       // alert(err.response.data);
     }
   };
-  const nameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
-  const companyRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
-  const formData = {
-    name: nameRef?.current?.value || "",
-    email: emailRef.current?.value || "",
-    phone: phoneRef.current?.value || "",
-    message: messageRef.current?.value || "",
-    company: companyRef.current?.value || "",
-    lastName: lastNameRef.current?.value || "",
-  };
-
-  const resetFormValues = (): void => {
-    nameRef.current !== null && (nameRef.current.value = "");
-    emailRef.current !== null && (emailRef.current.value = "");
-    phoneRef.current !== null && (phoneRef.current.value = "");
-    messageRef.current !== null && (messageRef.current.value = "");
-    companyRef.current !== null && (companyRef.current.value = "");
-    lastNameRef.current !== null && (lastNameRef.current.value = "");
-  };
-
-  const sendEmailToMyGmail = async (event: any) => {
+  const sendEmailToMdbAndMyGmail = async (event: any) => {
     try {
-      // await axios.post("api/messageToGmail", formRef.current);
-      // const { data } = await axios({
-      //   url: "/api/messageToGmail",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   data: templateParams,
-      //   method: "POST",
-      // });
-      // console.log("formRef.current : ", formRef.current);
+      await sendDataToMongodb();
+
       await emailJs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as unknown as string,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as unknown as string,
-        // or formRef.current
         formRef.current as unknown as HTMLFormElement,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as unknown as string
       );
-      setSuccessMessage("success");
+      // if its not set error by past sendsendDataToMongodb
       resetFormValues();
+      if (successMessage !== "error") setSuccessMessage("success");
       setIsSubmitLoading(false);
     } catch (error: any) {
       setIsSubmitLoading(false);
       setSuccessMessage("error");
-      console.log("error: 💕", error);
+      setErrorText(error.message);
+      console.log("error.message is ", error.message);
     }
   };
 
+  const validateForm = (): boolean => {
+    function validatePhoneNumber(input_str: any): boolean {
+      var re = /^[0-9()-]+$/;
+      return re.test(input_str);
+    }
+
+    function validateEmail(input_str: any): boolean {
+      var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      return re.test(input_str);
+    }
+
+    if (
+      !formState.email.includes("@") ||
+      !formState.first_name ||
+      formState.first_name.trim() === "" ||
+      !formState.message ||
+      formState.message.trim() === "" ||
+      formState.last_name.trim() === "" ||
+      !validatePhoneNumber(formState.phone_number) ||
+      !validateEmail(formState.email)
+    ) {
+      return false;
+    } else return true;
+  };
+
+  const sendDataHandler = async (eve: any) => {
+    eve.preventDefault();
+    if (!validateForm()) {
+      setSuccessMessage("error");
+      setErrorText("Invalid Inputs!");
+      return;
+    }
+    // checkFormBeforeSending();
+    // without await also they work
+    await sendEmailToMdbAndMyGmail(eve);
+  };
   return (
     <section className="isolate bg-white py-4 px-6 sm:py-8 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
@@ -99,11 +137,12 @@ const Contact: NextPage = () => {
             </label>
             <div className="mt-2.5">
               <input
-                ref={nameRef}
+                value={formState.first_name}
                 type="text"
-                name="first-name"
+                name="first_name"
                 id="first-name"
                 required
+                onChange={handleFormChange}
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 py-2 px-3.5 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
@@ -116,10 +155,11 @@ const Contact: NextPage = () => {
             <div className="mt-2.5">
               <input
                 type="text"
-                ref={lastNameRef}
-                name="last-name"
+                value={formState.last_name}
+                name="last_name"
                 id="last-name"
                 required
+                onChange={handleFormChange}
                 autoComplete="family-name"
                 className="block w-full rounded-md border-0 py-2 px-3.5 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
@@ -134,7 +174,8 @@ const Contact: NextPage = () => {
                 type="text"
                 name="company"
                 id="company"
-                ref={companyRef}
+                onChange={handleFormChange}
+                value={formState.company}
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 py-2 px-3.5 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
@@ -149,7 +190,8 @@ const Contact: NextPage = () => {
                 type="email"
                 name="email"
                 required
-                ref={emailRef}
+                onChange={handleFormChange}
+                value={formState.email}
                 id="email"
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-2 px-3.5 text-sm leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
@@ -177,10 +219,11 @@ const Contact: NextPage = () => {
               </div>
               <input
                 type="tel"
-                name="phone-number"
+                name="phone_number"
                 id="phone-number"
                 required
-                ref={phoneRef}
+                value={formState.phone_number}
+                onChange={handleFormChange}
                 autoComplete="tel"
                 className="block w-full rounded-md border-0 py-2 px-3.5 pl-20 text-sm sm:leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
@@ -195,7 +238,8 @@ const Contact: NextPage = () => {
                 name="message"
                 id="message"
                 required
-                ref={messageRef}
+                onChange={handleFormChange}
+                value={formState.message}
                 rows={4}
                 className="block w-full rounded-md border-0 py-2 px-3.5 text-sm sm:leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                 defaultValue={""}
@@ -205,11 +249,7 @@ const Contact: NextPage = () => {
         </div>
         <div className="mt-10">
           <button
-            onClick={(eve: any) => {
-              eve.preventDefault();
-              sendDataToMongodb();
-              sendEmailToMyGmail(eve);
-            }}
+            onClick={async (eve: any) => await sendDataHandler(eve)}
             type="submit"
             disabled={isSubmitLoading}
             className={`block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
@@ -267,7 +307,7 @@ const Contact: NextPage = () => {
                       successMessage === "success"
                         ? "Your email was sent Successfully!"
                         : successMessage === "error"
-                        ? "Your email wasn't sent!"
+                        ? errorText || "Your email wasn't sent!"
                         : ""
                     }`}</p>
                   </div>
