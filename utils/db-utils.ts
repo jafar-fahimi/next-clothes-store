@@ -3,12 +3,10 @@ var MongoClient = require("mongodb").MongoClient; // Driver for connecting to Mo
 import { MongoClient as MongoClientType, ObjectId } from "mongodb";
 let client: MongoClientType | null = null;
 
-export async function connectDatabase() {
+export async function connectDatabase(mongodbUriString: string) {
   // events is our database that contain both newsletter & comments collections/tables
   if (client) client.close();
-  client = await MongoClient.connect(
-    "mongodb+srv://user:svvhUCzOcIUyhdLD@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority"
-  ); // use %23 for !, "" for #$
+  client = await MongoClient.connect(mongodbUriString); // use %23 for !, "" for #$
 
   return client;
 }

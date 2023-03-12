@@ -45,7 +45,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     // send decreased items to mongodb via :
     let client;
     try {
-      client = await connectDatabase();
+      client = await connectDatabase(process.env.MONGODB_URI_STRING as string);
     } catch (error: any) {
       console.error(error.message);
       throw new Error(error);
