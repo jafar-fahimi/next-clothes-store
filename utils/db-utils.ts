@@ -7,7 +7,7 @@ export async function connectDatabase() {
   // events is our database that contain both newsletter & comments collections/tables
   if (client) client.close();
   client = await MongoClient.connect(
-    "mongodb+srv://user:svvhUCzOcIUyhdLD@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true"
+    "mongodb+srv://user:svvhUCzOcIUyhdLD@cluster1.r2tfvft.mongodb.net/ecommerce-crown?retryWrites=true&w=majority"
   ); // use %23 for !, "" for #$
 
   return client;
