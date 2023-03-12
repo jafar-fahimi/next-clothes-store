@@ -337,3 +337,6 @@ const Contact: NextPage = () => {
   );
 };
 export default Contact;
+
+// I had the same problem, gone to same path you mentioned.
+// My problem solved when I changed to my MONGODB_URI username & password from my account. Also check that it must be exactly MONGODB_URI.

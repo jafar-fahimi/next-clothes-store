@@ -55,6 +55,7 @@ const Checkout: NextPage = () => {
     try {
       setStripeIsLoading(true);
       const stripe = await getStripe();
+      // make sure it is '/api/checkout_sessions/ to work in vercel!
       const { data } = await axios.post("/api/checkout_sessions", {
         items: itemStateArray,
         preExistData,

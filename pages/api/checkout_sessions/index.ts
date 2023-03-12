@@ -45,6 +45,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     // send decreased items to mongodb via :
     let client;
     try {
+      // must be exactly MONGODB_URI in anywhere!
       client = await connectDatabase(process.env.MONGODB_URI as string);
     } catch (error: any) {
       console.error(error.message);
@@ -66,6 +67,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
           }
         }
       }
+
       for (let i = 0; i < preExistData.length; i += 1)
         if (!tempLocalProductsId.includes(preExistData[i].id)) {
           newChangedData.push(preExistData[i]);
@@ -73,7 +75,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
         }
 
       let result;
-      result = await insertData(client as MongoClient, "products", newChangedData as []);
+      result = await insertData(client as MongoClient, "products", newChangedData);
       // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
     } catch (error: any) {
       console.error("error is : ", error.message);
