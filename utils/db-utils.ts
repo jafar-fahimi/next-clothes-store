@@ -1,4 +1,3 @@
-import emailjs from "@emailjs/browser";
 var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
 import { MongoClient as MongoClientType, ObjectId } from "mongodb";
 let client: MongoClientType | null = null;
@@ -7,7 +6,6 @@ export async function connectDatabase(mongodbUriString: string) {
   // events is our database that contain both newsletter & comments collections/tables
   if (client) client.close();
   client = await MongoClient.connect(mongodbUriString); // use %23 for !, "" for #$
-
   return client;
 }
 
