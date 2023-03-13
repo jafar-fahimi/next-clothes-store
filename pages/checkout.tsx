@@ -67,6 +67,8 @@ const Checkout: NextPage = () => {
         return;
       }
 
+      // console.log("data from stripe returned is ", data);
+
       // after successfully payment, make cart empty:
       dispatch(setCart({ stateCartItems: [], stateTotalItems: 0, stateTotalPrice: 0 }));
       localStorage.setItem("state", JSON.stringify([]));

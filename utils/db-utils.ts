@@ -1,4 +1,4 @@
-var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
+// var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
 import { MongoClient as MongoClientType, ObjectId } from "mongodb";
 let mongoClient: MongoClientType | null = null;
 

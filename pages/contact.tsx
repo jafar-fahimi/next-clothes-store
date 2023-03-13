@@ -58,8 +58,6 @@ const Contact: NextPage = () => {
       setSuccessMessage("error");
       setErrorText(error.message);
       throw new Error(error); // will be catched in sendEmailToMdbAndMyGmail
-      // In the catch block, the error which will always be 500 internal server error
-      // alert(err.response.data);
     }
   };
 
