@@ -15,7 +15,7 @@ type Props = {
 };
 const HomePage: NextPage<Props> = ({ res, err = null }) => {
   const [products, setProducts] = useRecoilState(productState);
-  setProducts(res[0].document);
+  res !== null && setProducts(res[0].document);
   // by setAllData; define state.allExistingCarts!
   const dispatch = useDispatch();
   dispatch(setAllData(products));
@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
     err = "Failed in Connecting Database! " + error.message;
   }
 
-  let res;
+  let res = null;
   try {
     res = await getAllData(client as MongoClient, "products", { _id: -1 });
   } catch (error: any) {
