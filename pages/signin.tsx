@@ -62,10 +62,10 @@ const Signin: NextPage = function () {
       setUserWantsStripePayment(false);
       stripe?.redirectToCheckout({ sessionId: data.session.id });
       setLocalLoading(false);
-    } catch (err: any) {
+    } catch (err) {
       setLocalLoading(false);
       setUserWantsStripePayment(false);
-      alert("Error occured while proceeding your payment: " + err.message);
+      if (err instanceof Error) alert("Error occured while proceeding your payment: " + err.message);
     }
   };
 
@@ -76,8 +76,8 @@ const Signin: NextPage = function () {
       if (userWantsStripePayment)
         redirectToStripeCheckout(); // if user has come from checkout directly to signin, do payment.
       else router.push("/");
-    } catch (error: any) {
-      alert("Error occurred while sigining with google; " + error.message);
+    } catch (error) {
+      if (error instanceof Error) alert("Error occurred while sigining with google; " + error.message);
     }
     setLocalLoading(false);
   };

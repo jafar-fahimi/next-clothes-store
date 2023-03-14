@@ -22,9 +22,11 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       try {
         // must be exactly MONGODB_URI in anywhere!
         client = await connectDatabase(process.env.MONGODB_URI as string);
-      } catch (error: any) {
-        console.error(error.message);
-        throw new Error(error);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+          throw new Error(error.message);
+        }
       }
       try {
         const newChangedData: ItemPropsType[] = [];
@@ -50,8 +52,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
         await insertData(client as MongoClient, "products", newChangedData);
         // res.status(200).json({ message: "Products uploaded to mongodb!", products: newChangedData as [] });
-      } catch (error: any) {
-        console.error("error is : ", error.message);
+      } catch (error) {
+        if (error instanceof Error) console.error("error is : ", error.message);
         // res.status(500).json({ statusCode: 500, message: (error as unknown as Error).message });
       }
       client?.close();
@@ -74,6 +76,8 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       session = await stripe.checkout.sessions.create(sessionItem);
 
       await sendDataToMongodb();
+      // putting this await after try-catch, in another try catch caused this await don't work
+      // since page was redirected to success_url & other codes(awaits) didn't run.
 
       await createUserOrdersFromAuth(session, {
         ...req.body.userDetails,
@@ -81,9 +85,11 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       });
 
       res.status(200).json({ session });
-    } catch (err: any) {
-      console.error("error! : " + err.message); // alert don't work in server side
-      throw new Error(err);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("error! : " + err.message); // alert don't work in server side
+        throw new Error(err.message);
+      }
     }
   } else {
     // res.setHeader("Allow", "POST");

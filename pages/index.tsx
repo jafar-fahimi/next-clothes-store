@@ -47,17 +47,21 @@ export const getStaticProps: GetStaticProps = async () => {
   let client;
   try {
     client = await connectDatabase(process.env.MONGODB_URI as string);
-  } catch (error: any) {
-    console.log("Failed in Connecting Database! ", error.message);
-    err = "Failed in Connecting Database! " + error.message;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("Failed in Connecting Database! ", error.message);
+      err = "Failed in Connecting Database! " + error.message;
+    }
   }
 
   let res = null;
   try {
     res = await getAllData(client as MongoClient, "products", { _id: -1 });
-  } catch (error: any) {
-    console.log("Failed in Fetching Data! ", error.message);
-    err = "Failed in Fetching Data! " + error.message;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("Failed in Fetching Data! ", error.message);
+      err = "Failed in Fetching Data! " + error.message;
+    }
   }
 
   return {

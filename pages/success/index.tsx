@@ -21,8 +21,8 @@ const CheckoutSuccessPage: NextPage = () => {
     }
     try {
       fetcher(URL);
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      if (err instanceof Error) console.log(err.message);
     }
   }, [URL]);
   // console.log('', checkoutSession);

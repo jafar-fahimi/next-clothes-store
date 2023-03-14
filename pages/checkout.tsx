@@ -22,7 +22,7 @@ declare var localStorage: any;
 const Checkout: NextPage = () => {
   const dispatch = useDispatch();
   const [stripeIsLoading, setStripeIsLoading] = useState(false);
-  const [stripeError, setStripeError] = useState(null);
+  const [stripeError, setStripeError] = useState<string | null>(null);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
   // userWantsStripePayment tracked in signin; if true, user after signin directly will have stripe payment.
@@ -74,9 +74,11 @@ const Checkout: NextPage = () => {
       localStorage.setItem("state", JSON.stringify([]));
       await stripe?.redirectToCheckout({ sessionId: data.session.id });
       setStripeIsLoading(false);
-    } catch (err: any) {
-      alert("Error occured while proceeding your payment: " + err.message);
-      setStripeError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert("Error occured while proceeding your payment: " + err.message);
+        setStripeError(err.message);
+      }
     }
   };
 

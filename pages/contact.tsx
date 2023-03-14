@@ -53,11 +53,13 @@ const Contact: NextPage = () => {
         data: formState,
         method: "POST",
       });
-    } catch (error: any) {
+    } catch (error) {
       setIsSubmitLoading(false);
       setSuccessMessage("error");
-      setErrorText(error.message);
-      throw new Error(error); // will be catched in sendEmailToMdbAndMyGmail
+      if (error instanceof Error) {
+        setErrorText(error.message);
+        throw new Error(error.message); // will be catched in sendEmailToMdbAndMyGmail
+      }
     }
   };
 
@@ -75,11 +77,13 @@ const Contact: NextPage = () => {
       resetFormValues();
       if (successMessage !== "error") setSuccessMessage("success");
       setIsSubmitLoading(false);
-    } catch (error: any) {
+    } catch (error) {
       setIsSubmitLoading(false);
       setSuccessMessage("error");
-      setErrorText(error.message);
-      console.log("error.message is ", error.message);
+      if (error instanceof Error) {
+        console.log("error.message is ", error.message);
+        setErrorText(error.message);
+      }
     }
   };
 
