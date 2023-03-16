@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectDatabase, getAllData, insertData } from "utils/db-utils";
+import { connectDatabase, getAllData, insertData } from "utils/mongodb-utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let client;

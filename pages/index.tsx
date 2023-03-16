@@ -1,11 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import AllCatagories from "components/catagory/allCatagories";
-import { connectDatabase, getAllData } from "utils/db-utils";
+import { connectDatabase, getAllData } from "utils/mongodb-utils";
 import { useRecoilState } from "recoil";
 import { productState } from "atoms/productAtom";
 import { useDispatch } from "react-redux";
-import { setAllData } from "components/redux-toolkit/app/itemSlice";
+import { setAllData } from "store/itemSlice";
 import { GetStaticProps, NextPage } from "next";
 import { MongoClient } from "mongodb";
 

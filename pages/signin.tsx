@@ -11,7 +11,7 @@ import { productState } from "atoms/productAtom";
 import getStripe from "utils/get-stripe";
 import axios from "axios";
 import { userAtom, userWantsPayment } from "atoms/userAtom";
-import { setCart } from "components/redux-toolkit/app/itemSlice";
+import { setCart } from "store/itemSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectorType, stateItemType } from "utils/types";
 import ReactLoading from "react-loading";

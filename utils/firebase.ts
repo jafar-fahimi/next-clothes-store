@@ -25,6 +25,7 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
 const db = getFirestore();
+
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
@@ -33,25 +34,6 @@ googleProvider.setCustomParameters({
 
 export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 // without using .then, our func's result is just returned.
-// .then((result) => {
-//   // This gives you a Google Access Token. You can use it to access the Google API.
-//   const credential = GoogleAuthProvider.credentialFromResult(result);
-//   const token = credential?.accessToken;
-//   // The signed-in user info.
-//   const user = result.user;
-//   // IdP data available using getAdditionalUserInfo(result)
-//   // ...
-// })
-// .catch((error) => {
-//   // Handle Errors here.
-//   const errorCode = error.code;
-//   const errorMessage = error.message;
-//   // The email of the user's account used.
-//   const email = error.customData.email;
-//   // The AuthCredential type that was used.
-//   const credential = GoogleAuthProvider.credentialFromError(error);
-//   // ...
-// });
 
 // to store userAuth data(displayName,uid,email) inside firestore; doc(db, "users", userAuth.uid) if it not exists:
 export const createUserDocFromAuth = async (userAuth: User, additionalInformation = {}) => {
@@ -61,8 +43,8 @@ export const createUserDocFromAuth = async (userAuth: User, additionalInformatio
   // doc(db, 'collection/table', 'identifier; unique-id of this row')
   // it's just a ref; points to some unique point/path in db. // don't exist actually now.
   const userSnapshot = await getDoc(userDocRef); // return d data in d previous ref.
-  // console.log(userSnapshot.exists()); // false if user with userAuth.id doesn't exist
 
+  // false if user with userAuth.id doesn't exist
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdDate = new Date();
@@ -85,10 +67,8 @@ export const createUserDocFromAuth = async (userAuth: User, additionalInformatio
 export const createUserOrdersFromAuth = async (sessionAuth: any, additionalInformation: any) => {
   if (!sessionAuth) return;
 
-  console.log("sessionAuth is ", sessionAuth);
-
   const userDocRef = doc(db, "users-orders", sessionAuth.id as string);
-  const userSnapshot = await getDoc(userDocRef); // really getDocData! setDocData
+  const userSnapshot = await getDoc(userDocRef); // actually somehow getDocData! setDocData
 
   if (!userSnapshot.exists()) {
     const { displayName = "", email = "" } = { ...additionalInformation, ...sessionAuth };

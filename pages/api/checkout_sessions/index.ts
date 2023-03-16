@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
-import { connectDatabase, insertData } from "utils/db-utils";
+import { connectDatabase, insertData } from "utils/mongodb-utils";
 import { createUserOrdersFromAuth } from "utils/firebase";
 import { ItemPropsType } from "utils/types";
 
