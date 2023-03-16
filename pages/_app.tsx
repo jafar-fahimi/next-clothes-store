@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import { Provider } from "react-redux";
 import { RecoilRoot } from "recoil";
-import store from "components/redux-toolkit/app/store";
+import store from "store";
 
 type Props = {
   Component: any;

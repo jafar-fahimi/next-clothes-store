@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ItemPropsType } from "utils/types";
 // import { ItemPropsType } from "utils/types";
-declare var localStorage: any;// to avoid error: Cannot find name 'localStorage'.
+declare var localStorage: any; // to avoid error: Cannot find name 'localStorage'.
 
 // initial value for cartItems
-const initialItems: ItemPropsType[] = [];
+let initialItems: ItemPropsType[] = [];
 
 type StateType = {
   allExistingCarts: ItemPropsType[];
@@ -93,6 +93,7 @@ const itemSlice = createSlice({
     },
     setAllData: (state: StateType, action: { payload: ItemPropsType[] }) => {
       state.allExistingCarts = action.payload;
+      // setAllData is used in pages/index, when data comes from mongodb by getStaticProps, data is set.
     },
   },
 });

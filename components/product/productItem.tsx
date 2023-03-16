@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { useDispatch } from "react-redux";
-import { addToCart } from "components/redux-toolkit/app/itemSlice";
+import { addToCart } from "store/itemSlice";
 import { FunctionComponent } from "react";
 
 type RealProps = {

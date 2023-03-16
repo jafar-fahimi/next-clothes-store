@@ -1,4 +1,4 @@
-import { addToCart, deleteFromCart, minusFromCart, setCart } from "components/redux-toolkit/app/itemSlice";
+import { addToCart, deleteFromCart, minusFromCart, setCart } from "store/itemSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import getStripe from "utils/get-stripe";

@@ -9,7 +9,7 @@ const store = configureStore({
   middleware:
     process.env.NODE_ENV === "development" || "test"
       ? (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
-      : null,
+      : undefined, // null isn't assignable to middleware
 });
 export default store;
 // [2===3 && {s:12}].filter(Boolean); -> []

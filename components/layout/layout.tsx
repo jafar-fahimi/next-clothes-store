@@ -1,5 +1,5 @@
 import { userAtom } from "atoms/userAtom";
-import { setCart } from "components/redux-toolkit/app/itemSlice";
+import { setCart } from "store/itemSlice";
 import { User } from "firebase/auth";
 import React, { FunctionComponent, useEffect } from "react";
 import { useDispatch } from "react-redux";
