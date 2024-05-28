@@ -25,7 +25,6 @@ const CheckoutSuccessPage: NextPage = () => {
       if (err instanceof Error) console.log(err.message);
     }
   }, [URL]);
-  // console.log('', checkoutSession);
 
   const customer = checkoutSession?.customer_details;
   const products = checkoutSession?.line_items?.data?.map((item: any) => ({
